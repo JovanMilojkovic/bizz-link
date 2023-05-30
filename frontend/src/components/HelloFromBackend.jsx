@@ -6,6 +6,7 @@ export default function FetchFromBackend() {
     const hello = async () => {
         const respData = await fetch("http://localhost:8080/root");
         const stringResponse = await respData.text();
+
         setResponse(stringResponse);
     };
 

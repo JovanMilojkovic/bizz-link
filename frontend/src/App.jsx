@@ -4,6 +4,7 @@ import NavBar from "./components/NavBar";
 import UserCreator from "./components/UserCreator";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Routes, Route } from "react-router-dom";
+import LoginPage from "./components/LoginPage";
 
 function App() {
     return (
@@ -12,6 +13,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<FetchFromBackend />} />
                 <Route path="/createUser" element={<UserCreator />} />
+                <Route path="/api/v1/login" element={<LoginPage />} />
             </Routes>
         </>
     );

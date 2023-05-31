@@ -11,8 +11,8 @@ function NavBar() {
                     <Navbar.Brand to="/">BizLink</Navbar.Brand>
                     <Nav className="me-auto">
                         <NavLink to="/">Home</NavLink>
-                        <NavLink to="/createUser">Create User</NavLink>
-                        <NavLink to="/pricing">Pricing</NavLink>
+                        <NavLink to="/api/v1/signup">Sign up</NavLink>
+                        <NavLink to="/api/v1/login">Login</NavLink>
                     </Nav>
                 </Container>
             </Navbar>

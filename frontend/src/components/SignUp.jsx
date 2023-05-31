@@ -1,51 +1,3 @@
-// const createAppUser = async (appUser) => {
-//     return await fetch("http://localhost:8080/saveUser", {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(appUser),
-//     }).then((res) => res.json());
-// };
-
-// const UserCreator = () => {
-//     const onSubmit = async (e) => {
-//         e.preventDefault();
-
-//         const formData = new FormData(e.target);
-//         const appUser = {
-//             firstName: formData.get("firstName"),
-//             lastName: formData.get("lastName"),
-//         };
-
-//         console.log(appUser);
-
-//         try {
-//             await createAppUser(appUser);
-//         } catch (error) {
-//             console.error(error);
-//         }
-//     };
-
-//     return (
-//         <>
-//             <form className="appUserForm" onSubmit={onSubmit}>
-//                 <div className="firstName">
-//                     <label htmlFor="firstName">First Name: </label>
-//                     <input name="firstName"></input>
-//                 </div>
-//                 <div className="lastName">
-//                     <label htmlFor="lastName">Last Name: </label>
-//                     <input name="lastName"></input>
-//                 </div>
-//                 <button>Register</button>
-//             </form>
-//         </>
-//     );
-// };
-
-// export default UserCreator;
-
 import { CssVarsProvider } from "@mui/joy/styles";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
@@ -55,11 +7,11 @@ import Input from "@mui/joy/Input";
 import Button from "@mui/joy/Button";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import "../components/css_files/UserCreator.css";
+import "../components/css_files/SignUp.css";
 import { useState } from "react";
 import { useEffect } from "react";
 
-function UserCreator(props) {
+function SignUp(props) {
     const navigate = useNavigate();
     const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
@@ -225,7 +177,7 @@ function UserCreator(props) {
                     Sign up
                 </Button>
                 <Typography
-                    endDecorator={<Link to="/api/login/">Login</Link>}
+                    endDecorator={<Link to="/api/v1/login/">Login</Link>}
                     fontSize="sm"
                     sx={{ alignSelf: "center" }}
                 >
@@ -236,4 +188,4 @@ function UserCreator(props) {
     );
 }
 
-export default UserCreator;
+export default SignUp;

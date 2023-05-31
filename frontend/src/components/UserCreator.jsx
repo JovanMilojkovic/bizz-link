@@ -1,5 +1,3 @@
-import NavBar from "./NavBar";
-
 const createAppUser = async (appUser) => {
     return await fetch("http://localhost:8080/saveUser", {
         method: "POST",
@@ -40,7 +38,7 @@ const UserCreator = () => {
                     <label htmlFor="lastName">Last Name: </label>
                     <input name="lastName"></input>
                 </div>
-                <button>Submit!</button>
+                <button>Register</button>
             </form>
         </>
     );

@@ -10,9 +10,9 @@ function NavBar() {
         <Container>
           <Navbar.Brand  to="/">BizLink</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link  href="/">Home</Nav.Link>
-            <Nav.Link  href="/createUser">Create User</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/createUser">Create User</Nav.Link>
+            <Nav.Link href="/login">Log In</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

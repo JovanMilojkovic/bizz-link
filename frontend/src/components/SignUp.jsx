@@ -1,51 +1,3 @@
-// const createAppUser = async (appUser) => {
-//     return await fetch("http://localhost:8080/saveUser", {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify(appUser),
-//     }).then((res) => res.json());
-// };
-
-// const UserCreator = () => {
-//     const onSubmit = async (e) => {
-//         e.preventDefault();
-
-//         const formData = new FormData(e.target);
-//         const appUser = {
-//             firstName: formData.get("firstName"),
-//             lastName: formData.get("lastName"),
-//         };
-
-//         console.log(appUser);
-
-//         try {
-//             await createAppUser(appUser);
-//         } catch (error) {
-//             console.error(error);
-//         }
-//     };
-
-//     return (
-//         <>
-//             <form className="appUserForm" onSubmit={onSubmit}>
-//                 <div className="firstName">
-//                     <label htmlFor="firstName">First Name: </label>
-//                     <input name="firstName"></input>
-//                 </div>
-//                 <div className="lastName">
-//                     <label htmlFor="lastName">Last Name: </label>
-//                     <input name="lastName"></input>
-//                 </div>
-//                 <button>Register</button>
-//             </form>
-//         </>
-//     );
-// };
-
-// export default UserCreator;
-
 import { CssVarsProvider } from "@mui/joy/styles";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
@@ -55,11 +7,11 @@ import Input from "@mui/joy/Input";
 import Button from "@mui/joy/Button";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import "../components/css_files/UserCreator.css";
+import "../components/css_files/SignUp.css";
 import { useState } from "react";
 import { useEffect } from "react";
 
-function UserCreator(props) {
+function SignUp(props) {
     const navigate = useNavigate();
     const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
@@ -75,26 +27,28 @@ function UserCreator(props) {
         email: `${email}`,
         password: `${password}`,
     };
-    const checkUnoccupied = async (e) => {
-        if (e.target.type === "text") {
-            const userName = e.target.value;
-            setUserName(userName);
-            const res = await fetch(`/api/search/?userName=${userName}`);
-            if (res.ok) {
-                const respondMessage = await res.text();
-                setUserNameError(respondMessage);
-            }
-        }
-        if (e.target.type === "email") {
-            const userEmail = e.target.value;
-            setEmail(userEmail);
-            const res = await fetch(`/api/search/?userEmail=${userEmail}`);
-            if (res.ok) {
-                const respondMessage = await res.text();
-                setEmailError(respondMessage);
-            }
-        }
-    };
+    
+    // const checkUnoccupied = async (e) => {
+    //     if (e.target.type === "text") {
+    //         const userName = e.target.value;
+    //         setUserName(userName);
+    //         const res = await fetch(`/api/search/?userName=${userName}`);
+    //         if (res.ok) {
+    //             const respondMessage = await res.text();
+    //             setUserNameError(respondMessage);
+    //         }
+    //     }
+    //     if (e.target.type === "email") {
+    //         const userEmail = e.target.value;
+    //         setEmail(userEmail);
+    //         const res = await fetch(`/api/search/?userEmail=${userEmail}`);
+    //         if (res.ok) {
+    //             const respondMessage = await res.text();
+    //             setEmailError(respondMessage);
+    //         }
+    //     }
+    // };
+
     const checkUserName = () => {
         const errorMessage =
             "User name should be 5 characters long! and to include 1 special character!";
@@ -142,7 +96,7 @@ function UserCreator(props) {
                 },
             }
         ).then((res) => res);
-        // props.response(createUser);
+        props.response(createUser);
 
         if (createUser.ok) {
             alert(
@@ -189,7 +143,7 @@ function UserCreator(props) {
                         name="userName"
                         type="text"
                         placeholder="JohnDoe123"
-                        onChange={checkUnoccupied}
+                        onChange={(e) => setUserName(e.target.value)}
                     />
                     <span className="userSpan" style={{ color: "red" }}>
                         {userNameError}
@@ -204,7 +158,7 @@ function UserCreator(props) {
                         placeholder="johndoe@email.com"
                         autoComplete="on"
                         // onChange={(e) => setEmail(e.target.value)}
-                        onChange={checkUnoccupied}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     <span className="mail">{emailError}</span>
                 </FormControl>
@@ -225,7 +179,7 @@ function UserCreator(props) {
                     Sign up
                 </Button>
                 <Typography
-                    endDecorator={<Link to="/api/login/">Login</Link>}
+                    endDecorator={<Link to="/api/v1/login/">Login</Link>}
                     fontSize="sm"
                     sx={{ alignSelf: "center" }}
                 >
@@ -236,4 +190,4 @@ function UserCreator(props) {
     );
 }
 
-export default UserCreator;
+export default SignUp;

@@ -1,22 +1,18 @@
 import "./App.css";
-
-import UserCreatorPage from "./components/UserCreatorPage";
-import LoginPage from "./components/LoginPage";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Routes, Route, BrowserRouter } from "react-router-dom";
-import HomePage from "./components/HomePage";
+import FetchFromBackend from "./components/HelloFromBackend";
+import NavBar from "./components/NavBar";
+import UserCreator from "./components/UserCreator";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
-
     return (
         <>
-            <BrowserRouter>
-                <Routes>
-                    <Route path='/' element={<HomePage/>} />
-                    <Route path='/createUser' element={<UserCreatorPage/>} /> 
-                    <Route path="/login" element={LoginPage}/>   
-                </Routes>
-            </BrowserRouter>
+            <NavBar />
+            <Routes>
+                <Route path="/" element={<FetchFromBackend />} />
+                <Route path="/createUser" element={<UserCreator />} />
+            </Routes>
         </>
     );
 }

@@ -2,6 +2,7 @@ package com.elproyectegrande.codecool.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,13 +14,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AppUser {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String firstName;
-    private String lastName;
+    private String name;
+    private String email;
+    private String password;
 
-    public AppUser(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public AppUser(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 }

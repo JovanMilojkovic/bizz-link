@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/api/v1")
 public class Controller {
     @Autowired
     private UserRepository repository;
@@ -34,5 +35,5 @@ public class Controller {
     @GetMapping("/getUser/{firstName}")
     public List<AppUser> getUserByFirstName(@PathVariable String firstName){
         return repository.findByFirstName(firstName);
-    } 
+    }
 }

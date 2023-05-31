@@ -142,7 +142,7 @@ function UserCreator(props) {
                 },
             }
         ).then((res) => res);
-        props.response(createUser);
+        // props.response(createUser);
 
         if (createUser.ok) {
             alert(

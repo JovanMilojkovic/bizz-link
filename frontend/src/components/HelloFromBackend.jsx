@@ -14,7 +14,6 @@ export default function FetchFromBackend() {
     hello();
     return (
         <div>
-            <NavBar/>
             <p>{response}</p>
         </div>
     );

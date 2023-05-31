@@ -1,4 +1,5 @@
 import { useState } from "react";
+import NavBar from "./NavBar";
 
 export default function FetchFromBackend() {
     const [response, setResponse] = useState("");
@@ -13,6 +14,7 @@ export default function FetchFromBackend() {
     hello();
     return (
         <div>
+            <NavBar/>
             <p>{response}</p>
         </div>
     );

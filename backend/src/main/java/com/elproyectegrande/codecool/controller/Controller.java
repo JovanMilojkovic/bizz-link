@@ -34,5 +34,5 @@ public class Controller {
     @GetMapping("/getUser/{firstName}")
     public List<AppUser> getUserByFirstName(@PathVariable String firstName){
         return repository.findByFirstName(firstName);
-    }
+    } 
 }

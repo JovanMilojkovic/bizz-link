@@ -1,9 +1,10 @@
 import "./App.css";
-import FetchFromBackend from "./components/HelloFromBackend";
+
 import UserCreatorPage from "./components/UserCreatorPage";
 import LoginPage from "./components/LoginPage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route, BrowserRouter } from "react-router-dom";
+import HomePage from "./components/HomePage";
 
 function App() {
 
@@ -11,7 +12,7 @@ function App() {
         <>
             <BrowserRouter>
                 <Routes>
-                    <Route path='/' element={<FetchFromBackend/>} />
+                    <Route path='/' element={<HomePage/>} />
                     <Route path='/createUser' element={<UserCreatorPage/>} /> 
                     <Route path="/login" element={LoginPage}/>   
                 </Routes>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import NavBar from "./NavBar";
+
 
 export default function FetchFromBackend() {
     const [response, setResponse] = useState("");

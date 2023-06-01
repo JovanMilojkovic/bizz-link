@@ -1,11 +1,9 @@
 package com.elproyectegrande.codecool.controller;
 
 
-import com.elproyectegrande.codecool.dao.UserRepository;
 import com.elproyectegrande.codecool.model.AppUser;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.elproyectegrande.codecool.service.DAO.UserDAO;
+import com.elproyectegrande.codecool.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,14 +12,19 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:5173")
 @RequestMapping("/api/v1")
 public class Controller {
-    @Autowired
-    private UserRepository repository;
+
+    private UserService repository;
+
+    public Controller(UserService repository) {
+        this.repository = repository;
+    }
+
     @GetMapping("/root")
     public String helloFromBackend(){
         return "Hello from backend";
     }
 
-    @PostMapping("/saveUser")
+    @PostMapping("/addUser")
     public String saveUser(@RequestBody AppUser user){
         repository.save(user);
         return "User saved";
@@ -30,10 +33,5 @@ public class Controller {
     @GetMapping("/getAll")
     public List<AppUser> getAll(){
         return repository.findAll();
-    }
-
-    @GetMapping("/getUser/{firstName}")
-    public List<AppUser> getUserByFirstName(@PathVariable String firstName){
-        return repository.findByFirstName(firstName);
     }
 }

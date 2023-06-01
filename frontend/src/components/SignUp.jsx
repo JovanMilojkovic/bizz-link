@@ -86,7 +86,7 @@ function SignUp(props) {
 
     const handleCLick = async () => {
         const createUser = await fetch(
-            `http://localhost:8080/api/v1/saveUser`,
+            `http://localhost:8080/api/v1/addUser`,
             {
                 method: "POST",
                 body: JSON.stringify(userModel),

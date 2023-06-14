@@ -6,13 +6,14 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import ResetPassword from "./components/ResetPassword";
+import Error from "./components/Error";
 
 function App() {
     return (
         <>
             <NavBar />
             <Routes>
-                <Route path="/" element={<HomePage />} />
+                <Route path="/" element={<Error />} />
                 <Route path="/api/v1/signup" element={<SignUp />} />
                 <Route path="/api/v1/login" element={<Login />} />
                 <Route

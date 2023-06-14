@@ -673,5 +673,5 @@ google-services.json
 
 # Android Profiling
 *.hprof
-backend/src/main/resources/application.properties
+backend/src/main/resources/
 

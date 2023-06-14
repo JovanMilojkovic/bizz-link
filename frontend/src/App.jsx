@@ -13,13 +13,14 @@ function App() {
         <>
             <NavBar />
             <Routes>
-                <Route path="/" element={<Error />} />
+                <Route path="/" element={<HomePage />} />
                 <Route path="/api/v1/signup" element={<SignUp />} />
                 <Route path="/api/v1/login" element={<Login />} />
                 <Route
                     path="/api/v1/resetpassword"
                     element={<ResetPassword />}
                 />
+                <Route path="/api/v1/error" element={<Error/>} />
             </Routes>
         </>
     );

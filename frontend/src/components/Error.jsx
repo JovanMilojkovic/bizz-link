@@ -14,11 +14,11 @@ export default function Error({ message }) {
                         </div>
                         <div className="error-actions">
                             <Link
-                                to="/api/v1/signup/"
+                                to="/api/v1/login/"
                                 className="btn btn-primary btn-lg"
                             >
                                 <span className="glyphicon glyphicon-home"></span>
-                                Back to sign up
+                                Back to login
                             </Link>
                         </div>
                     </div>

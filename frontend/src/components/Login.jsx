@@ -24,6 +24,10 @@ function Login() {
         navigate("/api/v1/resetpassword/");
     };
 
+    const errorRoute = () => {
+        navigate("/api/v1/error");
+    };
+
     function checkEmail() {
         const errorMessage = "It should be a valid email address!";
         const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -51,16 +55,17 @@ function Login() {
             },
         }).then((res) => res);
         console.log(response);
-        //let message = await response.me;
-        //console.log(message);
-        // if (response.status === 401) {
-        //     return alert(message);
-        // }
-        // if (response.status === 404) {
-        //     return alert("User " + message);
-        // } else {
-        //     alert("Hello user");
-        // }
+        let message = await response;
+        console.log(message);
+        if (response.status === 401) {
+            return alert(message);
+        }
+        if (response.status === 404) {
+            return errorRoute();
+        } else {
+            alert("Hello user");
+        }
+        
     };
 
     useEffect(() => {

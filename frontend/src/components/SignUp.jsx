@@ -27,7 +27,7 @@ function SignUp(props) {
         email: `${email}`,
         password: `${password}`,
     };
-    
+
     // const checkUnoccupied = async (e) => {
     //     if (e.target.type === "text") {
     //         const userName = e.target.value;
@@ -85,19 +85,16 @@ function SignUp(props) {
     }
 
     const handleCLick = async () => {
-        const createUser = await fetch(
-            `http://localhost:8080/api/v1/addUser`,
-            {
-                method: "POST",
-                body: JSON.stringify(userModel),
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
-        ).then((res) => res);
-        props.response(createUser);
-
+        let responseStatus;
+        const createUser = await fetch(`http://localhost:8080/api/v1/addUser`, {
+            method: "POST",
+            body: JSON.stringify(userModel),
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then((res) => res);
+        //props.response(createUser);
         if (createUser.ok) {
             alert(
                 "Profile sucsefuly created 🙂 please check Your Email to confirm account"

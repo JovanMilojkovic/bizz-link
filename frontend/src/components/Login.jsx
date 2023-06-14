@@ -42,7 +42,7 @@ function Login() {
     }
 
     const handleCLick = async () => {
-        const response = await fetch("/api/login/", {
+        const response = await fetch("http://localhost:8080/api/v1/login", {
             method: "POST",
             body: JSON.stringify(userModel),
             mode: "cors",
@@ -50,15 +50,17 @@ function Login() {
                 "Content-Type": "application/json",
             },
         }).then((res) => res);
-        let message = await response.text();
-        if (response.status === 401) {
-            return alert(message);
-        }
-        if (response.status === 404) {
-            return alert(message);
-        } else {
-            alert("Hello user");
-        }
+        console.log(response);
+        //let message = await response.me;
+        //console.log(message);
+        // if (response.status === 401) {
+        //     return alert(message);
+        // }
+        // if (response.status === 404) {
+        //     return alert("User " + message);
+        // } else {
+        //     alert("Hello user");
+        // }
     };
 
     useEffect(() => {

@@ -1,9 +1,10 @@
 package com.elproyectegrande.codecool.service.DAO;
 
-import com.elproyectegrande.codecool.model.AppUser;
+import com.elproyectegrande.codecool.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 
-public interface UserDAO extends JpaRepository<AppUser, Integer> {
+public interface UserDAO extends JpaRepository<User, Integer> {
+    User findUserByEmail(String email);
+
 }

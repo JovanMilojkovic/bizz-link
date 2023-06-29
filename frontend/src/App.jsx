@@ -7,8 +7,10 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import ResetPassword from "./components/ResetPassword";
 import Error from "./components/Error";
+import Dashboard from "./components/Dashboard";
 
 function App() {
+    const jwtToken = localStorage.getItem("jwt");
     return (
         <>
             <NavBar />
@@ -20,7 +22,13 @@ function App() {
                     path="/api/v1/resetpassword"
                     element={<ResetPassword />}
                 />
-                <Route path="/api/v1/error" element={<Error/>} />
+                <Route path="/api/v1/error" element={<Error />} />
+                <Route
+                    path="/dashboard/*"
+                    //element={jwtToken == null ? <Error /> : <Hello />}
+                    // element={<Hello />}
+                    element={<Dashboard />}
+                />
             </Routes>
         </>
     );

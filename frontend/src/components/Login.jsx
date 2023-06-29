@@ -10,6 +10,7 @@ import "./css_files/Login.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
+import useGlobalState from "../globalState";
 
 function Login() {
     const navigate = useNavigate();
@@ -18,10 +19,17 @@ function Login() {
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
 
+    const setLogInFailed = useGlobalState(
+        (selector) => selector.setLogInFailed
+    );
+    const setLogInUserData = useGlobalState(
+        (selector) => selector.setLogInUserData
+    );
+
     const userModel = { email, password };
 
     const routeChange = () => {
-        navigate("/api/v1/resetpassword/");
+        navigate("/api/v1/resetpassword");
     };
 
     const errorRoute = () => {
@@ -37,7 +45,7 @@ function Login() {
     }
     function checkPassword() {
         const errorMessage =
-            " Password should be min 8-10 characters and includes 1 leter 1 number 1 special character!";
+            " Password should be min 8 characters and includes 1 leter 1 number 1 special character!";
         const passwordFormat =
             /^(?=.*\d)(?=.*[!@#$%^&*.])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
         !password.match(passwordFormat) && password.length > 7
@@ -46,26 +54,25 @@ function Login() {
     }
 
     const handleCLick = async () => {
-        const response = await fetch("http://localhost:8080/api/v1/login", {
-            method: "POST",
-            body: JSON.stringify(userModel),
-            mode: "cors",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }).then((res) => res);
-        console.log(response);
-        let message = await response;
-        console.log(message);
-        if (response.status === 401) {
-            return alert(message);
+        let response;
+
+        try {
+            response = await fetch("http://localhost:8080/api/v1/login", {
+                method: "POST",
+                body: JSON.stringify(userModel),
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const responseBody = await response.json();
+            setLogInUserData(responseBody);
+            navigate(`/dashboard/${responseBody.name}`);
+        } catch (error) {
+            setLogInFailed(response.status);
+            errorRoute();
+            console.log(error);
         }
-        if (response.status === 404) {
-            return errorRoute();
-        } else {
-            alert("Hello user");
-        }
-        
     };
 
     useEffect(() => {

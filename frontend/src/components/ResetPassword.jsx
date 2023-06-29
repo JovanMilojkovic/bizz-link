@@ -16,7 +16,7 @@ function ResetPassword() {
     const [email, setEmail] = useState("");
 
     const resetPassword = async () => {
-        const response = await fetch("/api/reset/", {
+        const response = await fetch("/api/v1/reset/", {
             method: "POST",
             body: JSON.stringify({ email }),
             mode: "cors",

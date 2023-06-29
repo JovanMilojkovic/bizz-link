@@ -10,51 +10,34 @@ import { Link } from "react-router-dom";
 import "../components/css_files/SignUp.css";
 import { useState } from "react";
 import { useEffect } from "react";
+import useGlobalState from "../globalState";
 
-function SignUp(props) {
+function SignUp() {
     const navigate = useNavigate();
     const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState(false);
+    const [buttonDisable, setButtonDisable] = useState(true);
 
     const [userNameError, setUserNameError] = useState("");
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
 
+    const setSignupFailed = useGlobalState(
+        (selector) => selector.setSignupFailed
+    );
     const userModel = {
         name: `${userName}`,
         email: `${email}`,
         password: `${password}`,
     };
 
-    // const checkUnoccupied = async (e) => {
-    //     if (e.target.type === "text") {
-    //         const userName = e.target.value;
-    //         setUserName(userName);
-    //         const res = await fetch(`/api/search/?userName=${userName}`);
-    //         if (res.ok) {
-    //             const respondMessage = await res.text();
-    //             setUserNameError(respondMessage);
-    //         }
-    //     }
-    //     if (e.target.type === "email") {
-    //         const userEmail = e.target.value;
-    //         setEmail(userEmail);
-    //         const res = await fetch(`/api/search/?userEmail=${userEmail}`);
-    //         if (res.ok) {
-    //             const respondMessage = await res.text();
-    //             setEmailError(respondMessage);
-    //         }
-    //     }
-    // };
-
     const checkUserName = () => {
         const errorMessage =
             "User name should be 5 characters long! and to include 1 special character!";
         const userNameFormat = /^(?=.{5,})(?=.*[a-z])(?=.*[!@#$%^&+=.]).*$/;
         const isUserNameValid = userName.match(userNameFormat);
-        if (!Array.isArray(isUserNameValid) && userName.length > 4) {
+        if (!isUserNameValid && userName.length > 0) {
             setUserNameError(errorMessage);
         } else {
             setUserNameError("");
@@ -65,7 +48,7 @@ function SignUp(props) {
         const errorMessage = "It should be a valid email address!";
         const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         const isEmailValid = email.match(mailFormat);
-        if (!Array.isArray(isEmailValid) && email.length > 0) {
+        if (!isEmailValid && email.length > 0) {
             setEmailError(errorMessage);
         } else {
             setEmailError("");
@@ -73,28 +56,34 @@ function SignUp(props) {
     }
     function checkPassword() {
         const errorMessage =
-            " Password should be min 8-10 characters and includes 1 uppercase leter 1 number 1 special character!";
+            " Password should be min 8 characters and includes 1 uppercase leter 1 number 1 special character!";
         const passwordFormat =
             /^(?=.*\d)(?=.*[!@#$%^&*.])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
         const isPasswordValid = password.match(passwordFormat);
-        if (!Array.isArray(isPasswordValid) && password.length > 7) {
+        if (!isPasswordValid && password.length > 0) {
             setPasswordError(errorMessage);
         } else {
             setPasswordError("");
         }
     }
+    const isButtonValid =
+        userName.length > 0 &&
+        userNameError == "" &&
+        email.length > 0 &&
+        emailError == "" &&
+        password.length > 0 &&
+        passwordError == "";
 
     const handleCLick = async () => {
-        let responseStatus;
-        const createUser = await fetch(`http://localhost:8080/api/v1/addUser`, {
+        const createUser = await fetch(`http://localhost:8080/api/v1/signup`, {
             method: "POST",
             body: JSON.stringify(userModel),
             mode: "cors",
             headers: {
                 "Content-Type": "application/json",
             },
-        }).then((res) => res);
-        //props.response(createUser);
+        });
+
         if (createUser.ok) {
             alert(
                 "Profile sucsefuly created 🙂 please check Your Email to confirm account"
@@ -102,7 +91,8 @@ function SignUp(props) {
             navigate("/api/v1/login/");
         }
         if (!createUser.ok) {
-            setError(true);
+            setSignupFailed(createUser.status);
+            navigate("/api/v1/error/");
             return;
         }
     };
@@ -111,11 +101,7 @@ function SignUp(props) {
         checkUserName();
         checkEmail();
         checkPassword();
-
-        if (error) {
-            navigate("/api/error/");
-        }
-    }, [error, userName, email, password]);
+    }, [userName, email, password, userNameError, emailError, passwordError]);
 
     return (
         <CssVarsProvider>
@@ -140,7 +126,9 @@ function SignUp(props) {
                         name="userName"
                         type="text"
                         placeholder="JohnDoe123"
-                        onChange={(e) => setUserName(e.target.value)}
+                        onChange={(e) => {
+                            setUserName(e.target.value);
+                        }}
                     />
                     <span className="userSpan" style={{ color: "red" }}>
                         {userNameError}
@@ -154,8 +142,9 @@ function SignUp(props) {
                         type="email"
                         placeholder="johndoe@email.com"
                         autoComplete="on"
-                        // onChange={(e) => setEmail(e.target.value)}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => {
+                            setEmail(e.target.value);
+                        }}
                     />
                     <span className="mail">{emailError}</span>
                 </FormControl>
@@ -167,12 +156,18 @@ function SignUp(props) {
                             type="password"
                             placeholder="password"
                             autoComplete="on"
-                            onChange={(e) => setPassword(e.target.value)}
+                            onChange={(e) => {
+                                setPassword(e.target.value);
+                            }}
                         />
                         <span className="password">{passwordError}</span>
                     </form>
                 </FormControl>
-                <Button sx={{ mt: 1 /* margin top */ }} onClick={handleCLick}>
+                <Button
+                    sx={{ mt: 1 /* margin top */ }}
+                    onClick={handleCLick}
+                    disabled={!isButtonValid}
+                >
                     Sign up
                 </Button>
                 <Typography

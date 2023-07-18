@@ -46,12 +46,17 @@ function NavBar() {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div className="navbar-nav ms-auto px-5">
-                            <NavLink className="nav-link" to="/api/v1/signup">
+                            {!isLoggedIn &&
+                            <>
+                                <NavLink className="nav-link" to="/api/v1/signup">
                                 Sign up
-                            </NavLink>
-                            <NavLink className="nav-link" to="/api/v1/login" >
-                                Login
-                            </NavLink>
+                                </NavLink>
+                                <NavLink className="nav-link" to="/api/v1/login" >
+                                    Login
+                                </NavLink>
+                            </>
+                            }
+                            
                             {isLoggedIn && (
                                 <a href="/" className="nav-link" onClick={handleLogout}>
                                     Logout

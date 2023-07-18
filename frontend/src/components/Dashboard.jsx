@@ -6,11 +6,11 @@ export default function Dashboard() {
     if (logInUserData === null) {
         return <Error />;
     }
-    const { email } = logInUserData;
+    const { username } = logInUserData;
 
     return (
         <div>
-            <h3>Hello {email} :)</h3>
+            <h3>Hello {username} :)</h3>
         </div>
     );
 }

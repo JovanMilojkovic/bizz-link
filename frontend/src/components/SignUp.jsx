@@ -14,7 +14,7 @@ import useGlobalState from "../globalState";
 
 function SignUp() {
     const navigate = useNavigate();
-    const [userName, setUserName] = useState("");
+    const [username, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [buttonDisable, setButtonDisable] = useState(true);
@@ -27,7 +27,7 @@ function SignUp() {
         (selector) => selector.setSignupFailed
     );
     const userModel = {
-        name: `${userName}`,
+        username: `${username}`,
         email: `${email}`,
         password: `${password}`,
     };
@@ -36,8 +36,8 @@ function SignUp() {
         const errorMessage =
             "User name should be 5 characters long! and to include 1 special character!";
         const userNameFormat = /^(?=.{5,})(?=.*[a-z])(?=.*[!@#$%^&+=.]).*$/;
-        const isUserNameValid = userName.match(userNameFormat);
-        if (!isUserNameValid && userName.length > 0) {
+        const isUserNameValid = username.match(userNameFormat);
+        if (!isUserNameValid && username.length > 0) {
             setUserNameError(errorMessage);
         } else {
             setUserNameError("");
@@ -67,7 +67,7 @@ function SignUp() {
         }
     }
     const isButtonValid =
-        userName.length > 0 &&
+        username.length > 0 &&
         userNameError == "" &&
         email.length > 0 &&
         emailError == "" &&
@@ -75,6 +75,7 @@ function SignUp() {
         passwordError == "";
 
     const handleCLick = async () => {
+        console.log(userModel);
         const createUser = await fetch(`http://localhost:8080/api/v1/auth/register`, {
             method: "POST",
             body: JSON.stringify(userModel),
@@ -101,7 +102,7 @@ function SignUp() {
         checkUserName();
         checkEmail();
         checkPassword();
-    }, [userName, email, password, userNameError, emailError, passwordError]);
+    }, [username, email, password, userNameError, emailError, passwordError]);
 
     return (
         <CssVarsProvider>

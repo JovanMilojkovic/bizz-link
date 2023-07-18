@@ -1,11 +1,42 @@
 .homePage {
-    background-image: url("../pictures/cropped_qr.jpg");
-    background-size: cover;
-    background-position: center center;
     height: 100vh;
     width: 100vw;
+
+}
+
+.firstSection {
+    background-image: url("../pictures/pexels-august-de-richelieu-4427612.jpg");
+    background-size: cover;
+    background-position: center center;
+    height: 80vh;
+    width: 100vw; 
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .welcomeDiv {
-    
+    background-color: rgba(255, 255, 255, 0.8); 
+    padding: 20px;
+    margin-left: 20px;
+    text-align: center;
+    border-radius: 10px;
+    height: 40vh;
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: left;
+}
+
+.signUpButton {
+    color: white;
+    background-color: black;
+    width: 15vw;
+}
+
+h2,
+p {
+    align-self: flex-start;
+    margin-left: 0;
 }

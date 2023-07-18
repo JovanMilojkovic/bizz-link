@@ -165,12 +165,17 @@ function SignUp() {
                     </form>
                 </FormControl>
                 <Button
-                    sx={{ mt: 1 /* margin top */ }}
+                    sx={{
+                        mt: 1 /* margin top */,
+                        backgroundColor: 'black', // Set the background color to black
+                        color: 'white', // Set the text color to white
+                    }}
                     onClick={handleCLick}
                     disabled={!isButtonValid}
-                >
+                    >
                     Sign up
                 </Button>
+
                 <Typography
                     endDecorator={<Link to="/api/v1/login/">Login</Link>}
                     fontSize="sm"

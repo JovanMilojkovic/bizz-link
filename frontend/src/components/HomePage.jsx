@@ -5,9 +5,12 @@ export default function HomePage() {
     const navigate = useNavigate();
     return (
         <div className="homePage">
-            <div className="welcomeDiv">
-                <h1>Welcome to the business cards of tomorrow!</h1>
-                <button onClick={() => navigate("/api/v1/signup")}>Sign Up!</button>
+            <div className="firstSection">
+                <div className="welcomeDiv">
+                    <h2>Welcome to the business cards of tomorrow!</h2>
+                    <p>Connecting people easier than ever, with <b>digital business cards</b>.</p>
+                    <button className="signUpButton" onClick={() => navigate("/api/v1/signup")}>Get your own!</button>
+                </div>
             </div>
         </div>
     )

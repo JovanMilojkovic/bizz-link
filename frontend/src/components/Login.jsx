@@ -139,10 +139,18 @@ function Login() {
                         <span className="password">{passwordError}</span>
                     </form>
                 </FormControl>
-                <Button sx={{ mt: 1 /* margin top */ }} onClick={handleCLick}>
+                <Button sx={{ 
+                        mt: 1,
+                        backgroundColor: 'black', 
+                        color: 'white', 
+                     }} onClick={handleCLick}>
                     Log in
                 </Button>
-                <Button sx={{ mt: 1 /* margin top */ }} onClick={routeChange}>
+                <Button sx={{ 
+                    mt: 1,
+                    backgroundColor: 'black', 
+                    color: 'white', 
+                 }} onClick={routeChange}>
                     Forgot Password?
                 </Button>
                 <Typography

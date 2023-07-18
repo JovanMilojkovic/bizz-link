@@ -19,6 +19,8 @@ function Login() {
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
 
+    
+
     const setLogInFailed = useGlobalState(
         (selector) => selector.setLogInFailed
     );
@@ -57,7 +59,7 @@ function Login() {
         let response;
 
         try {
-            response = await fetch("http://localhost:8080/api/v1/login", {
+            response = await fetch("http://localhost:8080/api/v1/auth/authenticate", {
                 method: "POST",
                 body: JSON.stringify(userModel),
                 mode: "cors",
@@ -66,8 +68,14 @@ function Login() {
                 },
             });
             const responseBody = await response.json();
+            
+        
             setLogInUserData(responseBody);
-            navigate(`/dashboard/${responseBody.name}`);
+            const token = responseBody.token;
+            localStorage.setItem('jwtToken', token);
+
+            console.log('Token stored: ', token);
+            navigate(`/dashboard/${responseBody.email}`);
         } catch (error) {
             setLogInFailed(response.status);
             errorRoute();

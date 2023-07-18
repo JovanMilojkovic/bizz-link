@@ -20,8 +20,7 @@ function NavBar() {
         setIsLoggedIn(false);
     };
 
-    // Check if user is logged in and set the isLoggedIn state accordingly
-    // You can modify this logic based on your actual authentication implementation
+
     useEffect(() => {
         const token = localStorage.getItem('jwtToken');
         setIsLoggedIn(!!token);

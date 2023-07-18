@@ -69,6 +69,7 @@ function Login() {
                 },
             });
             const responseBody = await response.json();
+            console.log(responseBody)
             setIsLoggedIn(true);    
         
             setLogInUserData(responseBody);

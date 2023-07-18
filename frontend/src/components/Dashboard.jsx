@@ -1,4 +1,3 @@
-import React from "react";
 import useGlobalState from "../globalState";
 import Error from "./Error";
 
@@ -7,11 +6,11 @@ export default function Dashboard() {
     if (logInUserData === null) {
         return <Error />;
     }
-    const { name } = logInUserData;
+    const { email } = logInUserData;
 
     return (
         <div>
-            <h3>Hello {name} :)</h3>
+            <h3>Hello {email} :)</h3>
         </div>
     );
 }

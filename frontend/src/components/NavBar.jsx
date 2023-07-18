@@ -1,10 +1,16 @@
 import { NavLink } from "react-router-dom";
 import "./css_files/NavBar.css";
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import useGlobalState from "../globalState";
 
 function NavBar() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const { isLoggedIn, setIsLoggedIn } = useGlobalState(
+        (selector) => ({
+            isLoggedIn: selector.isLoggedIn,
+            setIsLoggedIn: selector.setIsLoggedIn
+        })
+    );
 
     const handleLogout = () => {
         const token = localStorage.getItem("jwtToken");

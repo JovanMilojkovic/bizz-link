@@ -19,13 +19,14 @@ function Login() {
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
 
-    
-
     const setLogInFailed = useGlobalState(
         (selector) => selector.setLogInFailed
     );
     const setLogInUserData = useGlobalState(
         (selector) => selector.setLogInUserData
+    );
+    const setIsLoggedIn = useGlobalState(
+        (selector) => selector.setIsLoggedIn
     );
 
     const userModel = { email, password };
@@ -68,7 +69,7 @@ function Login() {
                 },
             });
             const responseBody = await response.json();
-            
+            setIsLoggedIn(true);    
         
             setLogInUserData(responseBody);
             const token = responseBody.token;

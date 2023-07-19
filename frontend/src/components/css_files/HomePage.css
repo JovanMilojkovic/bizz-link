@@ -11,6 +11,10 @@
     justify-content: center;
   }
 
+  .hero-section h1 {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Add the text shadow */
+  }
+
   .hero-section .btn-primary {
     background-color: grey;
     border-color: grey;

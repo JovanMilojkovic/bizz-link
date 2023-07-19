@@ -1,42 +1,62 @@
-.homePage {
-    height: 100vh;
-    width: 100vw;
-
-}
-
-.firstSection {
+.hero-section {
     background-image: url("../pictures/pexels-august-de-richelieu-4427612.jpg");
     background-size: cover;
-    background-position: center center;
-    height: 80vh;
-    width: 100vw; 
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.welcomeDiv {
-    background-color: rgba(255, 255, 255, 0.8); 
-    padding: 20px;
-    margin-left: 20px;
+    background-position: center;
+    padding: 100px 0;
+    color: white;
     text-align: center;
-    border-radius: 10px;
-    height: 40vh;
-    width: 60vw;
+    height: 70vh;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    text-align: left;
-}
+    justify-content: center;
+  }
 
-.signUpButton {
-    color: white;
+  .hero-section .btn-primary {
+    background-color: grey;
+    border-color: grey;
+  }
+  
+  .hero-section .btn-primary:hover {
     background-color: black;
-    width: 15vw;
-}
+    border-color: black;
+  }
+  
 
-h2,
-p {
-    align-self: flex-start;
-    margin-left: 0;
-}
+  .features-section {
+    background-color: #f7f7f7;
+    padding: 80px 0;
+  }
+  
+  .feature-box {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .feature-box i {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: black;
+  }
+  
+  .cta-section {
+    background-color: black;
+    padding: 100px 0;
+    color: white;
+    text-align: center;
+  }
+  
+  .cta-section h2 {
+    margin-bottom: 40px;
+  }
+  
+  .cta-section .btn-primary {
+    background-color: grey;
+    border-color: grey;
+  }
+  
+  .cta-section .btn-primary:hover {
+    background-color: white;
+    border-color: white;
+    color: black;
+  }
+  

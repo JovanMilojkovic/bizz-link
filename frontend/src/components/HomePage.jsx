@@ -1,13 +1,10 @@
 import "./css_files/HomePage.css"
-import { useNavigate } from "react-router"
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
 export default function HomePage() {
-    //const navigate = useNavigate();
     return (
         <>
-          {/* Header Section */}
           <header className="hero-section">
             <Container>
               <Row>
@@ -26,7 +23,6 @@ export default function HomePage() {
             </Container>
           </header>
     
-          {/* Features Section */}
           <section className="features-section">
             <Container>
               <Row>
@@ -55,7 +51,6 @@ export default function HomePage() {
             </Container>
           </section>
     
-          {/* Call-to-Action Section */}
           <section className="cta-section">
             <Container>
               <Row>

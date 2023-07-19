@@ -8,9 +8,16 @@ import SignUp from "./components/SignUp";
 import ResetPassword from "./components/ResetPassword";
 import Error from "./components/Error";
 import Dashboard from "./components/Dashboard";
+import { useEffect, useState } from "react";
 
 function App() {
-    const jwtToken = localStorage.getItem("jwt");
+    const [jwtToken, setJwtToken] = useState("")
+    //const jwtToken = localStorage.getItem("jwtToken");
+    
+    useEffect(() => {
+        setJwtToken(localStorage.getItem("jwtToken"))
+    }, [jwtToken])
+
     return (
         <>
             <NavBar />
@@ -25,9 +32,9 @@ function App() {
                 <Route path="/api/v1/error" element={<Error />} />
                 <Route
                     path="/dashboard/*"
-                    //element={jwtToken == null ? <Error /> : <Hello />}
-                    // element={<Hello />}
-                    element={<Dashboard />}
+                    element={jwtToken == null ? <Error /> :<Dashboard />}
+                    //element={<Hello />}
+                    //element={<Dashboard />}
                 />
             </Routes>
         </>

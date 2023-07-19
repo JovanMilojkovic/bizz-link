@@ -25,9 +25,9 @@ function Login() {
     const setLogInUserData = useGlobalState(
         (selector) => selector.setLogInUserData
     );
-    const setIsLoggedIn = useGlobalState(
-        (selector) => selector.setIsLoggedIn
-    );
+    const setIsLoggedIn = useGlobalState((selector) => selector.setIsLoggedIn);
+
+    const setUserToken = useGlobalState((selector) => selector.setUserToken);
 
     const userModel = { email, password };
 
@@ -60,23 +60,27 @@ function Login() {
         let response;
 
         try {
-            response = await fetch("http://localhost:8080/api/v1/auth/authenticate", {
-                method: "POST",
-                body: JSON.stringify(userModel),
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
+            response = await fetch(
+                "http://localhost:8080/api/v1/auth/authenticate",
+                {
+                    method: "POST",
+                    body: JSON.stringify(userModel),
+                    mode: "cors",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
             const responseBody = await response.json();
-            console.log(responseBody)
-            setIsLoggedIn(true);    
-        
+            console.log(responseBody);
+            setIsLoggedIn(true);
+
             setLogInUserData(responseBody);
             const token = responseBody.token;
-            localStorage.setItem('jwtToken', token);
+            localStorage.setItem("jwtToken", token);
+            setUserToken(token);
 
-            console.log('Token stored: ', token);
+            console.log("Token stored: ", token);
             navigate(`/dashboard/${responseBody.email}`);
         } catch (error) {
             setLogInFailed(response.status);
@@ -95,10 +99,10 @@ function Login() {
             <Sheet
                 sx={{
                     width: 300,
-                    mx: "auto", 
-                    my: 4, 
-                    py: 3, 
-                    px: 2, 
+                    mx: "auto",
+                    my: 4,
+                    py: 3,
+                    px: 2,
                     display: "flex",
                     flexDirection: "column",
                     gap: 2,
@@ -139,18 +143,24 @@ function Login() {
                         <span className="password">{passwordError}</span>
                     </form>
                 </FormControl>
-                <Button sx={{ 
+                <Button
+                    sx={{
                         mt: 1,
-                        backgroundColor: 'black', 
-                        color: 'white', 
-                     }} onClick={handleCLick}>
+                        backgroundColor: "black",
+                        color: "white",
+                    }}
+                    onClick={handleCLick}
+                >
                     Log in
                 </Button>
-                <Button sx={{ 
-                    mt: 1,
-                    backgroundColor: 'black', 
-                    color: 'white', 
-                 }} onClick={routeChange}>
+                <Button
+                    sx={{
+                        mt: 1,
+                        backgroundColor: "black",
+                        color: "white",
+                    }}
+                    onClick={routeChange}
+                >
                     Forgot Password?
                 </Button>
                 <Typography

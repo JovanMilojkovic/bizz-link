@@ -58,9 +58,14 @@ function NavBar() {
                             }
                             
                             {isLoggedIn && (
+                                <>
+                                <a href="/dashboard" className="nav-link">
+                                Dashboard
+                                </a>
                                 <a href="/" className="nav-link" onClick={handleLogout}>
                                     Logout
                                 </a>
+                                </>
                             )}
                             <a className="nav-link disabled" href="#" tabIndex="-1" aria-disabled="true">
                                 About

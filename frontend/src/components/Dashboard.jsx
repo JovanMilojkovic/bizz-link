@@ -16,7 +16,7 @@ export default function Dashboard() {
         // </div>
         <div style={{ backgroundColor: '#f2f2f2', minHeight: '100vh' }}>
         <Container fluid className="d-flex justify-content-center align-items-center">
-          <Container style={{ background: '#fff', padding: '20px', borderRadius: '4px' }}>
+          <Container style={{ background: '#fff', padding: '20px', borderRadius: '4px',marginTop: '15vh' }}>
             <Row>
               <Col md={4}>
                 <Card>

@@ -12,7 +12,7 @@ export default function HomePage() {
             <Container>
               <Row>
                 <Col>
-                  <h1 className="text-center">Welcome to BizCard</h1>
+                  <h1 className="text-center">Welcome to BizLink</h1>
                   <p className="lead text-center">
                     Create and share virtual business cards with ease.
                   </p>

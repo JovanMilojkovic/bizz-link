@@ -9,15 +9,10 @@ import ResetPassword from "./components/ResetPassword";
 import Error from "./components/Error";
 import Dashboard from "./components/Dashboard";
 import { useEffect, useState } from "react";
+import useGlobalState from "./globalState";
 
 function App() {
-    const [jwtToken, setJwtToken] = useState("")
-    //const jwtToken = localStorage.getItem("jwtToken");
-    
-    useEffect(() => {
-        setJwtToken(localStorage.getItem("jwtToken"))
-    }, [jwtToken])
-
+    const jwtToken = useGlobalState((selector) => selector.userToken);
     return (
         <>
             <NavBar />
@@ -32,9 +27,7 @@ function App() {
                 <Route path="/api/v1/error" element={<Error />} />
                 <Route
                     path="/dashboard/*"
-                    element={jwtToken == null ? <Error /> :<Dashboard />}
-                    //element={<Hello />}
-                    //element={<Dashboard />}
+                    element={jwtToken == null ? <Error /> : <Dashboard />}
                 />
             </Routes>
         </>

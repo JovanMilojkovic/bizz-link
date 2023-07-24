@@ -18,6 +18,11 @@ function Login() {
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    //TODO at the end adjust this for csrf security
+    // const csrfToken = document.cookie.replace(
+    //     /(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/,
+    //     "$1"
+    // );
 
     const setLogInFailed = useGlobalState(
         (selector) => selector.setLogInFailed
@@ -60,17 +65,16 @@ function Login() {
         let response;
 
         try {
-            response = await fetch(
-                "http://localhost:8080/api/v1/auth/authenticate",
-                {
-                    method: "POST",
-                    body: JSON.stringify(userModel),
-                    mode: "cors",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
+            response = await fetch("http://localhost:8080/api/v1/auth/login", {
+                method: "POST",
+                body: JSON.stringify(userModel),
+                mode: "cors",
+                headers: {
+                    //TODO at the end we need this
+                    // "X-XSRF-TOKEN": csrfToken,
+                    "Content-Type": "application/json",
+                },
+            });
             const responseBody = await response.json();
             console.log(responseBody);
             setIsLoggedIn(true);

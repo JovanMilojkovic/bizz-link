@@ -1,25 +1,22 @@
-package com.elproyectegrande.codecool.auth;
+package com.elproyectegrande.codecool.controller;
 
 
+import com.elproyectegrande.codecool.auth.AuthenticationRequest;
+import com.elproyectegrande.codecool.auth.AuthenticationResponse;
+import com.elproyectegrande.codecool.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/auth")
-@RequiredArgsConstructor
 @CrossOrigin("http://localhost:5173/")
+@RequestMapping("/api/v1/auth/")
+@RequiredArgsConstructor
 public class AuthenticationController {
+
     private final AuthenticationService service;
 
-    @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
-    ) {
-        return ResponseEntity.ok(service.register(request));
-    }
-
-    @PostMapping("/authenticate")
+    @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> authenticate(
             @RequestBody AuthenticationRequest request
     ) {

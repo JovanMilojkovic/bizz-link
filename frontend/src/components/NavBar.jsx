@@ -3,12 +3,19 @@ import "./css_files/NavBar.css";
 
 import { useEffect } from "react";
 import useGlobalState from "../globalState";
+import { shallow } from "zustand/shallow";
 
 function NavBar() {
-    const { isLoggedIn, setIsLoggedIn } = useGlobalState((selector) => ({
-        isLoggedIn: selector.isLoggedIn,
-        setIsLoggedIn: selector.setIsLoggedIn,
-    }));
+    const { isLoggedIn, setIsLoggedIn, setUserToken, setLogInUserData } =
+        useGlobalState(
+            (selector) => ({
+                isLoggedIn: selector.isLoggedIn,
+                setIsLoggedIn: selector.setIsLoggedIn,
+                setUserToken: selector.setUserToken,
+                setLogInUserData: selector.setLogInUserData,
+            }),
+            shallow
+        );
 
     const handleLogout = () => {
         const token = localStorage.getItem("jwtToken");
@@ -17,6 +24,22 @@ function NavBar() {
         localStorage.removeItem("jwtToken");
         setUserToken(null);
         setIsLoggedIn(false);
+        setLogInUserData(null);
+    };
+
+    const handleDashboard = async () => {
+        const token = localStorage.getItem("jwtToken");
+        const response = await fetch("http://localhost:8080/dashboard/", {
+            method: "POST",
+            //mode: "cors",
+            headers: {
+                //TODO at the end we need this
+                // "X-XSRF-TOKEN": csrfToken,
+                "X-Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json",
+            },
+        });
+        console.log(response);
     };
 
     useEffect(() => {
@@ -69,16 +92,20 @@ function NavBar() {
 
                             {isLoggedIn && (
                                 <>
-                                    <a href="/dashboard" className="nav-link">
+                                    <NavLink
+                                        to="/dashboard"
+                                        className="nav-link"
+                                        onClick={handleDashboard}
+                                    >
                                         Dashboard
-                                    </a>
-                                    <a
-                                        href="/"
+                                    </NavLink>
+                                    <NavLink
+                                        to="/"
                                         className="nav-link"
                                         onClick={handleLogout}
                                     >
                                         Logout
-                                    </a>
+                                    </NavLink>
                                 </>
                             )}
                             <a

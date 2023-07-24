@@ -23,6 +23,12 @@ function SignUp() {
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
 
+    //TODO "We will need this later for csrf security"
+    // const csrfToken = document.cookie.replace(
+    //     /(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/,
+    //     "$1"
+    // );
+
     const setSignupFailed = useGlobalState(
         (selector) => selector.setSignupFailed
     );
@@ -75,15 +81,17 @@ function SignUp() {
         passwordError == "";
 
     const handleCLick = async () => {
-        console.log(userModel);
-        const createUser = await fetch(`http://localhost:8080/api/v1/auth/register`, {
+        const createUser = await fetch(`http://localhost:8080/api/v1/signup`, {
             method: "POST",
             body: JSON.stringify(userModel),
             mode: "cors",
             headers: {
+                //TODO need for csrf security
+                //"X-XSRF-TOKEN": `${csrfToken}`,
                 "Content-Type": "application/json",
             },
         });
+        console.log(createUser);
 
         if (createUser.ok) {
             alert(
@@ -167,12 +175,12 @@ function SignUp() {
                 <Button
                     sx={{
                         mt: 1 /* margin top */,
-                        backgroundColor: 'black', // Set the background color to black
-                        color: 'white', // Set the text color to white
+                        backgroundColor: "black", // Set the background color to black
+                        color: "white", // Set the text color to white
                     }}
                     onClick={handleCLick}
                     disabled={!isButtonValid}
-                    >
+                >
                     Sign up
                 </Button>
 

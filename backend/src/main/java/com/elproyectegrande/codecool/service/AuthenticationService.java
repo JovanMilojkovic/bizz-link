@@ -1,36 +1,19 @@
-package com.elproyectegrande.codecool.auth;
+package com.elproyectegrande.codecool.service;
 
-import com.elproyectegrande.codecool.model.Role;
-import com.elproyectegrande.codecool.model.User;
+import com.elproyectegrande.codecool.auth.AuthenticationRequest;
+import com.elproyectegrande.codecool.auth.AuthenticationResponse;
 import com.elproyectegrande.codecool.repository.UserRepository;
-import com.elproyectegrande.codecool.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UserRepository repository;
-    private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
-
-    public AuthenticationResponse register(RegisterRequest request) {
-        var user = User.builder()
-                .username(request.getUsername())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
-                .build();
-        repository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .build();
-    }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
@@ -41,10 +24,12 @@ public class AuthenticationService {
         );
         var user = repository.findByEmail(request.getEmail())
                 .orElseThrow();
+        System.out.println(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .email(request.getEmail())
-                .username(user.getUsername()) // Add the username to the response
+                .username(user.getUsername())
+                .role(user.getRole())// Add the username to the response
                 .token(jwtToken)
                 .build();
     }

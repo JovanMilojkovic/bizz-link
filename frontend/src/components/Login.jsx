@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import useGlobalState from "../globalState";
+import NavBar from "./NavBar";
+import jwt_decode from "jwt-decode";
 
 function Login() {
     const navigate = useNavigate();
@@ -81,11 +83,14 @@ function Login() {
 
             setLogInUserData(responseBody);
             const token = responseBody.token;
+            const username = responseBody.username.toLowerCase();
             localStorage.setItem("jwtToken", token);
+            localStorage.setItem("username", responseBody.username);
+            localStorage.setItem("email", responseBody.email);
             setUserToken(token);
 
             console.log("Token stored: ", token);
-            navigate(`/dashboard/${responseBody.email}`);
+            navigate(`/dashboard/${username}`);
         } catch (error) {
             setLogInFailed(response.status);
             errorRoute();
@@ -99,83 +104,92 @@ function Login() {
     }, [email, password]);
 
     return (
-        <CssVarsProvider>
-            <Sheet
-                sx={{
-                    width: 300,
-                    mx: "auto",
-                    my: 4,
-                    py: 3,
-                    px: 2,
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 2,
-                    borderRadius: "sm",
-                    boxShadow: "md",
-                }}
-            >
-                <div>
-                    <Typography level="h4" component="h1" textAlign={"center "}>
-                        Welcome!
-                    </Typography>
-                    <Typography level="body2" textAlign={"center "}>
-                        Sign in to continue.
-                    </Typography>
-                </div>
-                <FormControl>
-                    <FormLabel>Email</FormLabel>
-                    <Input
-                        // html input attribute
-                        name="email"
-                        type="email"
-                        placeholder="johndoe@email.com"
-                        onChange={(e) => setEmail(e.target.value)}
-                        autoComplete="on"
-                    />
-                    <span className="mail">{emailError}</span>
-                </FormControl>
-                <FormControl>
-                    <FormLabel>Password</FormLabel>
-                    <form>
+        <>
+            <div>
+                <NavBar />
+            </div>
+            <CssVarsProvider>
+                <Sheet
+                    sx={{
+                        width: 300,
+                        mx: "auto",
+                        my: 4,
+                        py: 3,
+                        px: 2,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 2,
+                        borderRadius: "sm",
+                        boxShadow: "md",
+                    }}
+                >
+                    <div>
+                        <Typography
+                            level="h4"
+                            component="h1"
+                            textAlign={"center "}
+                        >
+                            Welcome!
+                        </Typography>
+                        <Typography level="body2" textAlign={"center "}>
+                            Sign in to continue.
+                        </Typography>
+                    </div>
+                    <FormControl>
+                        <FormLabel>Email</FormLabel>
                         <Input
-                            name="password"
-                            type="password"
-                            placeholder="password"
-                            onChange={(e) => setPassword(e.target.value)}
+                            // html input attribute
+                            name="email"
+                            type="email"
+                            placeholder="johndoe@email.com"
+                            onChange={(e) => setEmail(e.target.value)}
                             autoComplete="on"
                         />
-                        <span className="password">{passwordError}</span>
-                    </form>
-                </FormControl>
-                <Button
-                    sx={{
-                        mt: 1,
-                        backgroundColor: "black",
-                        color: "white",
-                    }}
-                    onClick={handleCLick}
-                >
-                    Log in
-                </Button>
-                <Button
-                    sx={{
-                        mt: 1,
-                        backgroundColor: "black",
-                        color: "white",
-                    }}
-                    onClick={routeChange}
-                >
-                    Forgot Password?
-                </Button>
-                <Typography
-                    endDecorator={<Link to="/api/v1/signup/">Sign up</Link>}
-                    fontSize="sm"
-                    sx={{ alignSelf: "center" }}
-                >
-                    Don't have an account?
-                </Typography>
-            </Sheet>
-        </CssVarsProvider>
+                        <span className="mail">{emailError}</span>
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel>Password</FormLabel>
+                        <form>
+                            <Input
+                                name="password"
+                                type="password"
+                                placeholder="password"
+                                onChange={(e) => setPassword(e.target.value)}
+                                autoComplete="on"
+                            />
+                            <span className="password">{passwordError}</span>
+                        </form>
+                    </FormControl>
+                    <Button
+                        sx={{
+                            mt: 1,
+                            backgroundColor: "black",
+                            color: "white",
+                        }}
+                        onClick={handleCLick}
+                    >
+                        Log in
+                    </Button>
+                    <Button
+                        sx={{
+                            mt: 1,
+                            backgroundColor: "black",
+                            color: "white",
+                        }}
+                        onClick={routeChange}
+                    >
+                        Forgot Password?
+                    </Button>
+                    <Typography
+                        endDecorator={<Link to="/api/v1/signup/">Sign up</Link>}
+                        fontSize="sm"
+                        sx={{ alignSelf: "center" }}
+                    >
+                        Don't have an account?
+                    </Typography>
+                </Sheet>
+            </CssVarsProvider>
+        </>
     );
 }
 

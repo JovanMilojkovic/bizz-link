@@ -33,7 +33,7 @@ public class SecurityConfiguration {
         configuration.setAllowedMethods(Collections.singletonList("*"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Collections.singletonList("*"));
-        configuration.setExposedHeaders(Collections.singletonList("X-Authorization"));
+        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
         configuration.setMaxAge(3600L);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
@@ -47,12 +47,11 @@ public class SecurityConfiguration {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/api/v1/signup", "/api/v1/auth/login").permitAll()
-                        .requestMatchers("/dashboard/**").hasRole("USER")
+                        .requestMatchers("/dashboard/**").hasAuthority("USER")
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .formLogin(Customizer.withDefaults())
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();

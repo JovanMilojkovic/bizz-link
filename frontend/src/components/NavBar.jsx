@@ -1,11 +1,15 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Navigate } from "react-router-dom";
 import "./css_files/NavBar.css";
 
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import useGlobalState from "../globalState";
 import { shallow } from "zustand/shallow";
+import { useParams } from "react-router-dom";
+import Login from "./Login";
 
 function NavBar() {
+    const navigate = useNavigate();
     const { isLoggedIn, setIsLoggedIn, setUserToken, setLogInUserData } =
         useGlobalState(
             (selector) => ({
@@ -21,7 +25,7 @@ function NavBar() {
         const token = localStorage.getItem("jwtToken");
 
         console.log("token deleting: ", token);
-        localStorage.removeItem("jwtToken");
+        localStorage.clear();
         setUserToken(null);
         setIsLoggedIn(false);
         setLogInUserData(null);
@@ -29,17 +33,36 @@ function NavBar() {
 
     const handleDashboard = async () => {
         const token = localStorage.getItem("jwtToken");
-        const response = await fetch("http://localhost:8080/dashboard/", {
-            method: "POST",
-            //mode: "cors",
-            headers: {
-                //TODO at the end we need this
-                // "X-XSRF-TOKEN": csrfToken,
-                "X-Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json",
-            },
-        });
-        console.log(response);
+        const username = localStorage.getItem("username").toLowerCase();
+        try {
+            const response = await fetch(
+                `http://localhost:8080/dashboard/?id=`,
+                {
+                    method: "GET",
+                    mode: "cors",
+                    headers: {
+                        //TODO at the end we need this
+                        // "X-XSRF-TOKEN": csrfToken,
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+            if (response.status === 200) {
+                const responseBody = await response.json();
+                console.log(responseBody);
+                setLogInUserData(responseBody);
+                navigate(`/dashboard/${username}`);
+            } else {
+                setIsLoggedIn(false);
+                setLogInUserData(null);
+                setUserToken(null);
+                localStorage.clear();
+                navigate("/api/v1/login");
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     useEffect(() => {
@@ -93,7 +116,6 @@ function NavBar() {
                             {isLoggedIn && (
                                 <>
                                     <NavLink
-                                        to="/dashboard"
                                         className="nav-link"
                                         onClick={handleDashboard}
                                     >

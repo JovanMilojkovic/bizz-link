@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@CrossOrigin("http://localhost:5173/")
-@RequestMapping("/")
+@CrossOrigin("http://localhost:5173")
+@RequestMapping("/dashboard")
 public class AuthorizationController {
     private final JwtService jwtService;
     private final AuthorizationService authorizationService;
@@ -21,10 +21,11 @@ public class AuthorizationController {
         this.authorizationService = authorizationService;
     }
 
-    @PostMapping("dashboard/")
-    public ResponseEntity<?> userCredentialOK(@RequestHeader Map<String,String> header) {
-        String token = header.get("x-authorization").substring(7);
-        System.out.println("HI");
-        return authorizationService.authorize(token);
+
+    @GetMapping("/**")
+    public ResponseEntity<?> userCredentialOK(@RequestHeader Map<String,String> header,@RequestParam String id) {
+        String token = header.get("authorization").substring(7);
+        String path = id;
+        return authorizationService.authorize(token,path);
     }
 }

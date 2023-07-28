@@ -1,4 +1,5 @@
 import { CssVarsProvider } from "@mui/joy/styles";
+import NavBar from "./NavBar";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 import FormControl from "@mui/joy/FormControl";
@@ -113,86 +114,89 @@ function SignUp() {
     }, [username, email, password, userNameError, emailError, passwordError]);
 
     return (
-        <CssVarsProvider>
-            <Sheet
-                sx={{
-                    width: 300,
-                    mx: "auto", // margin left & right
-                    my: 4, // margin top & botom
-                    py: 3, // padding top & bottom
-                    px: 2, // padding left & right
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 2,
-                    borderRadius: "sm",
-                    boxShadow: "md",
-                }}
-            >
-                <FormControl>
-                    <FormLabel>User name</FormLabel>
-                    <Input
-                        // html input attribute
-                        name="userName"
-                        type="text"
-                        placeholder="JohnDoe123"
-                        onChange={(e) => {
-                            setUserName(e.target.value);
-                        }}
-                    />
-                    <span className="userSpan" style={{ color: "red" }}>
-                        {userNameError}
-                    </span>
-                </FormControl>
-                <FormControl>
-                    <FormLabel>Email</FormLabel>
-                    <Input
-                        // html input attribute
-                        name="email"
-                        type="email"
-                        placeholder="johndoe@email.com"
-                        autoComplete="on"
-                        onChange={(e) => {
-                            setEmail(e.target.value);
-                        }}
-                    />
-                    <span className="mail">{emailError}</span>
-                </FormControl>
-                <FormControl>
-                    <FormLabel>Password</FormLabel>
-                    <form>
+        <>
+            <NavBar />
+            <CssVarsProvider>
+                <Sheet
+                    sx={{
+                        width: 300,
+                        mx: "auto", // margin left & right
+                        my: 4, // margin top & botom
+                        py: 3, // padding top & bottom
+                        px: 2, // padding left & right
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 2,
+                        borderRadius: "sm",
+                        boxShadow: "md",
+                    }}
+                >
+                    <FormControl>
+                        <FormLabel>User name</FormLabel>
                         <Input
-                            name="password"
-                            type="password"
-                            placeholder="password"
-                            autoComplete="on"
+                            // html input attribute
+                            name="userName"
+                            type="text"
+                            placeholder="JohnDoe123"
                             onChange={(e) => {
-                                setPassword(e.target.value);
+                                setUserName(e.target.value);
                             }}
                         />
-                        <span className="password">{passwordError}</span>
-                    </form>
-                </FormControl>
-                <Button
-                    sx={{
-                        mt: 1 /* margin top */,
-                        backgroundColor: "black", // Set the background color to black
-                        color: "white", // Set the text color to white
-                    }}
-                    onClick={handleCLick}
-                    disabled={!isButtonValid}
-                >
-                    Sign up
-                </Button>
+                        <span className="userSpan" style={{ color: "red" }}>
+                            {userNameError}
+                        </span>
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel>Email</FormLabel>
+                        <Input
+                            // html input attribute
+                            name="email"
+                            type="email"
+                            placeholder="johndoe@email.com"
+                            autoComplete="on"
+                            onChange={(e) => {
+                                setEmail(e.target.value);
+                            }}
+                        />
+                        <span className="mail">{emailError}</span>
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel>Password</FormLabel>
+                        <form>
+                            <Input
+                                name="password"
+                                type="password"
+                                placeholder="password"
+                                autoComplete="on"
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+                                }}
+                            />
+                            <span className="password">{passwordError}</span>
+                        </form>
+                    </FormControl>
+                    <Button
+                        sx={{
+                            mt: 1 /* margin top */,
+                            backgroundColor: "black", // Set the background color to black
+                            color: "white", // Set the text color to white
+                        }}
+                        onClick={handleCLick}
+                        disabled={!isButtonValid}
+                    >
+                        Sign up
+                    </Button>
 
-                <Typography
-                    endDecorator={<Link to="/api/v1/login/">Login</Link>}
-                    fontSize="sm"
-                    sx={{ alignSelf: "center" }}
-                >
-                    Already have an account?
-                </Typography>
-            </Sheet>
-        </CssVarsProvider>
+                    <Typography
+                        endDecorator={<Link to="/api/v1/login/">Login</Link>}
+                        fontSize="sm"
+                        sx={{ alignSelf: "center" }}
+                    >
+                        Already have an account?
+                    </Typography>
+                </Sheet>
+            </CssVarsProvider>
+        </>
     );
 }
 

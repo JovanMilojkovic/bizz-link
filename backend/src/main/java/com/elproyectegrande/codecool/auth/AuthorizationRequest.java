@@ -15,9 +15,4 @@ public class AuthorizationRequest {
     private String email;
     private Role role;
 
-
-
-    public Role getRole() {
-        return role;
-    }
 }

@@ -23,9 +23,8 @@ public class AuthorizationController {
 
 
     @GetMapping("/**")
-    public ResponseEntity<?> userCredentialOK(@RequestHeader Map<String,String> header,@RequestParam String id) {
+    public ResponseEntity<?> userCredentialOK(@RequestHeader Map<String, String> header, @RequestParam String id) {
         String token = header.get("authorization").substring(7);
-        String path = id;
-        return authorizationService.authorize(token,path);
+        return authorizationService.authorize(token, id);
     }
 }

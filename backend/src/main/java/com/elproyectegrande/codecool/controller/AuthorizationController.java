@@ -2,7 +2,6 @@ package com.elproyectegrande.codecool.controller;
 
 
 import com.elproyectegrande.codecool.service.AuthorizationService;
-import com.elproyectegrande.codecool.service.JwtService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,12 +11,11 @@ import java.util.Map;
 @CrossOrigin("http://localhost:5173")
 @RequestMapping("/dashboard")
 public class AuthorizationController {
-    private final JwtService jwtService;
+
     private final AuthorizationService authorizationService;
 
 
-    public AuthorizationController(JwtService jwtService, AuthorizationService authorizationService) {
-        this.jwtService = jwtService;
+    public AuthorizationController(AuthorizationService authorizationService) {
         this.authorizationService = authorizationService;
     }
 

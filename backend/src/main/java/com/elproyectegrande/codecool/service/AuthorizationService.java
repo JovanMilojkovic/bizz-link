@@ -1,6 +1,5 @@
 package com.elproyectegrande.codecool.service;
 
-import com.elproyectegrande.codecool.repository.UserRepository;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -8,11 +7,10 @@ import org.springframework.stereotype.Service;
 @Service
 
 public class AuthorizationService {
-    private final UserRepository repository;
+
     private final JwtService jwtService;
 
-    public AuthorizationService(UserRepository repository, JwtService jwtService) {
-        this.repository = repository;
+    public AuthorizationService(JwtService jwtService) {
         this.jwtService = jwtService;
 
     }

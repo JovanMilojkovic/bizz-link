@@ -23,7 +23,10 @@ function App() {
             <Route path="/api/v1/login" element={<Login />} />
             <Route path="/api/v1/resetpassword" element={<ResetPassword />} />
             <Route path="/api/v1/error" element={<Error />} />
-            <Route path="/dashboard/:userId" element={<Dashboard />} />
+            <Route
+                path="/dashboard/:userId"
+                element={jwt ? <Dashboard /> : <PageNotFound />}
+            />
             <Route path="*" element={<PageNotFound />} />
         </Routes>
     );

@@ -19,18 +19,13 @@ public class AuthorizationService {
 
     public ResponseEntity<?> authorize(String token, String id) {
         String username = jwtService.extractUsername(token);
-        System.out.println(username);
-        System.out.println(id);
         if (id.equals(username.toLowerCase())) {
-//            var user = repository.findUserByUsername(username)
-//                    .orElseThrow(() -> new UsernameNotFoundException("user not found " + username));
-
             return new ResponseEntity<>(HttpStatusCode.valueOf(200));
         } else {
-                return new ResponseEntity<>(HttpStatusCode.valueOf(401));
-            }
-
+            return new ResponseEntity<>(HttpStatusCode.valueOf(401));
         }
 
     }
+
+}
 

@@ -1,31 +1,40 @@
 import { useEffect } from "react";
-import useGlobalState from "../globalState";
-import Error from "./Error";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import NavBar from "./NavBar";
 
 export default function Dashboard() {
-    const logInUserData = useGlobalState((selector) => selector.user);
     const username = localStorage.getItem("username");
     const email = localStorage.getItem("email");
-
-    //const { userID } = useParams();
-
     const token = localStorage.getItem("jwtToken");
-    // const response = async () => {
-    //     await fetch(`http://localhost:8080/dashboard`, {
-    //         method: "POST",
-    //         mode: "cors",
-    //         headers: {
-    //             //TODO at the end we need this
-    //             // "X-XSRF-TOKEN": csrfToken,
-    //             Authorization: `Bearer ${token}`,
-    //             "Content-Type": "application/json",
-    //         },
-    //     });
-    // };
-    // response();
+    const navigate = useNavigate();
+    const param = useParams();
+
+    const fetchData = async () => {
+        try {
+            const response = await fetch(
+                `http://localhost:8080/dashboard/?id=${param.userId}`,
+                {
+                    method: "GET",
+                    mode: "cors",
+                    headers: {
+                        //TODO at the end we need this
+                        // "X-XSRF-TOKEN": csrfToken,
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+            if (response.status == 401) {
+                navigate("*");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <>

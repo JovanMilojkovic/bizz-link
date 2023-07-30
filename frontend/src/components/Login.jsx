@@ -49,7 +49,7 @@ function Login() {
     function checkEmail() {
         const errorMessage = "It should be a valid email address!";
         const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        !email.match(mailFormat) && email.length > 3
+        !email.match(mailFormat) && email.length > 0
             ? setEmailError(errorMessage)
             : setEmailError("");
     }
@@ -58,7 +58,7 @@ function Login() {
             " Password should be min 8 characters and includes 1 leter 1 number 1 special character!";
         const passwordFormat =
             /^(?=.*\d)(?=.*[!@#$%^&*.])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
-        !password.match(passwordFormat) && password.length > 7
+        !password.match(passwordFormat) && password.length > 0
             ? setPasswordError(errorMessage)
             : setPasswordError("");
     }
@@ -78,18 +78,14 @@ function Login() {
                 },
             });
             const responseBody = await response.json();
-            console.log(responseBody);
-            setIsLoggedIn(true);
-
-            setLogInUserData(responseBody);
             const token = responseBody.token;
             const username = responseBody.username.toLowerCase();
+            setIsLoggedIn(true);
+            setLogInUserData(responseBody);
             localStorage.setItem("jwtToken", token);
             localStorage.setItem("username", responseBody.username);
             localStorage.setItem("email", responseBody.email);
             setUserToken(token);
-
-            console.log("Token stored: ", token);
             navigate(`/dashboard/${username}`);
         } catch (error) {
             setLogInFailed(response.status);
@@ -98,10 +94,32 @@ function Login() {
         }
     };
 
+    function handleKeyPress(e) {
+        if (isButtonValid && e.key === "Enter") {
+            console.log(window.location.href);
+            console.log("HI");
+            handleCLick();
+        }
+    }
+
     useEffect(() => {
         checkEmail();
         checkPassword();
     }, [email, password]);
+
+    useEffect(() => {
+        document.addEventListener("keypress", handleKeyPress);
+
+        // Clean up the event listener when the component unmounts
+        return () => {
+            document.removeEventListener("keypress", handleKeyPress);
+        };
+    }, []);
+    const isButtonValid =
+        email.length > 0 &&
+        emailError == "" &&
+        password.length > 0 &&
+        passwordError == "";
 
     return (
         <>
@@ -142,20 +160,27 @@ function Login() {
                             name="email"
                             type="email"
                             placeholder="johndoe@email.com"
-                            onChange={(e) => setEmail(e.target.value)}
+                            onChange={(e) => {
+                                setEmail(e.target.value);
+                                e.preventDefault();
+                            }}
                             autoComplete="on"
                         />
                         <span className="mail">{emailError}</span>
                     </FormControl>
                     <FormControl>
                         <FormLabel>Password</FormLabel>
-                        <form>
+                        <form onSubmit={(e) => e.preventDefault()}>
                             <Input
                                 name="password"
                                 type="password"
                                 placeholder="password"
-                                onChange={(e) => setPassword(e.target.value)}
-                                autoComplete="on"
+                                value={password}
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+                                }}
+                                onKeyDown={handleKeyPress}
+                                autoComplete="off"
                             />
                             <span className="password">{passwordError}</span>
                         </form>
@@ -167,6 +192,7 @@ function Login() {
                             color: "white",
                         }}
                         onClick={handleCLick}
+                        disabled={!isButtonValid}
                     >
                         Log in
                     </Button>

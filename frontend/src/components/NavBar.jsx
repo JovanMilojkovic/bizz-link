@@ -1,12 +1,9 @@
-import { NavLink, Navigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./css_files/NavBar.css";
-
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useGlobalState from "../globalState";
 import { shallow } from "zustand/shallow";
-import { useParams } from "react-router-dom";
-import Login from "./Login";
 
 function NavBar() {
     const navigate = useNavigate();
@@ -22,9 +19,6 @@ function NavBar() {
         );
 
     const handleLogout = () => {
-        const token = localStorage.getItem("jwtToken");
-
-        console.log("token deleting: ", token);
         localStorage.clear();
         setUserToken(null);
         setIsLoggedIn(false);
@@ -36,22 +30,19 @@ function NavBar() {
         const username = localStorage.getItem("username").toLowerCase();
         try {
             const response = await fetch(
-                `http://localhost:8080/dashboard/?id=`,
+                `http://localhost:8080/dashboard/?id=${username}`,
                 {
                     method: "GET",
                     mode: "cors",
                     headers: {
                         //TODO at the end we need this
                         // "X-XSRF-TOKEN": csrfToken,
-                        "Authorization": `Bearer ${token}`,
+                        Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json",
                     },
                 }
             );
             if (response.status === 200) {
-                const responseBody = await response.json();
-                console.log(responseBody);
-                setLogInUserData(responseBody);
                 navigate(`/dashboard/${username}`);
             } else {
                 setIsLoggedIn(false);

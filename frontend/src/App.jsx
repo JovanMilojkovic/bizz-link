@@ -11,6 +11,7 @@ import Dashboard from "./components/Dashboard";
 import PageNotFound from "./components/PageNotFound";
 import { useEffect, useState } from "react";
 import useGlobalState from "./globalState";
+import EditUserProfile from "./components/EditUserProfile";
 
 function App() {
     const jwtToken = useGlobalState((selector) => selector.userToken);
@@ -26,6 +27,10 @@ function App() {
             <Route
                 path="/dashboard/:userId"
                 element={jwt ? <Dashboard /> : <PageNotFound />}
+            />
+            <Route
+                path="/dashboard/edit-user/:userId"
+                element={jwt ? <EditUserProfile /> : <PageNotFound />}
             />
             <Route path="*" element={<PageNotFound />} />
         </Routes>

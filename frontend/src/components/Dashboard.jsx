@@ -32,6 +32,35 @@ export default function Dashboard() {
             console.log(error);
         }
     };
+
+    const handleEditButton = async () => {
+        console.log("clicked")
+        try {
+            const response = await fetch(
+                `http://localhost:8080/dashboard/edit-user/?id=${param.userId}`,
+                {
+                    method: "GET",
+                    mode: "cors",
+                    headers: {
+                        //TODO at the end we need this
+                        // "X-XSRF-TOKEN": csrfToken,
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+    
+            if (response.status == 401) {
+                navigate("*");
+            } else {
+                navigate("/dashboard/edit-user/:userId")
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    
+    
     useEffect(() => {
         fetchData();
     }, []);
@@ -70,6 +99,7 @@ export default function Dashboard() {
                                         <Button
                                             variant="primary"
                                             style={{ backgroundColor: "#333" }}
+                                            onClick={() => handleEditButton()}
                                         >
                                             Edit
                                         </Button>

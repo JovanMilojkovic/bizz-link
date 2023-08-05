@@ -11,7 +11,6 @@ const EditUserProfile = () => {
     picture: null,
   });
 
-  // Handle input changes
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserData((prevUserData) => ({
@@ -20,7 +19,6 @@ const EditUserProfile = () => {
     }));
   };
 
-  // Handle picture upload
   const handlePictureUpload = (event) => {
     const pictureFile = event.target.files[0];
     setUserData((prevUserData) => ({
@@ -29,21 +27,29 @@ const EditUserProfile = () => {
     }));
   };
 
-  // Handle form submission
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    // Perform the fetch/save operation here
-    // You can send the user data to the server using an API endpoint
-    // For this example, let's just log the data to the console
-    console.log('User Data:', userData);
-    // Reset the form after successful submission (optional)
-    setUserData({
-      firstName: '',
-      lastName: '',
-      linkedin: '',
-      facebook: '',
-      picture: null,
-    });
+    const token = localStorage.getItem("jwtToken");
+    const username = localStorage.getItem("username").toLowerCase();
+
+    fetch(`http://localhost:8080/dashboard/edit-user?id=${username}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify(userData),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log('User data updated successfully');
+        } else {
+          console.log('User data update failed');
+        }
+      })
+      .catch((error) => {
+        console.error('Error updating user data:', error);
+      });
   };
 
   return (

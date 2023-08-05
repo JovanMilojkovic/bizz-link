@@ -36,6 +36,11 @@ function SignUp() {
         username: `${username}`,
         email: `${email}`,
         password: `${password}`,
+        firstName: null,
+        lastName: null,
+        linkedin: null,
+        facebook: null,
+        picture: null,
     };
 
     const checkUserName = () => {

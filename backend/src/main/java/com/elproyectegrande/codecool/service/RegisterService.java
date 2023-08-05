@@ -1,5 +1,6 @@
 package com.elproyectegrande.codecool.service;
 
+import com.elproyectegrande.codecool.auth.EditRequest;
 import com.elproyectegrande.codecool.auth.RegisterRequest;
 import com.elproyectegrande.codecool.model.Role;
 import com.elproyectegrande.codecool.model.User;

@@ -12,7 +12,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import useGlobalState from "../globalState";
 import NavBar from "./NavBar";
-import jwt_decode from "jwt-decode";
+// import jwt_decode from "jwt-decode";
 
 function Login() {
     const navigate = useNavigate();

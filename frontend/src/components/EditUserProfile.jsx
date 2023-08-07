@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import NavBar from './NavBar';
+import { useNavigate } from 'react-router';
+
 
 const EditUserProfile = () => {
+  const navigate = useNavigate();
   // State to hold user data
   const [userData, setUserData] = useState({
+    username: '',
     firstName: '',
     lastName: '',
     linkedin: '',
@@ -30,8 +34,9 @@ const EditUserProfile = () => {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     const token = localStorage.getItem("jwtToken");
+  
     const username = localStorage.getItem("username").toLowerCase();
-
+  
     fetch(`http://localhost:8080/dashboard/edit-user?id=${username}`, {
       method: 'PUT',
       headers: {
@@ -43,14 +48,25 @@ const EditUserProfile = () => {
       .then((response) => {
         if (response.ok) {
           console.log('User data updated successfully');
+          return response.json(); 
         } else {
           console.log('User data update failed');
+          throw new Error('User data update failed');
         }
+      })
+      .then((responseData) => {
+        const updatedUsername = responseData.username; 
+        const newToken = responseData.token;
+        localStorage.setItem("username", updatedUsername); 
+        localStorage.setItem("jwtToken", newToken);
+        console.log(`Updated username: ${updatedUsername}`);
+        navigate(`/dashboard/${updatedUsername}`);
       })
       .catch((error) => {
         console.error('Error updating user data:', error);
       });
   };
+  
 
   return (
     <>
@@ -58,6 +74,17 @@ const EditUserProfile = () => {
     <div className="container mt-4">
       <h2 className="mb-4">Edit User Profile</h2>
       <form onSubmit={handleFormSubmit}>
+      <div className="mb-3">
+          <label htmlFor="username" className="form-label">Username:</label>
+          <input
+            type="text"
+            name="username"
+            value={userData.username}
+            onChange={handleInputChange}
+            className="form-control"
+            required
+          />
+        </div>
         <div className="mb-3">
           <label htmlFor="firstName" className="form-label">First Name:</label>
           <input

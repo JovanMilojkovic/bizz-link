@@ -1,6 +1,7 @@
 package com.elproyectegrande.codecool.controller;
 
 import com.elproyectegrande.codecool.auth.EditRequest;
+import com.elproyectegrande.codecool.auth.EditResponse;
 import com.elproyectegrande.codecool.service.EditService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,7 +20,7 @@ public class EditController {
 
     @PutMapping("/edit-user")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<String> edit(@RequestBody EditRequest request, @RequestParam String id) {
+    public ResponseEntity<EditResponse> edit(@RequestBody EditRequest request, @RequestParam String id) {
         return editService.updateUser(request, id);
     }
 }

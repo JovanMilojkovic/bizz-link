@@ -2,6 +2,7 @@ package com.elproyectegrande.codecool.service;
 
 
 import com.elproyectegrande.codecool.auth.EditRequest;
+import com.elproyectegrande.codecool.auth.EditResponse;
 import com.elproyectegrande.codecool.model.User;
 import com.elproyectegrande.codecool.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,14 +16,19 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class EditService {
     private final UserRepository repository;
+    private final JwtService jwtService;
 
-    public ResponseEntity<String> updateUser(EditRequest request, String id){
+    public ResponseEntity<EditResponse> updateUser(EditRequest request, String id){
         Optional<User> optionalUser = repository.findUserByUsername(id);
         
         if (optionalUser.isEmpty()) {
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
         }
         User user = optionalUser.get();
+
+        if (request.getUsername() != null) {
+            user.setUsername(request.getUsername());
+        }
 
         if (request.getFirstName() != null) {
             user.setFirstName(request.getFirstName());
@@ -49,7 +55,13 @@ public class EditService {
         }*/
 
         repository.save(user);
+        String token = jwtService.generateToken(user);
 
-        return new ResponseEntity<>("User information updated", HttpStatus.OK);
+        EditResponse editResponse = new EditResponse();
+        editResponse.setUsername(user.getUsername());
+        editResponse.setEmail(user.getEmail());
+        editResponse.setToken(token);
+
+        return new ResponseEntity<>(editResponse, HttpStatus.OK);
     }
 }

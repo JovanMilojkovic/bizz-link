@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
@@ -29,6 +30,8 @@ public class User implements UserDetails {
     private String lastName;
     private String linkedin;
     private String facebook;
+
+    @Column(length = 1000000)
     private String picture;
     @Enumerated(EnumType.STRING)
     private Role role;

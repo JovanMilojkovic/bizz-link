@@ -12,7 +12,7 @@ const EditUserProfile = () => {
     lastName: '',
     linkedin: '',
     facebook: '',
-    picture: null,
+    picture: '',
   });
 
   const handleInputChange = (event) => {
@@ -23,11 +23,29 @@ const EditUserProfile = () => {
     }));
   };
 
-  const handlePictureUpload = (event) => {
+  const convertBase64 = (file) => new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+
+    fileReader.onload = () => {
+      resolve(fileReader.result)
+    }
+
+    fileReader.onerror = (error) => {
+      reject(error)
+    }
+  })
+
+  const handlePictureUpload = async (event) => {
     const pictureFile = event.target.files[0];
+      const base64 = await convertBase64(pictureFile);
+      const imageBase64 = base64.split(",")[1];
+      //console.log(base64);
+      console.log(imageBase64)
+
     setUserData((prevUserData) => ({
       ...prevUserData,
-      picture: pictureFile,
+      picture: imageBase64,
     }));
   };
 

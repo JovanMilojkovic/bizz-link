@@ -6,10 +6,13 @@ import com.elproyectegrande.codecool.auth.EditResponse;
 import com.elproyectegrande.codecool.model.User;
 import com.elproyectegrande.codecool.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.Optional;
 
 @Service
@@ -18,7 +21,7 @@ public class EditService {
     private final UserRepository repository;
     private final JwtService jwtService;
 
-    public ResponseEntity<EditResponse> updateUser(EditRequest request, String id){
+    public ResponseEntity<EditResponse> updateUser(EditRequest request, String id) throws IOException {
         Optional<User> optionalUser = repository.findUserByUsername(id);
         
         if (optionalUser.isEmpty()) {
@@ -46,9 +49,14 @@ public class EditService {
             user.setFacebook(request.getFacebook());
         }
 
+        //byte[] fileContent = FileUtils.readFileToByteArray(request.getPicture());
+        //String encodedString = Base64.getEncoder().encodeToString(fileContent);
+        System.out.println(request.getPicture());
         if (request.getPicture() != null) {
             user.setPicture(request.getPicture());
         }
+
+
 
         /*if (request.getPassword() != null) {
             user.setPassword(passwordEncoder.encode(request.getPassword()));

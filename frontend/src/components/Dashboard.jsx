@@ -85,31 +85,35 @@ export default function Dashboard() {
                         <Row>
                             <Col md={4}>
                                 <Card>
-                                    <Card.Body>
-                                        <Card.Title>
-                                            {username}, Your Business Card
-                                        </Card.Title>
-                                        <Card.Subtitle className="mb-2 text-muted">
-                                            John Doe
-                                        </Card.Subtitle>
-                                        <Card.Text>
-                                            Phone: 123-456-7890
-                                            <br />
-                                            Email: {email}
-                                        </Card.Text>
-                                        <div style={{ width: 50, height: 50 }}>
-                                            <img src={profilePic} style={{ width: 50, height: 50 }} alt="Red dot" />
+                                <Card.Body>
+                                    <div className="d-flex align-items-center mb-3">
+                                        <div className="profile-picture">
+                                            <img style={{height:50, width:50}} src={profilePic} alt="Profile" />
                                         </div>
+                                        <div className="ml-3">
+                                            <Card.Title>
+                                                {username}, Your Business Card
+                                            </Card.Title>
+                                            <Card.Subtitle className="mb-2 text-muted">
+                                                John Doe
+                                            </Card.Subtitle>
+                                        </div>
+                                    </div>
+                                    <Card.Text>
+                                        Phone: 123-456-7890
+                                        <br />
+                                        Email: {email}
+                                    </Card.Text>
+                                    <Button
+                                        variant="primary"
+                                        style={{ backgroundColor: "#333" }}
+                                        onClick={() => handleEditButton()}
+                                    >
+                                        Edit
+                                    </Button>
+                                </Card.Body>
+                            </Card>
 
-                                        <Button
-                                            variant="primary"
-                                            style={{ backgroundColor: "#333" }}
-                                            onClick={() => handleEditButton()}
-                                        >
-                                            Edit
-                                        </Button>
-                                    </Card.Body>
-                                </Card>
                             </Col>
                             <Col md={8}>
                                 <Card>

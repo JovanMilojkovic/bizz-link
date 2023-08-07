@@ -6,13 +6,11 @@ import com.elproyectegrande.codecool.auth.EditResponse;
 import com.elproyectegrande.codecool.model.User;
 import com.elproyectegrande.codecool.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Base64;
 import java.util.Optional;
 
 @Service
@@ -22,7 +20,7 @@ public class EditService {
     private final JwtService jwtService;
 
     public ResponseEntity<EditResponse> updateUser(EditRequest request, String id) throws IOException {
-        Optional<User> optionalUser = repository.findUserByUsername(id);
+        Optional<User> optionalUser = repository.findUserByUsernameIgnoreCase(id);
         
         if (optionalUser.isEmpty()) {
             return new ResponseEntity<>( HttpStatus.NOT_FOUND);
@@ -51,7 +49,7 @@ public class EditService {
 
         //byte[] fileContent = FileUtils.readFileToByteArray(request.getPicture());
         //String encodedString = Base64.getEncoder().encodeToString(fileContent);
-        System.out.println(request.getPicture());
+
         if (request.getPicture() != null) {
             user.setPicture(request.getPicture());
         }
@@ -68,6 +66,7 @@ public class EditService {
         EditResponse editResponse = new EditResponse();
         editResponse.setUsername(user.getUsername());
         editResponse.setEmail(user.getEmail());
+        editResponse.setPicture(user.getPicture());
         editResponse.setToken(token);
 
         return new ResponseEntity<>(editResponse, HttpStatus.OK);

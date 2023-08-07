@@ -12,7 +12,6 @@ public class AuthorizationService {
 
     public AuthorizationService(JwtService jwtService) {
         this.jwtService = jwtService;
-
     }
 
     public ResponseEntity<?> authorize(String token, String id) {

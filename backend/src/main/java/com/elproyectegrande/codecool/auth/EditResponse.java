@@ -8,5 +8,6 @@ import lombok.NoArgsConstructor;
 public class EditResponse {
     private String username;
     private String email;
+    private String picture;
     private String token;
 }

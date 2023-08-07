@@ -1,15 +1,17 @@
 import { useEffect } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
-import NavBar from "./NavBar";
 
 export default function Dashboard() {
     const username = localStorage.getItem("username");
     const email = localStorage.getItem("email");
     const token = localStorage.getItem("jwtToken");
+    const picture = localStorage.getItem("picture");
     const navigate = useNavigate();
     const param = useParams();
-
+    
+    const profilePic = `data:image/jpg;base64,${picture}`
+    
     const fetchData = async () => {
         try {
             const response = await fetch(
@@ -67,7 +69,6 @@ export default function Dashboard() {
 
     return (
         <>
-            <NavBar />
             <div style={{ backgroundColor: "#f2f2f2", minHeight: "100vh" }}>
                 <Container
                     fluid
@@ -86,7 +87,7 @@ export default function Dashboard() {
                                 <Card>
                                     <Card.Body>
                                         <Card.Title>
-                                            {username} Your Business Card
+                                            {username}, Your Business Card
                                         </Card.Title>
                                         <Card.Subtitle className="mb-2 text-muted">
                                             John Doe
@@ -96,6 +97,10 @@ export default function Dashboard() {
                                             <br />
                                             Email: {email}
                                         </Card.Text>
+                                        <div style={{ width: 50, height: 50 }}>
+                                            <img src={profilePic} style={{ width: 50, height: 50 }} alt="Red dot" />
+                                        </div>
+
                                         <Button
                                             variant="primary"
                                             style={{ backgroundColor: "#333" }}

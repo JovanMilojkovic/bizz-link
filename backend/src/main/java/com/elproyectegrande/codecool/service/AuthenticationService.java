@@ -28,6 +28,7 @@ public class AuthenticationService {
         return AuthenticationResponse.builder()
                 .email(request.getEmail())
                 .username(user.getUsername())
+                .picture(user.getPicture())
                 .role(user.getRole())// Add the username to the response
                 .token(jwtToken)
                 .build();

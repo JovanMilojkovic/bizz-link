@@ -18,6 +18,8 @@ function App() {
     const jwt = localStorage.getItem("jwtToken");
 
     return (
+        <>
+        <NavBar/>
         <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/api/v1/signup" element={<SignUp />} />
@@ -34,6 +36,7 @@ function App() {
             />
             <Route path="*" element={<PageNotFound />} />
         </Routes>
+        </>
     );
 }
 

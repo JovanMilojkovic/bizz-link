@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import NavBar from './NavBar';
 import { useNavigate } from 'react-router';
 
 
@@ -75,8 +74,11 @@ const EditUserProfile = () => {
       .then((responseData) => {
         const updatedUsername = responseData.username; 
         const newToken = responseData.token;
+        const picture = responseData.picture;
+        console.log(picture)
         localStorage.setItem("username", updatedUsername); 
         localStorage.setItem("jwtToken", newToken);
+        localStorage.setItem("picture", picture)
         console.log(`Updated username: ${updatedUsername}`);
         navigate(`/dashboard/${updatedUsername}`);
       })
@@ -88,7 +90,6 @@ const EditUserProfile = () => {
 
   return (
     <>
-    <NavBar/>
     <div className="container mt-4">
       <h2 className="mb-4">Edit User Profile</h2>
       <form onSubmit={handleFormSubmit}>

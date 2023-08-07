@@ -11,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import useGlobalState from "../globalState";
-import NavBar from "./NavBar";
 // import jwt_decode from "jwt-decode";
 
 function Login() {
@@ -80,11 +79,13 @@ function Login() {
             const responseBody = await response.json();
             const token = responseBody.token;
             const username = responseBody.username.toLowerCase();
+            
             setIsLoggedIn(true);
             setLogInUserData(responseBody);
             localStorage.setItem("jwtToken", token);
             localStorage.setItem("username", responseBody.username);
             localStorage.setItem("email", responseBody.email);
+            localStorage.setItem("picture", responseBody.picture);
             setUserToken(token);
             navigate(`/dashboard/${username}`);
         } catch (error) {
@@ -123,9 +124,6 @@ function Login() {
 
     return (
         <>
-            <div>
-                <NavBar />
-            </div>
             <CssVarsProvider>
                 <Sheet
                     sx={{

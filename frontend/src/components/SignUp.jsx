@@ -119,7 +119,6 @@ function SignUp() {
 
     return (
         <>
-            <NavBar />
             <CssVarsProvider>
                 <Sheet
                     sx={{

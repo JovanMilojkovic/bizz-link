@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
+import QRCode from "react-qr-code";
 
 export default function Dashboard() {
     const username = localStorage.getItem("username");
@@ -111,6 +112,7 @@ export default function Dashboard() {
                                     >
                                         Edit
                                     </Button>
+                                    <QRCode style={{height:50, width:50}} value={`http://localhost:5173/api/v1/business-card/${username}`} />
                                 </Card.Body>
                             </Card>
 

@@ -12,6 +12,7 @@ import PageNotFound from "./components/PageNotFound";
 import { useEffect, useState } from "react";
 import useGlobalState from "./globalState";
 import EditUserProfile from "./components/EditUserProfile";
+import BusinessCard from "./components/BusinessCard";
 
 function App() {
     const jwtToken = useGlobalState((selector) => selector.userToken);
@@ -26,6 +27,7 @@ function App() {
             <Route path="/api/v1/login" element={<Login />} />
             <Route path="/api/v1/resetpassword" element={<ResetPassword />} />
             <Route path="/api/v1/error" element={<Error />} />
+            <Route path="/api/v1/business-card/:username" element={<BusinessCard/>} />
             <Route
                 path="/dashboard/:userId"
                 element={jwt ? <Dashboard /> : <PageNotFound />}

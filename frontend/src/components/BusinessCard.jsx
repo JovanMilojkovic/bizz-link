@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import QRCode from "react-qr-code";
-import "./css_files/BusinessCard.css"; // Make sure to include your own CSS as well
+import "./css_files/BusinessCard.css";
 import { useParams } from 'react-router';
 import { useNavigate } from 'react-router';
 

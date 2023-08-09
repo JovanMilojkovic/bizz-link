@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-
+import React, { useState, useEffect } from 'react';
 
 const ContactsPage = () => {
     const [contacts, setContacts] = useState([]);
@@ -16,7 +15,8 @@ const ContactsPage = () => {
             });
 
             if (response.ok) {
-                const data = await response.json();                setContacts(data);
+                const data = await response.json();                
+                setContacts(data);
             }
         } catch (error) {
             console.error("Error fetching contacts:", error);
@@ -29,19 +29,19 @@ const ContactsPage = () => {
 
     return (
         <div className="container my-4">
-            <h1>Contacts</h1>
-            <div className="row">
+            <h1 className="text-center mb-4">Contacts</h1>
+            <div className="row justify-content-center">
                 {contacts.map(contact => (
                     <div key={contact.id} className="col-md-12 mb-4">
-                        <div className="card d-flex flex-row">
+                        <div className="card mx-auto d-flex flex-row">
                             <img
                                 src={`data:image/jpg;base64,${contact.picture}`}
                                 alt="Profile"
                                 className="card-img-top"
-                                style={{height:100, width:100}}
+                                style={{ height: 100, width: 100 }}
                             />
                             <div className="card-body">
-                                <div className="d-flex flex-column">
+                                <div className="d-flex flex-column align-items-center">
                                     <h5 className="card-title">
                                         {contact.firstname} {contact.lastname}
                                     </h5>
@@ -61,3 +61,4 @@ const ContactsPage = () => {
 };
 
 export default ContactsPage;
+

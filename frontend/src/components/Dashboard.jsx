@@ -89,7 +89,7 @@ export default function Dashboard() {
                                 <Card.Body>
                                     <div className="d-flex align-items-center mb-3">
                                         <div className="profile-picture">
-                                            <img style={{height:50, width:50}} src={profilePic} alt="Profile" />
+                                            <img style={{height:50, width:50}} src={profilePic} className="img-fluid rounded-circle profile-pic" alt="Profile" />
                                         </div>
                                         <div className="ml-3">
                                             <Card.Title>

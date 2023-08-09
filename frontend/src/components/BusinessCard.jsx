@@ -32,7 +32,7 @@ const BusinessCard = () => {
     const handleAddButton = (event) => {
         event.preventDefault();
         try {
-            fetch("http://localhost:8080/add-contact", {
+            fetch("http://localhost:8080/contacts/add-contact", {
                 method: "POST",
                 body: JSON.stringify(userData),
                 mode: "cors",
@@ -59,14 +59,12 @@ const BusinessCard = () => {
     }
 
     return (
-        <div className="container my-4">
+        <div className="container my-4 d-flex justify-content-center">
             <div className="card business-card">
                 <div className="card-body">
                     <div className="row">
-                        <div className="col-md-4">
+                        <div className="col-md-12 text-center">
                             <img style={{height:50, width:50}} ref={profilePicRef} alt="Profile" className="img-fluid rounded-circle profile-pic" />
-                        </div>
-                        <div className="col-md-8">
                             <h2 className="card-title">{`${userData.firstname} ${userData.lastname}`}</h2>
                             <p className="card-text">Phone: {userData.phoneNumber}</p>
                             <p className="card-text">Email: {userData.email}</p>
@@ -80,9 +78,11 @@ const BusinessCard = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="mt-3 text-center d-flex flex-column justify-content-center align-items-center">
-                        <QRCode style={{height:50, width:50}} value={userData.email} />
-                        <button className="btn btn-primary mt-3" onClick={(event) => handleAddButton(event)} style={{ backgroundColor: "black", border:"black" }}>Add to Contacts</button>
+                    <div className="mt-3 text-center">
+                        <div className="d-flex flex-column align-items-center">
+                            <QRCode style={{height:50, width:50}} value={userData.email} />
+                            <button className="btn btn-primary mt-3" onClick={(event) => handleAddButton(event)} style={{ backgroundColor: "black", border:"black" }}>Add to Contacts</button>
+                        </div>
                     </div>
                 </div>
             </div>

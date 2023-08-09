@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ContactService {
@@ -24,5 +26,9 @@ public class ContactService {
         repository.save(contact);
 
         return ResponseEntity.ok("Contact saved successfully");
+    }
+
+    public List<Contact> getContacts(){
+        return  repository.findAll();
     }
 }

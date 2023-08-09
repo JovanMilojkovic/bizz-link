@@ -13,9 +13,9 @@ import { useEffect, useState } from "react";
 import useGlobalState from "./globalState";
 import EditUserProfile from "./components/EditUserProfile";
 import BusinessCard from "./components/BusinessCard";
+import ContactsPage from "./components/ContactsPage";
 
 function App() {
-    const jwtToken = useGlobalState((selector) => selector.userToken);
     const jwt = localStorage.getItem("jwtToken");
 
     return (
@@ -35,6 +35,10 @@ function App() {
             <Route
                 path="/dashboard/edit-user/:userId"
                 element={jwt ? <EditUserProfile /> : <PageNotFound />}
+            />
+            <Route
+                path="/dashboard/contacts"
+                element={jwt ? <ContactsPage /> : <PageNotFound />}
             />
             <Route path="*" element={<PageNotFound />} />
         </Routes>

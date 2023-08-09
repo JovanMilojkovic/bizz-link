@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import QRCode from "react-qr-code";
 import {
     MDBCol,
@@ -14,10 +14,7 @@ import {
 import { useParams, useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
-    const [userData, setUserData] = useState({
-        email: '',
-        picture: '',
-    });
+
     const username = localStorage.getItem('username');
     const email = localStorage.getItem('email');
     const token = localStorage.getItem('jwtToken');
@@ -106,9 +103,9 @@ export default function Dashboard() {
                                 </div>
                                 <div className="ms-3" style={{ marginTop: '130px' }}>
                                     <MDBTypography tag="h5">
-                                        Hello {username}, welcome!
+                                        Hi {username}, welcome!
                                     </MDBTypography>
-                                    <MDBCardText>{userData.email}</MDBCardText>
+                                    <MDBCardText>{email}</MDBCardText>
                                 </div>
                             </div>
                             <div
@@ -134,6 +131,9 @@ export default function Dashboard() {
                                         <button
                                             className="btn btn-primary"
                                             style={{ backgroundColor: '#333' }}
+                                            onClick={()=> {
+                                                navigate("/dashboard/contacts")
+                                            }}
                                         >
                                             View All
                                         </button>
@@ -156,7 +156,7 @@ export default function Dashboard() {
                                     <MDBCol className="mb-2">
                                         {/* Replace this with your contact card */}
                                         <QRCode
-                                            style={{ height: 50, width: 50 }}
+                                            style={{ height: 100, width: 100 }}
                                             value={`http://localhost:5173/api/v1/business-card/${username}`}
                                         />
                                     </MDBCol>

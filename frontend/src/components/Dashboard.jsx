@@ -85,36 +85,47 @@ export default function Dashboard() {
                     >
                         <Row>
                             <Col md={4}>
-                                <Card>
-                                <Card.Body>
-                                    <div className="d-flex align-items-center mb-3">
-                                        <div className="profile-picture">
-                                            <img style={{height:50, width:50}} src={profilePic} className="img-fluid rounded-circle profile-pic" alt="Profile" />
-                                        </div>
-                                        <div className="ml-3">
-                                            <Card.Title>
-                                                {username}, Your Business Card
-                                            </Card.Title>
-                                            <Card.Subtitle className="mb-2 text-muted">
-                                                John Doe
-                                            </Card.Subtitle>
-                                        </div>
-                                    </div>
-                                    <Card.Text>
-                                        Phone: 123-456-7890
-                                        <br />
-                                        Email: {email}
-                                    </Card.Text>
-                                    <Button
-                                        variant="primary"
-                                        style={{ backgroundColor: "#333" }}
-                                        onClick={() => handleEditButton()}
-                                    >
-                                        Edit
-                                    </Button>
-                                    <QRCode style={{height:50, width:50}} value={`http://localhost:5173/api/v1/business-card/${username}`} />
-                                </Card.Body>
-                            </Card>
+                            <Card>
+    <Card.Body className="d-flex flex-column align-items-center">
+        <div className="mb-3">
+            <div className="profile-picture">
+                <img
+                    style={{ height: 50, width: 50 }}
+                    src={profilePic}
+                    className="img-fluid rounded-circle profile-pic"
+                    alt="Profile"
+                />
+            </div>
+            <div className="mt-3">
+                <Card.Title>
+                    {username}, Your Business Card
+                </Card.Title>
+            </div>
+        </div>
+        <div className="mb-3">
+            <Card.Text>
+                Phone: 123-456-7890
+                <br />
+                Email: {email}
+            </Card.Text>
+            <Button
+                variant="primary"
+                style={{ backgroundColor: "#333" }}
+                onClick={() => handleEditButton()}
+            >
+                Edit
+            </Button>
+        </div>
+        <div>
+            <QRCode
+                style={{ height: 50, width: 50 }}
+                value={`http://localhost:5173/api/v1/business-card/${username}`}
+            />
+        </div>
+    </Card.Body>
+</Card>
+
+
 
                             </Col>
                             <Col md={8}>

@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import QRCode from "react-qr-code";
 import "./css_files/BusinessCard.css"; // Make sure to include your own CSS as well
 import { useParams } from 'react-router';
+import { useNavigate } from 'react-router';
 
 const BusinessCard = () => {
     const [userData, setUserData] = useState({
@@ -15,16 +16,47 @@ const BusinessCard = () => {
     });
     const param = useParams();
     const profilePicRef = useRef(null);
+    const navigate = useNavigate();
+    const token = localStorage.getItem("jwtToken");
+    const username = localStorage.getItem("username").toLowerCase();
 
     useEffect(() => { 
         fetch(`http://localhost:8080/business-card?username=${param.username}`)
         .then(response => response.json())
         .then(user => {
-            console.log(user);
             setUserData(user);
             profilePicRef.current.src = `data:image/jpg;base64,${user.picture}`;
         });
     }, []);
+
+    const handleAddButton = (event) => {
+        event.preventDefault();
+        try {
+            fetch("http://localhost:8080/add-contact", {
+                method: "POST",
+                body: JSON.stringify(userData),
+                mode: "cors",
+                headers: {
+                    //TODO at the end we need this
+                    // "X-XSRF-TOKEN": csrfToken,
+                    'Authorization': `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            })
+            .then((response) => {
+                if (response.ok) {
+                  console.log('Contact added successfully');
+                  return response.json(); 
+                } else {
+                  console.log('Failed to add contact');
+                  throw new Error('Failed to add contact');
+                }
+              })
+            navigate(`/dashboard/${username}`);
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <div className="container my-4">
@@ -48,8 +80,9 @@ const BusinessCard = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="mt-3 text-center">
+                    <div className="mt-3 text-center d-flex flex-column justify-content-center align-items-center">
                         <QRCode style={{height:50, width:50}} value={userData.email} />
+                        <button className="btn btn-primary mt-3" onClick={(event) => handleAddButton(event)} style={{ backgroundColor: "black", border:"black" }}>Add to Contacts</button>
                     </div>
                 </div>
             </div>

@@ -45,7 +45,7 @@ public class SecurityConfiguration {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/api/v1/signup", "/api/v1/auth/login", "/business-card/**").permitAll()
-                        .requestMatchers("/dashboard/**").hasAuthority("USER")
+                        .requestMatchers("/dashboard/**", "/add-contact/**").hasAuthority("USER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

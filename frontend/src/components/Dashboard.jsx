@@ -154,7 +154,6 @@ export default function Dashboard() {
                                 </div>
                                 <MDBRow>
                                     <MDBCol className="mb-2">
-                                        {/* Replace this with your contact card */}
                                         <QRCode
                                             style={{ height: 100, width: 100 }}
                                             value={`http://localhost:5173/api/v1/business-card/${username}`}

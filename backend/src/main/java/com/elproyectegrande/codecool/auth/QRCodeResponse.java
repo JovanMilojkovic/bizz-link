@@ -13,5 +13,6 @@ public class QRCodeResponse {
     private String picture;
     private String linkedin;
     private String facebook;
+    private String token;
 
 }

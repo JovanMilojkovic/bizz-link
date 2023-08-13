@@ -21,8 +21,21 @@ const BusinessCard = () => {
     const username = localStorage.getItem("username").toLowerCase();
 
     useEffect(() => { 
-        fetch(`http://localhost:8080/business-card?username=${param.username}`)
-        .then(response => response.json())
+        fetch(`http://localhost:8080/business-card?username=${param.username}`, {
+            method: "GET",
+            headers:   {
+                "Authorization": `Bearer ${token}`
+            }
+        })
+        .then((response) => {
+            if (response.ok) {
+              console.log('Successfully showing contact details');
+              return response.json(); 
+            } else {
+              console.log('Failed to show contact details');
+              throw new Error('Failed to show contact  details');
+            }
+          })
         .then(user => {
             setUserData(user);
             profilePicRef.current.src = `data:image/jpg;base64,${user.picture}`;
@@ -37,8 +50,6 @@ const BusinessCard = () => {
                 body: JSON.stringify(userData),
                 mode: "cors",
                 headers: {
-                    //TODO at the end we need this
-                    // "X-XSRF-TOKEN": csrfToken,
                     'Authorization': `Bearer ${token}`,
                     "Content-Type": "application/json",
                 },

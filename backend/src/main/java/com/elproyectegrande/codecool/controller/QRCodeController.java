@@ -2,6 +2,8 @@ package com.elproyectegrande.codecool.controller;
 
 import com.elproyectegrande.codecool.auth.QRCodeResponse;
 import com.elproyectegrande.codecool.service.QRCodeService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,7 +17,8 @@ public class QRCodeController {
     }
 
     @GetMapping("")
-    public QRCodeResponse getBusinessCardData(@RequestParam String username){
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<QRCodeResponse> getBusinessCardData(@RequestParam String username){
         return service.generate(username);
     }
 }

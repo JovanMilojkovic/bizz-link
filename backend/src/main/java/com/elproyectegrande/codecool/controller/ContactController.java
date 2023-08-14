@@ -2,13 +2,12 @@ package com.elproyectegrande.codecool.controller;
 
 
 import com.elproyectegrande.codecool.auth.ContactRequest;
-import com.elproyectegrande.codecool.model.Contact;
 import com.elproyectegrande.codecool.service.ContactService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin("http://localhost:5173/")
@@ -17,9 +16,10 @@ import java.util.List;
 public class ContactController {
     private final ContactService service;
 
+
     @GetMapping
-    public List<Contact> getContacts(){
-        return service.getContacts();
+    public ResponseEntity<?> getContacts(@RequestHeader Map<String, String> header){
+        return service.getContacts(header);
     }
 
     @PostMapping("/add-contact")

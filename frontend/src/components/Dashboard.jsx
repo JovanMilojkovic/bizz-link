@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from "react";
 import QRCode from "react-qr-code";
 import {
     MDBCol,
@@ -9,16 +9,15 @@ import {
     MDBCardBody,
     MDBCardImage,
     MDBBtn,
-    MDBTypography
-} from 'mdb-react-ui-kit';
-import { useParams, useNavigate } from 'react-router-dom';
+    MDBTypography,
+} from "mdb-react-ui-kit";
+import { useParams, useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
-
-    const username = localStorage.getItem('username');
-    const email = localStorage.getItem('email');
-    const token = localStorage.getItem('jwtToken');
-    const picture = localStorage.getItem('picture');
+    const username = localStorage.getItem("username");
+    const email = localStorage.getItem("email");
+    const token = localStorage.getItem("jwtToken");
+    const picture = localStorage.getItem("picture");
     const navigate = useNavigate();
     const param = useParams();
     const profilePicRef = useRef();
@@ -30,16 +29,16 @@ export default function Dashboard() {
             const response = await fetch(
                 `http://localhost:8080/dashboard/?id=${param.userId}`,
                 {
-                    method: 'GET',
-                    mode: 'cors',
+                    method: "GET",
+                    mode: "cors",
                     headers: {
                         Authorization: `Bearer ${token}`,
-                        'Content-Type': 'application/json',
+                        "Content-Type": "application/json",
                     },
                 }
             );
             if (response.status === 401) {
-                navigate('*');
+                navigate("*");
             }
         } catch (error) {
             console.log(error);
@@ -47,7 +46,7 @@ export default function Dashboard() {
     };
 
     const handleEditButton = async () => {
-        console.log("clicked")
+        console.log("clicked");
         try {
             const response = await fetch(
                 `http://localhost:8080/dashboard/edit-user/?id=${param.userId}`,
@@ -62,46 +61,51 @@ export default function Dashboard() {
                     },
                 }
             );
-    
+
             if (response.status == 401) {
                 navigate("*");
             } else {
-                navigate("/dashboard/edit-user/:userId")
+                navigate(`/dashboard/edit-user/${param.userId}`);
             }
         } catch (error) {
             console.log(error);
         }
     };
-    
 
     useEffect(() => {
         fetchData();
     }, []);
 
     return (
-        <div className="gradient-custom-2" >
+        <div className="gradient-custom-2">
             <MDBContainer className="py-5 h-100">
                 <MDBRow className="justify-content-center align-items-center h-100">
                     <MDBCol lg="9" xl="7">
                         <MDBCard>
                             <div
                                 className="rounded-top text-white d-flex flex-row"
-                                style={{ backgroundColor: '#000', height: '200px' }}
+                                style={{
+                                    backgroundColor: "#000",
+                                    height: "200px",
+                                }}
                             >
                                 <div
                                     className="ms-4 mt-5 d-flex flex-column"
-                                    style={{ width: '150px' }}
+                                    style={{ width: "150px" }}
                                 >
                                     <MDBCardImage
                                         src={profilePic}
                                         alt="Profile"
                                         className="mt-4 mb-2 img-thumbnail"
                                         fluid
-                                        style={{ width: '150px', zIndex: '1' }}
-                                        ref={profilePicRef}
+                                        style={{ width: "150px", zIndex: "1" }}
+                                        //ref={profilePicRef}
                                     />
                                 </div>
-                                <div className="ms-3" style={{ marginTop: '130px' }}>
+                                <div
+                                    className="ms-3"
+                                    style={{ marginTop: "130px" }}
+                                >
                                     <MDBTypography tag="h5">
                                         Hi {username}, welcome!
                                     </MDBTypography>
@@ -110,12 +114,15 @@ export default function Dashboard() {
                             </div>
                             <div
                                 className="p-4 text-black"
-                                style={{ backgroundColor: '#f8f9fa' }}
+                                style={{ backgroundColor: "#f8f9fa" }}
                             >
                                 <div className="d-flex justify-content-end text-center py-1">
-                                <MDBBtn
+                                    <MDBBtn
                                         color="dark"
-                                        style={{ height: '36px', overflow: 'visible' }}
+                                        style={{
+                                            height: "36px",
+                                            overflow: "visible",
+                                        }}
                                         onClick={(e) => handleEditButton(e)}
                                     >
                                         Edit profile
@@ -130,9 +137,9 @@ export default function Dashboard() {
                                     <MDBCardText className="mb-0">
                                         <button
                                             className="btn btn-primary"
-                                            style={{ backgroundColor: '#333' }}
-                                            onClick={()=> {
-                                                navigate("/dashboard/contacts")
+                                            style={{ backgroundColor: "#333" }}
+                                            onClick={() => {
+                                                navigate("/dashboard/contacts");
                                             }}
                                         >
                                             View All
@@ -146,7 +153,7 @@ export default function Dashboard() {
                                     <MDBCardText className="mb-0">
                                         <button
                                             className="btn btn-primary"
-                                            style={{ backgroundColor: '#333' }}
+                                            style={{ backgroundColor: "#333" }}
                                         >
                                             View Details
                                         </button>

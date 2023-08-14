@@ -1,15 +1,11 @@
 package com.elproyectegrande.codecool.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
@@ -30,9 +26,13 @@ public class User implements UserDetails {
     private String lastName;
     private String linkedin;
     private String facebook;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Contact> contacts;
+
 
     @Column(length = 1000000)
     private String picture;
+    @Getter
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -41,12 +41,8 @@ public class User implements UserDetails {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
-    public Role getRole(){
-        return role;
-    }
-
     @Override
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 

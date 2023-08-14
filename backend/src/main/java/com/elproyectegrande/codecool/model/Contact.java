@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "contacts")
+@Table(name = "contact")
 public class Contact {
     @Id
     @GeneratedValue
@@ -22,4 +22,8 @@ public class Contact {
     private String picture;
     private String linkedin;
     private String facebook;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id") // This is the foreign key column in the Contacts table
+    private User user;
 }

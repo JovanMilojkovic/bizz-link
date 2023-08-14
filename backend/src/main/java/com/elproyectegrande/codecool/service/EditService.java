@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -19,7 +18,7 @@ public class EditService {
     private final UserRepository repository;
     private final JwtService jwtService;
 
-    public ResponseEntity<EditResponse> updateUser(EditRequest request, String id) throws IOException {
+    public ResponseEntity<EditResponse> updateUser(EditRequest request, String id){
         Optional<User> optionalUser = repository.findUserByUsernameIgnoreCase(id);
         
         if (optionalUser.isEmpty()) {
@@ -53,12 +52,6 @@ public class EditService {
         if (request.getPicture() != null) {
             user.setPicture(request.getPicture());
         }
-
-
-
-        /*if (request.getPassword() != null) {
-            user.setPassword(passwordEncoder.encode(request.getPassword()));
-        }*/
 
         repository.save(user);
         String token = jwtService.generateToken(user);

@@ -8,7 +8,7 @@ import Button from "@mui/joy/Button";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import "./css_files/LogIn.css";
+import "./css_files/Login.css";
 import { useState } from "react";
 
 function ResetPassword() {

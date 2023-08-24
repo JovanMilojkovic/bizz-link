@@ -21,52 +21,54 @@ const EditUserProfile = () => {
         }));
     };
 
-    const convertBase64 = (file) =>
+    const convertBase64 = async (file) =>
         new Promise((resolve, reject) => {
             const fileReader = new FileReader();
-            fileReader.readAsDataURL(file);
+            if (file !== undefined) {
+                fileReader.readAsDataURL(file);
 
-            fileReader.onload = () => {
-                resolve(fileReader.result);
-            };
+                fileReader.onload = () => {
+                    resolve(fileReader.result);
+                };
 
-            fileReader.onerror = (error) => {
-                reject(error);
-            };
+                fileReader.onerror = (error) => {
+                    reject(error);
+                };
+            } else {
+                return;
+            }
         });
 
     const handlePictureUpload = async (event) => {
         const pictureFile = event.target.files[0];
         const base64 = await convertBase64(pictureFile);
         const imageBase64 = base64.split(",")[1];
-        //console.log(base64);
-        console.log(imageBase64);
-
         setUserData((prevUserData) => ({
             ...prevUserData,
             picture: imageBase64,
         }));
     };
 
-    const handleFormSubmit = (event) => {
+    const handleFormSubmit = async (event) => {
         event.preventDefault();
         const token = localStorage.getItem("jwtToken");
         const username = localStorage.getItem("username").toLowerCase();
 
-        fetch(`http://localhost:8080/dashboard/edit-user?id=${username}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(userData),
-        })
+        fetch(
+            `https://test-production-7e70.up.railway.app/dashboard/edit-user?id=${username}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(userData),
+            }
+        )
             .then((response) => {
                 if (response.ok) {
-                    console.log("User data updated successfully");
                     return response.json();
                 } else {
-                    console.log("User data update failed");
                     throw new Error("User data update failed");
                 }
             })
@@ -74,11 +76,9 @@ const EditUserProfile = () => {
                 const updatedUsername = responseData.username;
                 const newToken = responseData.token;
                 const picture = responseData.picture;
-                console.log(picture);
                 localStorage.setItem("username", updatedUsername);
                 localStorage.setItem("jwtToken", newToken);
                 localStorage.setItem("picture", picture);
-                console.log(`Updated username: ${updatedUsername}`);
                 navigate(`/dashboard/${updatedUsername}`);
             })
             .catch((error) => {

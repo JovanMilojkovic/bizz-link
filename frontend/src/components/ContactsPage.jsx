@@ -6,14 +6,17 @@ const ContactsPage = () => {
 
     const fetchContacts = async () => {
         try {
-            const response = await fetch("http://localhost:8080/contacts", {
-                method: "GET",
-                mode: "cors",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-            });
+            const response = await fetch(
+                `https://test-production-7e70.up.railway.app/contacts`,
+                {
+                    method: "GET",
+                    mode: "cors",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
 
             if (response.ok) {
                 const data = await response.json();

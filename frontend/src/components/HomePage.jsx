@@ -1,5 +1,4 @@
 import "./css_files/HomePage.css";
-import NavBar from "./NavBar";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
 

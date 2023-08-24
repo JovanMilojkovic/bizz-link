@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import QRCode from "react-qr-code";
+import { CryptoJS } from "crypto-js";
+
 import {
     MDBCol,
     MDBContainer,
@@ -18,6 +20,7 @@ export default function Dashboard() {
     const email = localStorage.getItem("email");
     const token = localStorage.getItem("jwtToken");
     const picture = localStorage.getItem("picture");
+    const [hashedUsername, setHashedUsername] = useState("");
     const navigate = useNavigate();
     const param = useParams();
     const profilePicRef = useRef();
@@ -27,7 +30,7 @@ export default function Dashboard() {
     const fetchData = async () => {
         try {
             const response = await fetch(
-                `http://localhost:8080/dashboard/?id=${param.userId}`,
+                `https://test-production-7e70.up.railway.app/dashboard/?id=${param.userId}`,
                 {
                     method: "GET",
                     mode: "cors",
@@ -37,7 +40,7 @@ export default function Dashboard() {
                     },
                 }
             );
-            if (response.status === 401) {
+            if (response.status !== 200) {
                 navigate("*");
             }
         } catch (error) {
@@ -46,23 +49,20 @@ export default function Dashboard() {
     };
 
     const handleEditButton = async () => {
-        console.log("clicked");
         try {
             const response = await fetch(
-                `http://localhost:8080/dashboard/edit-user/?id=${param.userId}`,
+                `/dashboard/edit-user/?id=${param.userId}`,
                 {
                     method: "GET",
                     mode: "cors",
                     headers: {
-                        //TODO at the end we need this
-                        // "X-XSRF-TOKEN": csrfToken,
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json",
                     },
                 }
             );
 
-            if (response.status == 401) {
+            if (response.status != 200) {
                 navigate("*");
             } else {
                 navigate(`/dashboard/edit-user/${param.userId}`);
@@ -74,6 +74,9 @@ export default function Dashboard() {
 
     useEffect(() => {
         fetchData();
+        const secretKey = "yourSecretKey";
+        const encrypted = CryptoJS.AES.encrypt(username, secretKey).toString();
+        setHashedUsername(encrypted);
     }, []);
 
     return (
@@ -94,7 +97,11 @@ export default function Dashboard() {
                                     style={{ width: "150px" }}
                                 >
                                     <MDBCardImage
-                                        src={profilePic}
+                                        src={
+                                            profilePic.length !== null
+                                                ? profilePic
+                                                : "/src/components/pictures/PngItem_1468295.png"
+                                        }
                                         alt="Profile"
                                         className="mt-4 mb-2 img-thumbnail"
                                         fluid
@@ -163,7 +170,7 @@ export default function Dashboard() {
                                     <MDBCol className="mb-2">
                                         <QRCode
                                             style={{ height: 100, width: 100 }}
-                                            value={`http://localhost:5173/api/v1/business-card/${username}`}
+                                            value={`https://bizlinkbyjj.netlify.app/#/api/v1/business-card/${username}`}
                                         />
                                     </MDBCol>
                                 </MDBRow>

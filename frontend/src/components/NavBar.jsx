@@ -30,13 +30,11 @@ function NavBar() {
         const username = localStorage.getItem("username").toLowerCase();
         try {
             const response = await fetch(
-                `http://localhost:8080/dashboard/?id=${username}`,
+                `https://test-production-7e70.up.railway.app/dashboard/?id=${username}`,
                 {
                     method: "GET",
                     mode: "cors",
                     headers: {
-                        //TODO at the end we need this
-                        // "X-XSRF-TOKEN": csrfToken,
                         Authorization: `Bearer ${token}`,
                         "Content-Type": "application/json",
                     },

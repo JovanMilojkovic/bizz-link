@@ -25,16 +25,15 @@ public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
 
-//    @Value("${frontend.url}")
-//    private String frontendUrl;
-
-    @Value("${localhost.url}")
-    private String development;
+    @Value("${frontend.url}")
+    private String frontendUrl;
+//
+//   @Value("${localhost.url}")
+//    private String development;
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
-        System.out.println(development);
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList(development));
+        configuration.setAllowedOrigins(Collections.singletonList(frontendUrl));
         configuration.setAllowedMethods(Collections.singletonList("*"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Collections.singletonList("*"));

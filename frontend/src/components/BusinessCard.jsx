@@ -14,6 +14,7 @@ const BusinessCard = () => {
         facebook: "",
         picture: "",
     });
+    
     const param = useParams();
     const profilePicRef = useRef(null);
     const navigate = useNavigate();

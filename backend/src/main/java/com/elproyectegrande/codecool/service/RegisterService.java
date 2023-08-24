@@ -27,13 +27,14 @@ public class RegisterService {
         if (tempUser.isPresent()){
             return new ResponseEntity<>(userExistMsg, HttpStatusCode.valueOf(403));
         }
-            var createNewUser = User.builder()
-                    .username(request.getUsername())
-                    .email(request.getEmail())
-                    .password(passwordEncoder.encode(request.getPassword()))
-                    .role(Role.USER)
-                    .build();
-            repository.save(createNewUser);
-            return new ResponseEntity<>("Account created",HttpStatusCode.valueOf(200));
+        var createNewUser = User.builder()
+                .username(request.getUsername())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(Role.USER)
+                .build();
+        repository.save(createNewUser);
+        return new ResponseEntity<>("Account created",HttpStatusCode.valueOf(200));
     }
 }
+

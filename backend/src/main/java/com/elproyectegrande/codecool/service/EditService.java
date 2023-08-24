@@ -20,7 +20,7 @@ public class EditService {
 
     public ResponseEntity<EditResponse> updateUser(EditRequest request, String id){
         Optional<User> optionalUser = repository.findUserByUsernameIgnoreCase(id);
-        
+
         if (optionalUser.isEmpty()) {
             return new ResponseEntity<>( HttpStatus.NOT_FOUND);
         }

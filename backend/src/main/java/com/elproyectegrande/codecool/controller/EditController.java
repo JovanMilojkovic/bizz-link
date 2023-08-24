@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 @RestController
-@CrossOrigin("http://localhost:5173")
 @RequestMapping("/dashboard")
 public class EditController {
 
@@ -26,4 +25,5 @@ public class EditController {
         return editService.updateUser(request, id);
     }
 }
+
 

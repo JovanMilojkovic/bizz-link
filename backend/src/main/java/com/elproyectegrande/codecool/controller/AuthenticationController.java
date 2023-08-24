@@ -9,12 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin("http://localhost:5173/")
-@RequestMapping("/api/v1/auth/")
+@RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
 
+
     private final AuthenticationService service;
+
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> authenticate(

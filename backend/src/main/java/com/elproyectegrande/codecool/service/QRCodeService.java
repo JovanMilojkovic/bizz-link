@@ -18,6 +18,7 @@ public class QRCodeService {
     private final JwtService jwtService;
 
     public ResponseEntity<QRCodeResponse> generate(String username){
+        System.out.println("qr code request made");
         Optional<User> user = repository.findUserByUsernameIgnoreCase(username);
         User actualUser = user.get();
         QRCodeResponse response = new QRCodeResponse();

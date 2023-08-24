@@ -3,6 +3,7 @@ package com.elproyectegrande.codecool.security;
 
 import com.elproyectegrande.codecool.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -24,10 +25,16 @@ public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
 
+//    @Value("${frontend.url}")
+//    private String frontendUrl;
+
+    @Value("${localhost.url}")
+    private String development;
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
+        System.out.println(development);
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:5173/"));
+        configuration.setAllowedOrigins(Collections.singletonList(development));
         configuration.setAllowedMethods(Collections.singletonList("*"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Collections.singletonList("*"));

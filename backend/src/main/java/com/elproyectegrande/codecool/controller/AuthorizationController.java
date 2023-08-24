@@ -1,7 +1,6 @@
 package com.elproyectegrande.codecool.controller;
 
 
-import com.elproyectegrande.codecool.auth.EditRequest;
 import com.elproyectegrande.codecool.service.AuthorizationService;
 import com.elproyectegrande.codecool.service.EditService;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@CrossOrigin("http://localhost:5173")
 @RequestMapping("/dashboard")
 public class AuthorizationController {
 

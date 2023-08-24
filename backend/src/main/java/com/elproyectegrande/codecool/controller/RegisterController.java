@@ -8,15 +8,14 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@CrossOrigin("http://localhost:5173/")
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class RegisterController {
 
-        private final RegisterService service;
+    private final RegisterService service;
 
-        @PostMapping("/signup")
-        public ResponseEntity<String> signup(@RequestBody RegisterRequest request) {
-            return service.registerNewUser(request);
-        }
+    @PostMapping("/signup")
+    public ResponseEntity<String> signup(@RequestBody RegisterRequest request) {
+        return service.registerNewUser(request);
+    }
 }

@@ -8,7 +8,7 @@ import Button from "@mui/joy/Button";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import "./css_files/LogIn.css";
+import "./css_files/Login.css";
 import { useState } from "react";
 
 function ResetPassword() {
@@ -16,14 +16,17 @@ function ResetPassword() {
     const [email, setEmail] = useState("");
 
     const resetPassword = async () => {
-        const response = await fetch("/api/v1/reset/", {
-            method: "POST",
-            body: JSON.stringify({ email }),
-            mode: "cors",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        }).then((res) => res);
+        const response = await fetch(
+            `https://test-production-7e70.up.railway.app/api/v1/reset/`,
+            {
+                method: "POST",
+                body: JSON.stringify({ email }),
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        ).then((res) => res);
         if (response.ok) {
             alert("Reset email was sent,please check inbox to reset password");
             navigate("/api/v1/login/");

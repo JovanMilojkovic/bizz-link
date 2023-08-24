@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import useGlobalState from "../globalState";
+
 // import jwt_decode from "jwt-decode";
 
 function Login() {
@@ -19,11 +20,6 @@ function Login() {
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
-    //TODO at the end adjust this for csrf security
-    // const csrfToken = document.cookie.replace(
-    //     /(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/,
-    //     "$1"
-    // );
 
     const setLogInFailed = useGlobalState(
         (selector) => selector.setLogInFailed
@@ -66,20 +62,20 @@ function Login() {
         let response;
 
         try {
-            response = await fetch("http://localhost:8080/api/v1/auth/login", {
-                method: "POST",
-                body: JSON.stringify(userModel),
-                mode: "cors",
-                headers: {
-                    //TODO at the end we need this
-                    // "X-XSRF-TOKEN": csrfToken,
-                    "Content-Type": "application/json",
-                },
-            });
+            response = await fetch(
+                `https://test-production-7e70.up.railway.app/api/v1/auth/login`,
+                {
+                    method: "POST",
+                    body: JSON.stringify(userModel),
+                    mode: "cors",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
             const responseBody = await response.json();
             const token = responseBody.token;
             const username = responseBody.username.toLowerCase();
-            console.log(responseBody)
             setIsLoggedIn(true);
             setLogInUserData(responseBody);
             localStorage.setItem("jwtToken", token);
@@ -97,8 +93,6 @@ function Login() {
 
     function handleKeyPress(e) {
         if (isButtonValid && e.key === "Enter") {
-            console.log(window.location.href);
-            console.log("HI");
             handleCLick();
         }
     }

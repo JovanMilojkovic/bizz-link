@@ -22,13 +22,6 @@ function SignUp() {
     const [userNameError, setUserNameError] = useState("");
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
-
-    //TODO "We will need this later for csrf security"
-    // const csrfToken = document.cookie.replace(
-    //     /(?:(?:^|.*;\s*)XSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/,
-    //     "$1"
-    // );
-
     const setSignupFailed = useGlobalState(
         (selector) => selector.setSignupFailed
     );
@@ -86,18 +79,17 @@ function SignUp() {
         passwordError == "";
 
     const handleCLick = async () => {
-        const createUser = await fetch(`http://localhost:8080/api/v1/signup`, {
-            method: "POST",
-            body: JSON.stringify(userModel),
-            mode: "cors",
-            headers: {
-                //TODO need for csrf security
-                //"X-XSRF-TOKEN": `${csrfToken}`,
-                "Content-Type": "application/json",
-            },
-        });
-        console.log(createUser);
-
+        const createUser = await fetch(
+            `https://test-production-7e70.up.railway.app/api/v1/signup`,
+            {
+                method: "POST",
+                body: JSON.stringify(userModel),
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
         if (createUser.ok) {
             alert(
                 "Profile sucsefuly created 🙂 please check Your Email to confirm account"

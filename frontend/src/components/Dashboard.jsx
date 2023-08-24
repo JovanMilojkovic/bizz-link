@@ -27,7 +27,7 @@ export default function Dashboard() {
     const fetchData = async () => {
         try {
             const response = await fetch(
-                `http://localhost:8080/dashboard/?id=${param.userId}`,
+                `http://localhost:8080/dashboard?id=${param.userId}`,
                 {
                     method: "GET",
                     mode: "cors",

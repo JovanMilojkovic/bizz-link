@@ -45,7 +45,7 @@ const BusinessCard = () => {
     const handleAddButton = (event) => {
         event.preventDefault();
         try {
-            fetch("http://localhost:8080/contacts/add-contact", {
+            fetch(`http://localhost:8080/contacts/add-contact?username=${username}`, {
                 method: "POST",
                 body: JSON.stringify(userData),
                 mode: "cors",

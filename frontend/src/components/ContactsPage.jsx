@@ -6,7 +6,7 @@ const ContactsPage = () => {
 
     const fetchContacts = async () => {
         try {
-            const response = await fetch("http://localhost:8080/contacts", {
+            const response = await fetch(`http://localhost:8080/contacts`, {
                 method: "GET",
                 mode: "cors",
                 headers: {

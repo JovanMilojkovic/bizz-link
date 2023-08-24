@@ -79,7 +79,7 @@ function Login() {
             const responseBody = await response.json();
             const token = responseBody.token;
             const username = responseBody.username.toLowerCase();
-            
+            console.log(responseBody)
             setIsLoggedIn(true);
             setLogInUserData(responseBody);
             localStorage.setItem("jwtToken", token);

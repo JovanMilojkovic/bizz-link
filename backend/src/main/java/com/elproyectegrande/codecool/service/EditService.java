@@ -1,28 +1,44 @@
 package com.elproyectegrande.codecool.service;
 
-
 import com.elproyectegrande.codecool.auth.EditRequest;
 import com.elproyectegrande.codecool.auth.EditResponse;
 import com.elproyectegrande.codecool.model.User;
 import com.elproyectegrande.codecool.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class EditService {
     private final UserRepository repository;
     private final JwtService jwtService;
 
-    public ResponseEntity<EditResponse> updateUser(EditRequest request, String id){
+    private EditResponse editResponse;
+
+
+    public EditService(UserRepository repository, JwtService jwtService, EditResponse editResponse) {
+        this.repository = repository;
+        this.jwtService = jwtService;
+        this.editResponse = editResponse;
+    }
+
+    public ResponseEntity<Optional<User>> getUserData(String userName, String id, String email) throws IOException {
+        if (!userName.toLowerCase().equals(id)) {
+            throw new IOException("User not found");
+        }
+        Optional<User> optionalUser = repository.findByEmail(email);
+
+        return new ResponseEntity<>(optionalUser, HttpStatus.OK);
+    }
+
+    public ResponseEntity<EditResponse> updateUser(EditRequest request, String id) {
         Optional<User> optionalUser = repository.findUserByUsernameIgnoreCase(id);
 
         if (optionalUser.isEmpty()) {
-            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         User user = optionalUser.get();
 

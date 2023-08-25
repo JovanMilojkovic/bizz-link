@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import QRCode from "react-qr-code";
-import { CryptoJS } from "crypto-js";
+import CryptoJS from "crypto-js";
+import { AES } from "crypto-js/aes";
 
 import {
     MDBCol,
@@ -30,7 +31,7 @@ export default function Dashboard() {
     const fetchData = async () => {
         try {
             const response = await fetch(
-                `https://test-production-7e70.up.railway.app/dashboard/?id=${param.userId}`,
+                `http://localhost:8080/dashboard/?id=${param.userId}`,
                 {
                     method: "GET",
                     mode: "cors",
@@ -51,7 +52,7 @@ export default function Dashboard() {
     const handleEditButton = async () => {
         try {
             const response = await fetch(
-                `/dashboard/edit-user/?id=${param.userId}`,
+                `http://localhost:8080/dashboard/edit-user/?id=${param.userId}`,
                 {
                     method: "GET",
                     mode: "cors",
@@ -72,12 +73,15 @@ export default function Dashboard() {
         }
     };
 
+    const encrypted = CryptoJS.AES.encrypt(username, secretKey).toString();
+
     useEffect(() => {
         fetchData();
-        const secretKey = "yourSecretKey";
-        const encrypted = CryptoJS.AES.encrypt(username, secretKey).toString();
+        console.log(encrypted);
         setHashedUsername(encrypted);
     }, []);
+
+    localStorage.setItem("hashedUsername", hashedUsername);
 
     return (
         <div className="gradient-custom-2">
@@ -170,7 +174,12 @@ export default function Dashboard() {
                                     <MDBCol className="mb-2">
                                         <QRCode
                                             style={{ height: 100, width: 100 }}
+<<<<<<< HEAD
                                             value={`https://bizlinkbyjj.netlify.app/#/api/v1/business-card/${hashedUsername}`}
+=======
+                                            value={`http://localhost:5173/#/api/v1/business-card/${hashedUsername}`}
+                                            // value={`https://bizlinkbyjj.netlify.app/#/api/v1/business-card/${username}`}
+>>>>>>> e19451c6c64a2cc5a058a95b4ee9b110290a00a5
                                         />
                                     </MDBCol>
                                 </MDBRow>

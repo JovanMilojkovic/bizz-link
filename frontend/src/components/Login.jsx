@@ -62,17 +62,14 @@ function Login() {
         let response;
 
         try {
-            response = await fetch(
-                `https://test-production-7e70.up.railway.app/api/v1/auth/login`,
-                {
-                    method: "POST",
-                    body: JSON.stringify(userModel),
-                    mode: "cors",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
+            response = await fetch(`http://localhost:8080/api/v1/auth/login`, {
+                method: "POST",
+                body: JSON.stringify(userModel),
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
             const responseBody = await response.json();
             const token = responseBody.token;
             const username = responseBody.username.toLowerCase();

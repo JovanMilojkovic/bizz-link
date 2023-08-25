@@ -14,16 +14,18 @@ const BusinessCard = () => {
         facebook: "",
         picture: "",
     });
-    
+
     const param = useParams();
     const profilePicRef = useRef(null);
     const navigate = useNavigate();
     const token = localStorage.getItem("jwtToken");
     const username = localStorage.getItem("username").toLowerCase();
+    const hashedUsername = localStorage.getItem("hashedUsername");
 
     useEffect(() => {
         fetch(
-            `https://test-production-7e70.up.railway.app/business-card?username=${param.username}`,
+            // `https://test-production-7e70.up.railway.app/business-card?username=${param.username}`,
+            `http://localhost:8080/business-card?username=${hashedUsername}`,
             {
                 method: "GET",
                 headers: {
@@ -32,6 +34,7 @@ const BusinessCard = () => {
             }
         )
             .then((response) => {
+                console.log(response);
                 if (response.ok) {
                     return response.json();
                 } else {

@@ -29,11 +29,11 @@ function SignUp() {
         username: `${username}`,
         email: `${email}`,
         password: `${password}`,
-        firstName: null,
-        lastName: null,
-        linkedin: null,
-        facebook: null,
-        picture: null,
+        firstName: "",
+        lastName: "",
+        linkedin: "",
+        facebook: "",
+        picture: "",
     };
 
     const checkUserName = () => {
@@ -79,17 +79,14 @@ function SignUp() {
         passwordError == "";
 
     const handleCLick = async () => {
-        const createUser = await fetch(
-            `https://test-production-7e70.up.railway.app/api/v1/signup`,
-            {
-                method: "POST",
-                body: JSON.stringify(userModel),
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
-        );
+        const createUser = await fetch(`http://localhost:8080/api/v1/signup`, {
+            method: "POST",
+            body: JSON.stringify(userModel),
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
         if (createUser.ok) {
             alert(
                 "Profile sucsefuly created 🙂 please check Your Email to confirm account"
@@ -97,7 +94,7 @@ function SignUp() {
             navigate("/api/v1/login/");
         }
         if (!createUser.ok) {
-            setSignupFailed(createUser.status);
+            setSignupFailed(await createUser.text());
             navigate("/api/v1/error/");
             return;
         }

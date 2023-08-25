@@ -27,14 +27,13 @@ public class SecurityConfiguration {
 
 //    @Value("${frontend.url}")
 //    private String frontendUrl;
-
-    @Value("${localhost.url}")
+//
+   @Value("${localhost.url}")
     private String development;
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
-        System.out.println(development);
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList(development));
+        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:5173"));
         configuration.setAllowedMethods(Collections.singletonList("*"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Collections.singletonList("*"));

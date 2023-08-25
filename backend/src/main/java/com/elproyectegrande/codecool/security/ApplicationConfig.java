@@ -1,5 +1,6 @@
 package com.elproyectegrande.codecool.security;
 
+import com.elproyectegrande.codecool.auth.EditResponse;
 import com.elproyectegrande.codecool.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,11 @@ public class ApplicationConfig {
         ///!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         return username -> (UserDetails) repository.findByEmail(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
+    @Bean
+    public EditResponse editResponse(){
+        return new EditResponse();
     }
 
     @Bean

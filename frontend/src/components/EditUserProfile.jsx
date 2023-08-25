@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const EditUserProfile = () => {
     const navigate = useNavigate();
+    const param = useParams();
+    const token = localStorage.getItem("jwtToken");
+    const email = localStorage.getItem("email");
     // State to hold user data
     const [userData, setUserData] = useState({
         username: "",
@@ -12,6 +17,26 @@ const EditUserProfile = () => {
         facebook: "",
         picture: "",
     });
+
+    const fetchData = async () => {
+        try {
+            const response = await fetch(
+                `http://localhost:8080/dashboard/edit-user?id=${param.userId}&email=${email}`,
+                {
+                    method: "GET",
+                    mode: "cors",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+            const data = await response.json();
+            setUserData({ ...data });
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -54,17 +79,14 @@ const EditUserProfile = () => {
         const token = localStorage.getItem("jwtToken");
         const username = localStorage.getItem("username").toLowerCase();
 
-        fetch(
-            `https://test-production-7e70.up.railway.app/dashboard/edit-user?id=${username}`,
-            {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify(userData),
-            }
-        )
+        fetch(`http://localhost:8080/dashboard/edit-user?id=${username}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(userData),
+        })
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -90,15 +112,19 @@ const EditUserProfile = () => {
         navigate(`/dashboard/${localStorage.getItem("username")}`);
     }
 
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     return (
         <>
             <div className="container mt-4">
                 <h2 className="mb-4">Edit User Profile</h2>
                 <form onSubmit={handleFormSubmit}>
                     <div className="mb-3">
-                        <label htmlFor="username" className="form-label">
+                        <p htmlFor="username" className="form-label">
                             Username:
-                        </label>
+                        </p>
                         <input
                             type="text"
                             name="username"
@@ -109,9 +135,9 @@ const EditUserProfile = () => {
                         />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="firstName" className="form-label">
+                        <p htmlFor="firstName" className="form-label">
                             First Name:
-                        </label>
+                        </p>
                         <input
                             type="text"
                             name="firstName"
@@ -122,9 +148,9 @@ const EditUserProfile = () => {
                         />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="lastName" className="form-label">
+                        <p htmlFor="lastName" className="form-label">
                             Last Name:
-                        </label>
+                        </p>
                         <input
                             type="text"
                             name="lastName"
@@ -135,9 +161,9 @@ const EditUserProfile = () => {
                         />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="linkedin" className="form-label">
+                        <p htmlFor="linkedin" className="form-label">
                             LinkedIn:
-                        </label>
+                        </p>
                         <input
                             type="text"
                             name="linkedin"
@@ -147,9 +173,9 @@ const EditUserProfile = () => {
                         />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="facebook" className="form-label">
+                        <p htmlFor="facebook" className="form-label">
                             Facebook:
-                        </label>
+                        </p>
                         <input
                             type="text"
                             name="facebook"
@@ -159,9 +185,9 @@ const EditUserProfile = () => {
                         />
                     </div>
                     <div className="mb-3">
-                        <label htmlFor="picture" className="form-label">
+                        <p htmlFor="picture" className="form-label">
                             Upload Picture:
-                        </label>
+                        </p>
                         <input
                             type="file"
                             accept="image/*"

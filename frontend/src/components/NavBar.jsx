@@ -30,7 +30,7 @@ function NavBar() {
         const username = localStorage.getItem("username").toLowerCase();
         try {
             const response = await fetch(
-                `https://test-production-7e70.up.railway.app/dashboard/?id=${username}`,
+                `http://localhost:8080/dashboard/?id=${username}`,
                 {
                     method: "GET",
                     mode: "cors",

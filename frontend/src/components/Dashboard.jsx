@@ -170,7 +170,7 @@ export default function Dashboard() {
                                     <MDBCol className="mb-2">
                                         <QRCode
                                             style={{ height: 100, width: 100 }}
-                                            value={`https://bizlinkbyjj.netlify.app/#/api/v1/business-card/${username}`}
+                                            value={`https://bizlinkbyjj.netlify.app/#/api/v1/business-card/${hashedUsername}`}
                                         />
                                     </MDBCol>
                                 </MDBRow>

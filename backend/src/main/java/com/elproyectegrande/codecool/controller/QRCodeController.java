@@ -25,16 +25,15 @@ public class QRCodeController {
     @GetMapping("")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<QRCodeResponse> getBusinessCardData(@RequestParam String username){
-        return service.generate(username);
+        String decryptedUsername = decryptData(username);
+        return service.generate(decryptedUsername);
     }
 
 
     public String decryptData(String encryptedData) {
         try {
-            // Convert the encrypted data from base64
             byte[] encryptedBytes = Base64Utils.decodeFromString(encryptedData);
 
-            // Initialize the AES cipher in decryption mode
             Cipher cipher = Cipher.getInstance("AES");
             SecretKeySpec secretKeySpec = new SecretKeySpec(secretKey.getBytes(StandardCharsets.UTF_8), "AES");
             cipher.init(Cipher.DECRYPT_MODE, secretKeySpec);

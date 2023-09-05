@@ -16,13 +16,10 @@ public class EditService {
     private final UserRepository repository;
     private final JwtService jwtService;
 
-    private EditResponse editResponse;
 
-
-    public EditService(UserRepository repository, JwtService jwtService, EditResponse editResponse) {
+    public EditService(UserRepository repository, JwtService jwtService) {
         this.repository = repository;
         this.jwtService = jwtService;
-        this.editResponse = editResponse;
     }
 
     public ResponseEntity<Optional<User>> getUserData(String userName, String id, String email) throws IOException {

@@ -25,7 +25,7 @@ public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
 
-//    @Value("${frontend.url}")
+    //    @Value("${frontend.url}")
 //    private String frontendUrl;
 //
    @Value("${localhost.url}")
@@ -50,8 +50,8 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/v1/signup", "/api/v1/auth/login").permitAll()
-                        .requestMatchers("/dashboard/**", "/add-contact/**", "/business-card/**").hasAuthority("USER")
+                        .requestMatchers("/api/v1/signup", "/api/v1/auth/login","/business-card/**").permitAll()
+                        .requestMatchers("/dashboard/**", "/add-contact/**").hasAuthority("USER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -1,7 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect } from "react";
 import QRCode from "react-qr-code";
-import CryptoJS from "crypto-js";
-import { AES } from "crypto-js/aes";
 
 import {
     MDBCol,
@@ -21,11 +19,9 @@ export default function Dashboard() {
     const email = localStorage.getItem("email");
     const token = localStorage.getItem("jwtToken");
     const picture = localStorage.getItem("picture");
-    const [hashedUsername, setHashedUsername] = useState("");
+    const userId = localStorage.getItem("id");
     const navigate = useNavigate();
     const param = useParams();
-    const profilePicRef = useRef();
-    const secretKey="8ffced1f9076e03cb1662050614471201a546838812b2439d643e0a34e2d5f94";
 
     const profilePic = `data:image/jpg;base64,${picture}`;
 
@@ -74,15 +70,9 @@ export default function Dashboard() {
         }
     };
 
-    const encrypted = CryptoJS.AES.encrypt(username, secretKey).toString();
-
     useEffect(() => {
         fetchData();
-        console.log(encrypted);
-        setHashedUsername(encrypted);
     }, []);
-
-    localStorage.setItem("hashedUsername", hashedUsername);
 
     return (
         <div className="gradient-custom-2">
@@ -175,7 +165,7 @@ export default function Dashboard() {
                                     <MDBCol className="mb-2">
                                         <QRCode
                                             style={{ height: 100, width: 100 }}
-                                            value={`http://localhost:5173/#/api/v1/business-card/${hashedUsername}`}
+                                            value={`http://localhost:5173/#/api/v1/business-card/${userId}`}
                                             // value={`https://bizlinkbyjj.netlify.app/#/api/v1/business-card/${username}`}
                                         />
                                     </MDBCol>

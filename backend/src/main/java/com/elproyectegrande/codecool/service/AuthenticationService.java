@@ -26,6 +26,7 @@ public class AuthenticationService {
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
+                .id(user.getId())
                 .email(request.getEmail())
                 .username(user.getUsername())
                 .picture(user.getPicture())

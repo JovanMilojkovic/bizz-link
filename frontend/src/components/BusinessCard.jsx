@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import QRCode from "react-qr-code";
 import "./css_files/BusinessCard.css";
-import { useParams } from "react-router";
 import { useNavigate } from "react-router";
 
 const BusinessCard = () => {
@@ -14,14 +13,13 @@ const BusinessCard = () => {
         facebook: "",
         picture: "",
     });
-
-    const param = useParams();
     const profilePicRef = useRef(null);
     const navigate = useNavigate();
     const token = localStorage.getItem("jwtToken");
     const username = localStorage.getItem("username").toLowerCase();
-    const hashedUsername = localStorage.getItem("hashedUsername");
+    const userId = localStorage.getItem("id");
 
+<<<<<<< HEAD
     useEffect(() => {
         fetch(
             // `https://test-production-7e70.up.railway.app/business-card?username=${param.username}`,
@@ -33,8 +31,17 @@ const BusinessCard = () => {
                 },
             }
         )
+=======
+    const fetchData = () => {
+        // `https://test-production-7e70.up.railway.app/business-card?username=${param.username}`,
+        fetch(`http://localhost:8080/business-card/?userId=${userId}`, {
+            method: "GET",
+            // headers: {
+            //     Authorization: `Bearer ${token}`,
+            // },
+        })
+>>>>>>> cdbf4f1676afafd9ba47c4af9d011138d450e416
             .then((response) => {
-                console.log(response);
                 if (response.ok) {
                     return response.json();
                 } else {
@@ -42,10 +49,11 @@ const BusinessCard = () => {
                 }
             })
             .then((user) => {
+                console.log(user);
                 setUserData(user);
                 profilePicRef.current.src = `data:image/jpg;base64,${user.picture}`;
             });
-    }, []);
+    };
 
     const handleAddButton = (event) => {
         event.preventDefault();
@@ -73,6 +81,10 @@ const BusinessCard = () => {
             console.log(error);
         }
     };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <div className="container my-4 d-flex justify-content-center">

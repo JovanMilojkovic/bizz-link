@@ -74,12 +74,13 @@ function Login() {
             const token = responseBody.token;
             const username = responseBody.username.toLowerCase();
             setIsLoggedIn(true);
-            setLogInUserData(responseBody);
+            setLogInUserData(token);
+            console.log(responseBody);
             localStorage.setItem("jwtToken", token);
             localStorage.setItem("username", responseBody.username);
             localStorage.setItem("email", responseBody.email);
             localStorage.setItem("picture", responseBody.picture);
-            setUserToken(token);
+            localStorage.setItem("id", responseBody.id);
             navigate(`/dashboard/${username}`);
         } catch (error) {
             setLogInFailed(response.status);

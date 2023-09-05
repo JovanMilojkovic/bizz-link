@@ -2,7 +2,6 @@ package com.elproyectegrande.codecool.security;
 
 import com.elproyectegrande.codecool.auth.EditResponse;
 import com.elproyectegrande.codecool.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,9 +15,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@RequiredArgsConstructor
 public class ApplicationConfig {
+
     private final UserRepository repository;
+
+    public ApplicationConfig(UserRepository repository) {
+        this.repository = repository;
+    }
 
     @Bean
     public UserDetailsService userDetailsService() {

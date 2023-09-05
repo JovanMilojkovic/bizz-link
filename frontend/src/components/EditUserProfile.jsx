@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 
 const EditUserProfile = () => {
     const navigate = useNavigate();
@@ -79,14 +78,17 @@ const EditUserProfile = () => {
         const token = localStorage.getItem("jwtToken");
         const username = localStorage.getItem("username").toLowerCase();
 
-        fetch(`http://localhost:8080/dashboard/edit-user?id=${username}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(userData),
-        })
+        await fetch(
+            `http://localhost:8080/dashboard/edit-user?id=${username}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(userData),
+            }
+        )
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -96,6 +98,7 @@ const EditUserProfile = () => {
             })
             .then((responseData) => {
                 const updatedUsername = responseData.username;
+                console.log(updatedUsername);
                 const newToken = responseData.token;
                 const picture = responseData.picture;
                 localStorage.setItem("username", updatedUsername);

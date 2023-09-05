@@ -25,7 +25,7 @@ const BusinessCard = () => {
     useEffect(() => {
         fetch(
             // `https://test-production-7e70.up.railway.app/business-card?username=${param.username}`,
-            `http://localhost:8080/business-card?username=${hashedUsername}`,
+            `http://localhost:8080/business-card?username=${username}`,
             {
                 method: "GET",
                 headers: {

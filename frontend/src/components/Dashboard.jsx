@@ -25,6 +25,7 @@ export default function Dashboard() {
     const navigate = useNavigate();
     const param = useParams();
     const profilePicRef = useRef();
+    const secretKey="8ffced1f9076e03cb1662050614471201a546838812b2439d643e0a34e2d5f94";
 
     const profilePic = `data:image/jpg;base64,${picture}`;
 
@@ -174,12 +175,8 @@ export default function Dashboard() {
                                     <MDBCol className="mb-2">
                                         <QRCode
                                             style={{ height: 100, width: 100 }}
-<<<<<<< HEAD
-                                            value={`https://bizlinkbyjj.netlify.app/#/api/v1/business-card/${hashedUsername}`}
-=======
                                             value={`http://localhost:5173/#/api/v1/business-card/${hashedUsername}`}
                                             // value={`https://bizlinkbyjj.netlify.app/#/api/v1/business-card/${username}`}
->>>>>>> e19451c6c64a2cc5a058a95b4ee9b110290a00a5
                                         />
                                     </MDBCol>
                                 </MDBRow>

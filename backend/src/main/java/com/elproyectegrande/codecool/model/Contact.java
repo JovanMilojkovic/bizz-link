@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "contact")
 public class Contact {
     @Id
-    @GeneratedValue
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
     private String firstname;
     private String lastname;
     private String email;
@@ -24,6 +24,5 @@ public class Contact {
     private String facebook;
 
     @ManyToOne
-    @JoinColumn(name = "user_id") // This is the foreign key column in the Contacts table
     private User user;
 }

@@ -1,6 +1,5 @@
 package com.elproyectegrande.codecool.service;
 
-import com.elproyectegrande.codecool.auth.EditRequest;
 import com.elproyectegrande.codecool.auth.RegisterRequest;
 import com.elproyectegrande.codecool.model.Role;
 import com.elproyectegrande.codecool.model.User;
@@ -25,7 +24,7 @@ public class RegisterService {
         String userExistMsg = "User already exist";
         Optional<User> tempUser = repository.findByEmail(request.getEmail());
         if (tempUser.isPresent()){
-            return new ResponseEntity<>(userExistMsg, HttpStatusCode.valueOf(403));
+            return new ResponseEntity<>(userExistMsg, HttpStatusCode.valueOf(400));
         }
         var createNewUser = User.builder()
                 .username(request.getUsername())

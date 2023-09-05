@@ -17,9 +17,10 @@ import java.util.List;
 @Table(name = "_user")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
     private String username;
+    @Column(unique = true)
     private String email;
     private String password;
     private String firstName;

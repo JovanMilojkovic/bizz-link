@@ -16,7 +16,7 @@ public class AuthorizationService {
 
     public ResponseEntity<?> authorize(String token, String id) {
         String username = jwtService.extractUsername(token);
-        if (id.equals(username.toLowerCase())) {
+        if (id.equalsIgnoreCase(username)) {
             return new ResponseEntity<>(HttpStatusCode.valueOf(200));
         } else {
             return new ResponseEntity<>(HttpStatusCode.valueOf(401));

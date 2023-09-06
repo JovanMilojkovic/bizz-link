@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/dashboard")
+@RequestMapping("/edit-user")
 public class EditController {
 
     private final EditService editService;
@@ -25,14 +25,14 @@ public class EditController {
         this.jwtService = jwtService;
     }
 
-    @GetMapping("/edit-user")
+    @GetMapping("/**")
     public ResponseEntity<Optional<User>>getUserData(@RequestHeader Map<String, String> header, @RequestParam String id, @RequestParam String email) throws IOException {
         String token = header.get("authorization").substring(7);
         String userName = jwtService.extractUsername(token);
         return editService.getUserData(userName,id,email);
     }
 
-    @PutMapping("/edit-user")
+    @PutMapping("/**")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<EditResponse> edit(@RequestBody EditRequest request, @RequestParam String id){
         return editService.updateUser(request, id);

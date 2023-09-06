@@ -23,7 +23,7 @@ public class EditService {
     }
 
     public ResponseEntity<Optional<User>> getUserData(String userName, String id, String email) throws IOException {
-        if (!userName.toLowerCase().equals(id)) {
+        if (!userName.equalsIgnoreCase(id)) {
             throw new IOException("User not found");
         }
         Optional<User> optionalUser = repository.findByEmail(email);

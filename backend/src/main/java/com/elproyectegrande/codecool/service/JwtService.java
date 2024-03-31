@@ -1,5 +1,6 @@
 package com.elproyectegrande.codecool.service;
 
+import com.elproyectegrande.codecool.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -11,12 +12,12 @@ import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
 @Service
 public class JwtService {
+
 
     @Value("${secret.key}")
     private String SECRET_KEY;
@@ -26,24 +27,40 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
+    public String extractEmail(String token) {
+        return extractClaim(token, claims -> (String) claims.get("Email"));
+    }
 
-    public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+    public String generateToken(User user) {
+        return generateToken(Map.of("Email", user.getEmail()), user);
+    }
+
+    public String generateActivationLinkToken(User newRegistredUser) {
+        return Jwts.builder()
+                .setSubject(newRegistredUser.getId())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + (1000 * 60 * 15)))
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+    public String extractUserId(String token) {
+        return extractClaim(token, Claims::getSubject);
     }
 
     public String generateToken(
             Map<String, Object> extraClaims,
             UserDetails userDetails
     ) {
-        return Jwts
-                .builder()
-                .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
-                .claim(String.valueOf(userDetails.getAuthorities().iterator().next()),userDetails.getAuthorities())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
-                .compact();
+        return
+                Jwts.builder()
+                        .setClaims(extraClaims)
+                        .setSubject(userDetails.getUsername())
+                        .claim(String.valueOf(userDetails.getAuthorities().iterator().next()), userDetails.getAuthorities())
+                        .setIssuedAt(new Date(System.currentTimeMillis()))
+                        .setExpiration(new Date(System.currentTimeMillis() + (1000 * 60 * 60)))
+                        .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                        .compact();
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
@@ -69,8 +86,7 @@ public class JwtService {
                 .parserBuilder()
                 .setSigningKey(getSignInKey())
                 .build()
-                .parseClaimsJws(token)
-                .getBody();
+                .parseClaimsJws(token).getBody();
     }
 
     private Key getSignInKey() {

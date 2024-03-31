@@ -13,6 +13,7 @@ import EditUserProfile from "./components/EditUserProfile";
 import BusinessCard from "./components/BusinessCard";
 import ContactsPage from "./components/ContactsPage";
 import { HashRouter } from "react-router-dom";
+import ActivationProfil from "./components/ActivationProfil";
 
 function App() {
     return (
@@ -23,6 +24,10 @@ function App() {
                 <Route path="/api/v1/signup" element={<SignUp />} />
                 <Route path="/api/v1/login" element={<Login />} />
                 <Route
+                    path="/activationlink/*"
+                    element={<ActivationProfil />}
+                />
+                <Route
                     path="/api/v1/resetpassword"
                     element={<ResetPassword />}
                 />
@@ -31,9 +36,9 @@ function App() {
                     path="/api/v1/business-card/:username"
                     element={<BusinessCard />}
                 />
-                <Route path="/dashboard/:userId" element={<Dashboard />} />
+                <Route path="/dashboard/:username" element={<Dashboard />} />
                 <Route
-                    path="/dashboard/edit-user/:userId"
+                    path="/edit-user/:username"
                     element={<EditUserProfile />}
                 />
                 <Route path="/dashboard/contacts" element={<ContactsPage />} />

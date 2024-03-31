@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EditRequest {
     private String username;
-    private String email;
     private String firstName;
     private String lastName;
     private String linkedin;

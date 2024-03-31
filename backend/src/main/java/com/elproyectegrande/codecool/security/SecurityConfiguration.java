@@ -28,8 +28,6 @@ public class SecurityConfiguration {
     @Value("${frontend.url}")
     private String frontendUrl;
 
-//   @Value("${localhost.url}")
-//    private String development;
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -50,8 +48,8 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/v1/signup", "/api/v1/auth/login","/business-card/**").permitAll()
-                        .requestMatchers("/dashboard/**", "/add-contact/**","/edit-user/**").hasAuthority("USER")
+                        .requestMatchers("/api/v1/signup", "/api/v1/auth/login", "/business-card/**", "/activationlink/**").permitAll()
+                        .requestMatchers("/dashboard/**", "/add-contact/**", "/edit-user/**").hasAuthority("USER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

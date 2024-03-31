@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -27,6 +28,8 @@ public class User implements UserDetails {
     private String lastName;
     private String linkedin;
     private String facebook;
+    private boolean isActive;
+    private LocalDateTime creationTime;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Contact> contacts;
 
@@ -62,9 +65,20 @@ public class User implements UserDetails {
         return true;
     }
 
-    @Override
     public boolean isEnabled() {
-        return true;
+        return isActive;
+    }
+
+    public void setActive(boolean enabled) {
+        isActive = enabled;
+    }
+
+    public LocalDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(LocalDateTime creationTime) {
+        this.creationTime = creationTime;
     }
 }
 

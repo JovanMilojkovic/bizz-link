@@ -12,7 +12,14 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class RegisterController {
 
+
     private final RegisterService service;
+
+
+    @GetMapping("/signup")
+    public ResponseEntity<String>checkUsernameExist(@RequestParam String username){
+        return  service.checkUsernameExist(username);
+    }
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody RegisterRequest request) {

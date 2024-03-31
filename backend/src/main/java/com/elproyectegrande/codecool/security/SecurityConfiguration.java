@@ -25,15 +25,13 @@ public class SecurityConfiguration {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
 
-    //    @Value("${frontend.url}")
-//    private String frontendUrl;
-//
-   @Value("${localhost.url}")
-    private String development;
+    @Value("${frontend.url}")
+    private String frontendUrl;
+
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:5173"));
+        configuration.setAllowedOrigins(Collections.singletonList(frontendUrl));
         configuration.setAllowedMethods(Collections.singletonList("*"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(Collections.singletonList("*"));
@@ -50,8 +48,8 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/v1/signup", "/api/v1/auth/login","/business-card/**").permitAll()
-                        .requestMatchers("/dashboard/**", "/add-contact/**").hasAuthority("USER")
+                        .requestMatchers("/api/v1/signup", "/api/v1/auth/login", "/business-card/**", "/activationlink/**").permitAll()
+                        .requestMatchers("/dashboard/**", "/add-contact/**", "/edit-user/**").hasAuthority("USER")
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

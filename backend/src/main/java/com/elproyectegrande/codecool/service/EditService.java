@@ -22,17 +22,16 @@ public class EditService {
         this.jwtService = jwtService;
     }
 
-    public ResponseEntity<Optional<User>> getUserData(String userName, String id, String email) throws IOException {
-        if (!userName.toLowerCase().equals(id)) {
+    public ResponseEntity<Optional<User>> getUserData(String usernameFromToken, String username, String email) throws IOException {
+        if (!usernameFromToken.equalsIgnoreCase(username)) {
             throw new IOException("User not found");
         }
         Optional<User> optionalUser = repository.findByEmail(email);
-
         return new ResponseEntity<>(optionalUser, HttpStatus.OK);
     }
 
-    public ResponseEntity<EditResponse> updateUser(EditRequest request, String id) {
-        Optional<User> optionalUser = repository.findUserByUsernameIgnoreCase(id);
+    public ResponseEntity<EditResponse> updateUser(EditRequest request, String userId) {
+        Optional<User> optionalUser = repository.findUserById(userId);
 
         if (optionalUser.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

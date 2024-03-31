@@ -33,7 +33,7 @@ function App() {
                 />
                 <Route path="/api/v1/error" element={<Error />} />
                 <Route
-                    path="/api/v1/business-card/:username"
+                    path="/api/v1/business-card/*"
                     element={<BusinessCard />}
                 />
                 <Route path="/dashboard/:username" element={<Dashboard />} />

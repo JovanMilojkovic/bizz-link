@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import QRCode from "react-qr-code";
 
 import {
@@ -22,7 +22,6 @@ export default function Dashboard() {
     const userId = localStorage.getItem("id");
     const navigate = useNavigate();
     const param = useParams();
-    const profilePicRef = useRef();
 
     const profilePic = `data:image/jpg;base64,${picture}`;
 

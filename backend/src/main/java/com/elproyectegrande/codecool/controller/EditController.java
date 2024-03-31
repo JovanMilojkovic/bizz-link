@@ -26,16 +26,16 @@ public class EditController {
     }
 
     @GetMapping("/**")
-    public ResponseEntity<Optional<User>>getUserData(@RequestHeader Map<String, String> header, @RequestParam String id, @RequestParam String email) throws IOException {
+    public ResponseEntity<Optional<User>>getUserData(@RequestHeader Map<String, String> header, @RequestParam String username, @RequestParam String email) throws IOException {
         String token = header.get("authorization").substring(7);
-        String userName = jwtService.extractUsername(token);
-        return editService.getUserData(userName,id,email);
+        String usernameFromToken = jwtService.extractUsername(token);
+        return editService.getUserData(usernameFromToken,username,email);
     }
 
     @PutMapping("/**")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<EditResponse> edit(@RequestBody EditRequest request, @RequestParam String id){
-        return editService.updateUser(request, id);
+    public ResponseEntity<EditResponse> edit(@RequestBody EditRequest request, @RequestParam String userId){
+        return editService.updateUser(request, userId);
     }
 }
 

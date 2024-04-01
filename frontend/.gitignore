@@ -23,5 +23,14 @@ dist-ssr
 *.sln
 *.sw?
 *.node_modules
+<<<<<<< HEAD
+
+# Environment files
+.env
+.env.development
+.env.production
+
+=======
 .env.local
 .env.production
+>>>>>>> ddeb42b69da1b4a9655ffae88c54029e23021581

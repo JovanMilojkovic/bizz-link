@@ -18,6 +18,8 @@ public class RegisterService {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
+<<<<<<< HEAD
+=======
 
     public RegisterService(UserRepository repository, PasswordEncoder passwordEncoder, EmailService emailService) {
         this.repository = repository;
@@ -35,7 +37,13 @@ public class RegisterService {
         }
         return new ResponseEntity<>(usernameFree, HttpStatusCode.valueOf(200));
     }
+>>>>>>> ddeb42b69da1b4a9655ffae88c54029e23021581
 
+    public RegisterService(UserRepository repository, PasswordEncoder passwordEncoder, EmailService emailService) {
+        this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
+    }
 
     public ResponseEntity<String> registerNewUser(RegisterRequest request) {
         String userExistMsg = "User already exist";
@@ -56,10 +64,16 @@ public class RegisterService {
                 .creationTime(LocalDateTime.now())
                 .role(Role.USER)
                 .build();
+<<<<<<< HEAD
+        repository.save(createNewUser);
+        emailService.sendEmail(request.getEmail(),"bizlinkbyjj@gmail.com","Hello", "Hello from me");
+        return new ResponseEntity<>("Account created",HttpStatusCode.valueOf(200));
+=======
         User createdUser = repository.save(createNewUser);
         emailService.sendEmail(createdUser);
 
         return new ResponseEntity<>("Account created", HttpStatusCode.valueOf(200));
+>>>>>>> ddeb42b69da1b4a9655ffae88c54029e23021581
     }
 }
 

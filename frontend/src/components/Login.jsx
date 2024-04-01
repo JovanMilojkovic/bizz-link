@@ -60,8 +60,20 @@ function Login() {
 
     const handleCLick = async () => {
         let response;
-
         try {
+<<<<<<< HEAD
+            response = await fetch(
+                `${import.meta.env.VITE_APP_API_URL}/api/v1/auth/login`,
+                {
+                    method: "POST",
+                    body: JSON.stringify(userModel),
+                    mode: "cors",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+=======
             response = await fetch(`http://localhost:8080/api/v1/auth/login`, {
                 method: "POST",
                 body: JSON.stringify(userModel),
@@ -70,6 +82,7 @@ function Login() {
                     "Content-Type": "application/json",
                 },
             });
+>>>>>>> ddeb42b69da1b4a9655ffae88c54029e23021581
             const responseBody = await response.json();
             const token = responseBody.token;
             const username = responseBody.username.toLowerCase();

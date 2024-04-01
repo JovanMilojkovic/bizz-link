@@ -1,13 +1,31 @@
 package com.elproyectegrande.codecool.service;
 
+<<<<<<< HEAD
+=======
 import com.elproyectegrande.codecool.model.User;
 import org.springframework.beans.factory.annotation.Value;
+>>>>>>> ddeb42b69da1b4a9655ffae88c54029e23021581
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmailService {
+<<<<<<< HEAD
+
+    private final JavaMailSender mailSender;
+
+    public EmailService(JavaMailSender mailSender) {
+        this.mailSender = mailSender;
+    }
+    public void sendEmail(String to, String from,String subject, String body) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setFrom(from);
+        message.setSubject(subject);
+        message.setText(body);
+
+=======
     private final JavaMailSender mailSender;
     private final JwtService jwtService;
 
@@ -35,6 +53,7 @@ public class EmailService {
                         + "Link will expire in 15 minutes",
                 newUser.getUsername(),
                 frontendUrl));
+>>>>>>> ddeb42b69da1b4a9655ffae88c54029e23021581
         mailSender.send(message);
     }
 }

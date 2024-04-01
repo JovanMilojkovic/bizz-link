@@ -28,7 +28,13 @@ export default function Dashboard() {
     const fetchData = async () => {
         try {
             const response = await fetch(
+<<<<<<< HEAD
+                `${import.meta.env.VITE_APP_API_URL}/dashboard/?id=${
+                    param.userId
+                }`,
+=======
                 `http://localhost:8080/dashboard/?id=${param.userId}`,
+>>>>>>> ddeb42b69da1b4a9655ffae88c54029e23021581
                 {
                     method: "GET",
                     mode: "cors",

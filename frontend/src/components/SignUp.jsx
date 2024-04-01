@@ -79,6 +79,19 @@ function SignUp() {
         passwordError == "";
 
     const handleCLick = async () => {
+<<<<<<< HEAD
+        const createUser = await fetch(
+            `${import.meta.env.VITE_APP_API_URL}/api/v1/signup`,
+            {
+                method: "POST",
+                body: JSON.stringify(userModel),
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+=======
         const createUser = await fetch(`http://localhost:8080/api/v1/signup`, {
             method: "POST",
             body: JSON.stringify(userModel),
@@ -87,6 +100,7 @@ function SignUp() {
                 "Content-Type": "application/json",
             },
         });
+>>>>>>> ddeb42b69da1b4a9655ffae88c54029e23021581
         if (createUser.ok) {
             alert(
                 "Profile sucsefuly created 🙂 please check Your Email to confirm account"

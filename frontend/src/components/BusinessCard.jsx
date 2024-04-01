@@ -19,6 +19,20 @@ const BusinessCard = () => {
     const username = localStorage.getItem("username").toLowerCase();
     const userId = localStorage.getItem("id");
 
+<<<<<<< HEAD
+    useEffect(() => {
+        fetch(
+            `${import.meta.env.VITE_APP_API_URL}/business-card?username=${
+                param.username
+            }`,
+            {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        )
+=======
     const fetchData = () => {
         // `https://test-production-7e70.up.railway.app/business-card?username=${param.username}`,
         fetch(`http://localhost:8080/business-card/?userId=${userId}`, {
@@ -27,6 +41,7 @@ const BusinessCard = () => {
             //     Authorization: `Bearer ${token}`,
             // },
         })
+>>>>>>> ddeb42b69da1b4a9655ffae88c54029e23021581
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -44,18 +59,15 @@ const BusinessCard = () => {
     const handleAddButton = (event) => {
         event.preventDefault();
         try {
-            fetch(
-                `https://test-production-7e70.up.railway.app/contacts/add-contact`,
-                {
-                    method: "POST",
-                    body: JSON.stringify(userData),
-                    mode: "cors",
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json",
-                    },
-                }
-            ).then((response) => {
+            fetch(`${import.meta.env.VITE_APP_API_URL}/contacts/add-contact`, {
+                method: "POST",
+                body: JSON.stringify(userData),
+                mode: "cors",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            }).then((response) => {
                 if (response.ok) {
                     return response.json();
                 } else {

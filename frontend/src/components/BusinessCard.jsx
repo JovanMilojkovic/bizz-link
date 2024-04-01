@@ -39,7 +39,6 @@ const BusinessCard = () => {
                 }
             })
             .then((user) => {
-                console.log(user);
                 setUserData(user);
                 profilePicRef.current.src = `data:image/jpg;base64,${user.picture}`;
             });

@@ -77,7 +77,6 @@ function Login() {
             const username = responseBody.username.toLowerCase();
             setIsLoggedIn(true);
             setLogInUserData(token);
-            console.log(responseBody);
             localStorage.setItem("jwtToken", token);
             localStorage.setItem("username", responseBody.username);
             localStorage.setItem("email", responseBody.email);

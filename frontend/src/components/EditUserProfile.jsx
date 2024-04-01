@@ -100,7 +100,6 @@ const EditUserProfile = () => {
             })
             .then((responseData) => {
                 const updatedUsername = responseData.username;
-                console.log(updatedUsername);
                 const newToken = responseData.token;
                 const picture = responseData.picture;
                 localStorage.setItem("username", updatedUsername);

@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-
 public class AuthorizationService {
 
     private final JwtService jwtService;
@@ -14,9 +13,9 @@ public class AuthorizationService {
         this.jwtService = jwtService;
     }
 
-    public ResponseEntity<?> authorize(String token, String id) {
-        String username = jwtService.extractUsername(token);
-        if (id.equals(username.toLowerCase())) {
+    public ResponseEntity<?> authorize(String token, String username) {
+        String usernameFromToken = jwtService.extractUsername(token);
+        if (username.equalsIgnoreCase(usernameFromToken)) {
             return new ResponseEntity<>(HttpStatusCode.valueOf(200));
         } else {
             return new ResponseEntity<>(HttpStatusCode.valueOf(401));

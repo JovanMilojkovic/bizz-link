@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,15 +18,18 @@ import java.util.List;
 @Table(name = "_user")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
     private String username;
+    @Column(unique = true)
     private String email;
     private String password;
     private String firstName;
     private String lastName;
     private String linkedin;
     private String facebook;
+    private boolean isActive;
+    private LocalDateTime creationTime;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Contact> contacts;
 
@@ -61,9 +65,20 @@ public class User implements UserDetails {
         return true;
     }
 
-    @Override
     public boolean isEnabled() {
-        return true;
+        return isActive;
+    }
+
+    public void setActive(boolean enabled) {
+        isActive = enabled;
+    }
+
+    public LocalDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(LocalDateTime creationTime) {
+        this.creationTime = creationTime;
     }
 }
 

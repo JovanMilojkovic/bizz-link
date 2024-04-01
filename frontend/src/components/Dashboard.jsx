@@ -1,6 +1,5 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect } from "react";
 import QRCode from "react-qr-code";
-import { CryptoJS } from "crypto-js";
 
 import {
     MDBCol,
@@ -20,19 +19,22 @@ export default function Dashboard() {
     const email = localStorage.getItem("email");
     const token = localStorage.getItem("jwtToken");
     const picture = localStorage.getItem("picture");
-    const [hashedUsername, setHashedUsername] = useState("");
+    const userId = localStorage.getItem("id");
     const navigate = useNavigate();
     const param = useParams();
-    const profilePicRef = useRef();
 
     const profilePic = `data:image/jpg;base64,${picture}`;
 
     const fetchData = async () => {
         try {
             const response = await fetch(
+<<<<<<< HEAD
                 `${import.meta.env.VITE_APP_API_URL}/dashboard/?id=${
                     param.userId
                 }`,
+=======
+                `http://localhost:8080/dashboard/?id=${param.userId}`,
+>>>>>>> ddeb42b69da1b4a9655ffae88c54029e23021581
                 {
                     method: "GET",
                     mode: "cors",
@@ -53,7 +55,7 @@ export default function Dashboard() {
     const handleEditButton = async () => {
         try {
             const response = await fetch(
-                `/dashboard/edit-user/?id=${param.userId}`,
+                `http://localhost:8080/dashboard/edit-user/?id=${param.userId}`,
                 {
                     method: "GET",
                     mode: "cors",
@@ -76,9 +78,6 @@ export default function Dashboard() {
 
     useEffect(() => {
         fetchData();
-        const secretKey = "yourSecretKey";
-        const encrypted = CryptoJS.AES.encrypt(username, secretKey).toString();
-        setHashedUsername(encrypted);
     }, []);
 
     return (
@@ -172,7 +171,8 @@ export default function Dashboard() {
                                     <MDBCol className="mb-2">
                                         <QRCode
                                             style={{ height: 100, width: 100 }}
-                                            value={`https://bizlinkbyjj.netlify.app/#/api/v1/business-card/${username}`}
+                                            value={`http://localhost:5173/#/api/v1/business-card/${userId}`}
+                                            // value={`https://bizlinkbyjj.netlify.app/#/api/v1/business-card/${username}`}
                                         />
                                     </MDBCol>
                                 </MDBRow>

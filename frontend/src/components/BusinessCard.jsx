@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import QRCode from "react-qr-code";
 import "./css_files/BusinessCard.css";
-import { useParams } from "react-router";
 import { useNavigate } from "react-router";
 
 const BusinessCard = () => {
@@ -14,12 +13,13 @@ const BusinessCard = () => {
         facebook: "",
         picture: "",
     });
-    const param = useParams();
     const profilePicRef = useRef(null);
     const navigate = useNavigate();
     const token = localStorage.getItem("jwtToken");
     const username = localStorage.getItem("username").toLowerCase();
+    const userId = localStorage.getItem("id");
 
+<<<<<<< HEAD
     useEffect(() => {
         fetch(
             `${import.meta.env.VITE_APP_API_URL}/business-card?username=${
@@ -32,6 +32,16 @@ const BusinessCard = () => {
                 },
             }
         )
+=======
+    const fetchData = () => {
+        // `https://test-production-7e70.up.railway.app/business-card?username=${param.username}`,
+        fetch(`http://localhost:8080/business-card/?userId=${userId}`, {
+            method: "GET",
+            // headers: {
+            //     Authorization: `Bearer ${token}`,
+            // },
+        })
+>>>>>>> ddeb42b69da1b4a9655ffae88c54029e23021581
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -40,10 +50,11 @@ const BusinessCard = () => {
                 }
             })
             .then((user) => {
+                console.log(user);
                 setUserData(user);
                 profilePicRef.current.src = `data:image/jpg;base64,${user.picture}`;
             });
-    }, []);
+    };
 
     const handleAddButton = (event) => {
         event.preventDefault();
@@ -68,6 +79,10 @@ const BusinessCard = () => {
             console.log(error);
         }
     };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <div className="container my-4 d-flex justify-content-center">

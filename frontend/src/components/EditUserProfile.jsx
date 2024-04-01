@@ -78,15 +78,10 @@ const EditUserProfile = () => {
         const token = localStorage.getItem("jwtToken");
         const username = localStorage.getItem("username").toLowerCase();
 
-<<<<<<< HEAD
         fetch(
             `${
                 import.meta.env.VITE_APP_API_URL
             }/dashboard/edit-user?id=${username}`,
-=======
-        await fetch(
-            `http://localhost:8080/dashboard/edit-user?id=${username}`,
->>>>>>> ddeb42b69da1b4a9655ffae88c54029e23021581
             {
                 method: "PUT",
                 headers: {

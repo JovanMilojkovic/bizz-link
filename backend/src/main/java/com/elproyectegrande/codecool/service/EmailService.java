@@ -30,12 +30,10 @@ public class EmailService {
         message.setTo(newUser.getEmail());
         message.setFrom(serverEmail);
         message.setSubject("Activation link");
-        message.setText(String.format("Hello %s%nPlease click on the activation link %s/#/activationlink/"
-                        + newUserActivationToken
-                        + " to activate your account.%n"
-                        + "Link will expire in 15 minutes",
+        message.setText(String.format("Hello %s%nPlease click on the activation link %s/#/activationlink/%s to activate your account.%nLink will expire in 15 minutes",
                 newUser.getUsername(),
-                frontendUrl));
+                frontendUrl,
+                newUserActivationToken));
         mailSender.send(message);
     }
 }

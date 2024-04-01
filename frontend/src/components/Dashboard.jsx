@@ -30,7 +30,9 @@ export default function Dashboard() {
     const fetchData = async () => {
         try {
             const response = await fetch(
-                `https://test-production-7e70.up.railway.app/dashboard/?id=${param.userId}`,
+                `${import.meta.env.VITE_APP_API_URL}/dashboard/?id=${
+                    param.userId
+                }`,
                 {
                     method: "GET",
                     mode: "cors",

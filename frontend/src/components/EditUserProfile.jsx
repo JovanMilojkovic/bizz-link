@@ -55,7 +55,9 @@ const EditUserProfile = () => {
         const username = localStorage.getItem("username").toLowerCase();
 
         fetch(
-            `https://test-production-7e70.up.railway.app/dashboard/edit-user?id=${username}`,
+            `${
+                import.meta.env.VITE_APP_API_URL
+            }/dashboard/edit-user?id=${username}`,
             {
                 method: "PUT",
                 headers: {

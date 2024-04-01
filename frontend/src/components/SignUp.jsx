@@ -80,7 +80,7 @@ function SignUp() {
 
     const handleCLick = async () => {
         const createUser = await fetch(
-            `https://test-production-7e70.up.railway.app/api/v1/signup`,
+            `${import.meta.env.VITE_APP_API_URL}/api/v1/signup`,
             {
                 method: "POST",
                 body: JSON.stringify(userModel),

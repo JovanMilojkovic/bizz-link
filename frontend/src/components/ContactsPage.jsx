@@ -7,7 +7,7 @@ const ContactsPage = () => {
     const fetchContacts = async () => {
         try {
             const response = await fetch(
-                `https://test-production-7e70.up.railway.app/contacts`,
+                `${import.meta.env.VITE_APP_API_URL}/contacts`,
                 {
                     method: "GET",
                     mode: "cors",

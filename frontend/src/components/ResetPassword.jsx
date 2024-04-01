@@ -17,7 +17,7 @@ function ResetPassword() {
 
     const resetPassword = async () => {
         const response = await fetch(
-            `https://test-production-7e70.up.railway.app/api/v1/reset/`,
+            `${import.meta.env.VITE_APP_API_URL}/api/v1/reset/`,
             {
                 method: "POST",
                 body: JSON.stringify({ email }),

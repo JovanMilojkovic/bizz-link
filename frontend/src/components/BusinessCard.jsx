@@ -22,7 +22,9 @@ const BusinessCard = () => {
 
     useEffect(() => {
         fetch(
-            `https://test-production-7e70.up.railway.app/business-card?username=${param.username}`,
+            `${import.meta.env.VITE_APP_API_URL}/business-card?username=${
+                param.username
+            }`,
             {
                 method: "GET",
                 headers: {
@@ -46,18 +48,15 @@ const BusinessCard = () => {
     const handleAddButton = (event) => {
         event.preventDefault();
         try {
-            fetch(
-                `https://test-production-7e70.up.railway.app/contacts/add-contact`,
-                {
-                    method: "POST",
-                    body: JSON.stringify(userData),
-                    mode: "cors",
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json",
-                    },
-                }
-            ).then((response) => {
+            fetch(`${import.meta.env.VITE_APP_API_URL}/contacts/add-contact`, {
+                method: "POST",
+                body: JSON.stringify(userData),
+                mode: "cors",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+            }).then((response) => {
                 if (response.ok) {
                     return response.json();
                 } else {

@@ -60,10 +60,9 @@ function Login() {
 
     const handleCLick = async () => {
         let response;
-
         try {
             response = await fetch(
-                `https://test-production-7e70.up.railway.app/api/v1/auth/login`,
+                `${import.meta.env.VITE_APP_API_URL}/api/v1/auth/login`,
                 {
                     method: "POST",
                     body: JSON.stringify(userModel),

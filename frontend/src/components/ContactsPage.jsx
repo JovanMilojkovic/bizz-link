@@ -6,7 +6,6 @@ const ContactsPage = () => {
 
     const fetchContacts = async () => {
         try {
-<<<<<<< HEAD
             const response = await fetch(
                 `${import.meta.env.VITE_APP_API_URL}/contacts`,
                 {
@@ -18,16 +17,6 @@ const ContactsPage = () => {
                     },
                 }
             );
-=======
-            const response = await fetch(`http://localhost:8080/contacts`, {
-                method: "GET",
-                mode: "cors",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-            });
->>>>>>> ddeb42b69da1b4a9655ffae88c54029e23021581
 
             if (response.ok) {
                 const data = await response.json();

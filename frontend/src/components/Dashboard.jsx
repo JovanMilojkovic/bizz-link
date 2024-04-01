@@ -28,13 +28,9 @@ export default function Dashboard() {
     const fetchData = async () => {
         try {
             const response = await fetch(
-<<<<<<< HEAD
                 `${import.meta.env.VITE_APP_API_URL}/dashboard/?id=${
                     param.userId
                 }`,
-=======
-                `http://localhost:8080/dashboard/?id=${param.userId}`,
->>>>>>> ddeb42b69da1b4a9655ffae88c54029e23021581
                 {
                     method: "GET",
                     mode: "cors",
@@ -55,7 +51,9 @@ export default function Dashboard() {
     const handleEditButton = async () => {
         try {
             const response = await fetch(
-                `http://localhost:8080/dashboard/edit-user/?id=${param.userId}`,
+                `${import.meta.env.VITE_APP_API_URL}/dashboard/edit-user/?id=${
+                    param.userId
+                }`,
                 {
                     method: "GET",
                     mode: "cors",
@@ -171,7 +169,9 @@ export default function Dashboard() {
                                     <MDBCol className="mb-2">
                                         <QRCode
                                             style={{ height: 100, width: 100 }}
-                                            value={`http://localhost:5173/#/api/v1/business-card/${userId}`}
+                                            value={`${
+                                                import.meta.env.VITE_APP_API_URL
+                                            }/#/api/v1/business-card/${userId}`}
                                             // value={`https://bizlinkbyjj.netlify.app/#/api/v1/business-card/${username}`}
                                         />
                                     </MDBCol>

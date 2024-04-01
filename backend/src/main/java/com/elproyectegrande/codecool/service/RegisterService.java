@@ -1,11 +1,9 @@
 package com.elproyectegrande.codecool.service;
 
-import com.elproyectegrande.codecool.auth.EditRequest;
 import com.elproyectegrande.codecool.auth.RegisterRequest;
 import com.elproyectegrande.codecool.model.Role;
 import com.elproyectegrande.codecool.model.User;
 import com.elproyectegrande.codecool.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,11 +13,16 @@ import java.util.Optional;
 
 
 @Service
-@RequiredArgsConstructor
 public class RegisterService {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
 
+    public RegisterService(UserRepository repository, PasswordEncoder passwordEncoder, EmailService emailService) {
+        this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
+    }
 
     public ResponseEntity<String> registerNewUser(RegisterRequest request) {
         String userExistMsg = "User already exist";
@@ -34,6 +37,7 @@ public class RegisterService {
                 .role(Role.USER)
                 .build();
         repository.save(createNewUser);
+        emailService.sendEmail(request.getEmail(),"bizlinkbyjj@gmail.com","Hello", "Hello from me");
         return new ResponseEntity<>("Account created",HttpStatusCode.valueOf(200));
     }
 }

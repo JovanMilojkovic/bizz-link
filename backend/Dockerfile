@@ -1,6 +1,4 @@
-FROM openjdk:23-ea-8-jdk-slim
-VOLUME /tmp
-EXPOSE 8080
-ARG JAR_FILE=target/codecool-0.0.1-SNAPSHOT.jar
-ADD ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+FROM openjdk:11
+ENV SPRING_PROFILES_ACTIVE=prod
+COPY target/codecool-0.0.1-SNAPSHOT.jar app.jar
+ENTRYPOINT ["java", "-jar", "/app.jar"]

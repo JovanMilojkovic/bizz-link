@@ -29,8 +29,6 @@ function Login() {
     );
     const setIsLoggedIn = useGlobalState((selector) => selector.setIsLoggedIn);
 
-    const setUserToken = useGlobalState((selector) => selector.setUserToken);
-
     const userModel = { email, password };
 
     const routeChange = () => {
@@ -43,7 +41,7 @@ function Login() {
 
     function checkEmail() {
         const errorMessage = "It should be a valid email address!";
-        const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        const mailFormat = /^[\w.-]+@[a-zA-Z\d.-]+\.[a-zA-Z]{2,}$/;
         !email.match(mailFormat) && email.length > 0
             ? setEmailError(errorMessage)
             : setEmailError("");

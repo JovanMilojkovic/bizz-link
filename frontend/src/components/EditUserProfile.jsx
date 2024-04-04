@@ -12,6 +12,7 @@ export default function EditUserProfile() {
         username: "",
         firstName: "",
         lastName: "",
+        phone: "",
         linkedin: "",
         facebook: "",
         picture: "",
@@ -169,6 +170,18 @@ export default function EditUserProfile() {
                             onChange={handleInputChange}
                             className="form-control"
                             required
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <p htmlFor="phone" className="form-label">
+                            Phone:
+                        </p>
+                        <input
+                            type="text"
+                            name="phone"
+                            value={userData.phone}
+                            onChange={handleInputChange}
+                            className="form-control"
                         />
                     </div>
                     <div className="mb-3">

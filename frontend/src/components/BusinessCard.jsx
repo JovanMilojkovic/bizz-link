@@ -7,7 +7,7 @@ const BusinessCard = () => {
     const [userData, setUserData] = useState({
         firstname: "",
         lastname: "",
-        phoneNumber: "",
+        phone: "",
         email: "",
         linkedin: "",
         facebook: "",
@@ -19,30 +19,33 @@ const BusinessCard = () => {
     const username = localStorage.getItem("username").toLowerCase();
     const userId = localStorage.getItem("id");
 
-    useEffect(() => {
-        fetch(
-            `${import.meta.env.VITE_APP_API_URL}/business-card?username=${
-                param.username
-            }`,
-            {
-                method: "GET",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        )
-            .then((response) => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error("Failed to show contact  details");
+    useEffect(
+        () => async () => {
+            await fetch(
+                `${
+                    import.meta.env.VITE_APP_API_URL
+                }/business-card/?userId=${userId}`,
+                {
+                    method: "GET",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                 }
-            })
-            .then((user) => {
-                setUserData(user);
-                profilePicRef.current.src = `data:image/jpg;base64,${user.picture}`;
-            });
-    });
+            )
+                .then((response) => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error("Failed to show contact  details");
+                    }
+                })
+                .then((user) => {
+                    setUserData({ ...user });
+                    profilePicRef.current.src = `data:image/jpg;base64,${user.picture}`;
+                });
+        },
+        []
+    );
 
     const handleAddButton = (event) => {
         event.preventDefault();
@@ -68,10 +71,6 @@ const BusinessCard = () => {
         }
     };
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-
     return (
         <div className="container my-4 d-flex justify-content-center">
             <div className="card business-card">
@@ -85,9 +84,7 @@ const BusinessCard = () => {
                                 className="img-fluid rounded-circle profile-pic"
                             />
                             <h2 className="card-title">{`${userData.firstname} ${userData.lastname}`}</h2>
-                            <p className="card-text">
-                                Phone: {userData.phoneNumber}
-                            </p>
+                            <p className="card-text">Phone: {userData.phone}</p>
                             <p className="card-text">Email: {userData.email}</p>
                             <div className="links">
                                 <a

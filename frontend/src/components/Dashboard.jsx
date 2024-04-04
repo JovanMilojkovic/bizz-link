@@ -17,6 +17,7 @@ import { useParams, useNavigate } from "react-router-dom";
 export default function Dashboard() {
     const username = localStorage.getItem("username");
     const email = localStorage.getItem("email");
+    const phone = localStorage.getItem("phone");
     const token = localStorage.getItem("jwtToken");
     const picture = localStorage.getItem("picture");
     const userId = localStorage.getItem("id");
@@ -110,12 +111,13 @@ export default function Dashboard() {
                                 </div>
                                 <div
                                     className="ms-3"
-                                    style={{ marginTop: "130px" }}
+                                    style={{ marginTop: "100px" }}
                                 >
                                     <MDBTypography tag="h5">
                                         Hi {username}, welcome!
                                     </MDBTypography>
                                     <MDBCardText>{email}</MDBCardText>
+                                    <MDBCardText>{phone}</MDBCardText>
                                 </div>
                             </div>
                             <div
@@ -170,8 +172,9 @@ export default function Dashboard() {
                                         <QRCode
                                             style={{ height: 100, width: 100 }}
                                             value={`${
-                                                import.meta.env.VITE_APP_API_URL
-                                            }/#/api/v1/business-card/${userId}`}
+                                                import.meta.env
+                                                    .VITE_APP_FRONTEND_URL
+                                            }/#/api/v1/business-card/?userId=${userId}`}
                                         />
                                     </MDBCol>
                                 </MDBRow>

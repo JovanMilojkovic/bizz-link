@@ -30,7 +30,9 @@ function NavBar() {
         const username = localStorage.getItem("username").toLowerCase();
         try {
             const response = await fetch(
-                `${import.meta.env.VITE_APP_API_URL}/dashboard/?id=${username}`,
+                `${
+                    import.meta.env.VITE_APP_API_URL
+                }/dashboard/?username=${username}`,
                 {
                     method: "GET",
                     mode: "cors",

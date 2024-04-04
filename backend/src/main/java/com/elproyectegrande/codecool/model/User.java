@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
@@ -32,10 +33,7 @@ public class User implements UserDetails {
     private LocalDateTime creationTime;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Contact> contacts;
-
-
-    @Column(length = 1000000)
-    private String picture;
+    private byte[] picture;
     @Getter
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -43,6 +41,10 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
+    }
+
+    public String getPicture() {
+        return new String(picture, StandardCharsets.UTF_8);
     }
 
     @Override
@@ -71,14 +73,6 @@ public class User implements UserDetails {
 
     public void setActive(boolean enabled) {
         isActive = enabled;
-    }
-
-    public LocalDateTime getCreationTime() {
-        return creationTime;
-    }
-
-    public void setCreationTime(LocalDateTime creationTime) {
-        this.creationTime = creationTime;
     }
 }
 

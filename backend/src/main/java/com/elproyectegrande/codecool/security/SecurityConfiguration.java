@@ -48,7 +48,7 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/v1/signup", "/api/v1/auth/login", "/api/v1/business-card/**", "/activationlink/**").permitAll()
+                        .requestMatchers("/api/v1/signup", "/api/v1/auth/login", "/business-card/**", "/activationlink/**").permitAll()
                         .requestMatchers("/dashboard/**", "/add-contact/**", "/edit-user/**").hasAuthority("USER")
                         .anyRequest().authenticated()
                 )

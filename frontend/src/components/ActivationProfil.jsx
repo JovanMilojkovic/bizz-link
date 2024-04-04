@@ -12,7 +12,7 @@ function ActivationProfil() {
             try {
                 const response = await axios.get(
                     `${
-                        import.meta.env.VITE_BACKEND_URL
+                        import.meta.env.VITE_APP_API_URL
                     }/activationlink/${token}`,
                     {
                         method: "GET",
@@ -20,7 +20,6 @@ function ActivationProfil() {
                     }
                 );
                 setResponseData(await response.data);
-                console.log(response.data);
             } catch (error) {
                 setResponseData(await error.response.data);
             }

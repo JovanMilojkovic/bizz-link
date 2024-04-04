@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/edit-user")
@@ -26,16 +25,16 @@ public class EditController {
     }
 
     @GetMapping("/**")
-    public ResponseEntity<Optional<User>>getUserData(@RequestHeader Map<String, String> header, @RequestParam String username, @RequestParam String email) throws IOException {
+    public ResponseEntity<User> getUserData(@RequestHeader Map<String, String> header, @RequestParam String username, @RequestParam String email) throws IOException {
         String token = header.get("authorization").substring(7);
         String usernameFromToken = jwtService.extractUsername(token);
-        return editService.getUserData(usernameFromToken,username,email);
+        return editService.getUserData(usernameFromToken, username, email);
     }
 
     @PutMapping("/**")
     @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<EditResponse> edit(@RequestBody EditRequest request, @RequestParam String userId){
-        return editService.updateUser(request, userId);
+    public ResponseEntity<EditResponse> edit(@RequestBody EditRequest request, @RequestParam String email) {
+        return editService.updateUser(request, email);
     }
 }
 

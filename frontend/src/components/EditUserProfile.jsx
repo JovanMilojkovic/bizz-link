@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useParams } from "react-router-dom";
 
-const EditUserProfile = () => {
+export default function EditUserProfile() {
     const navigate = useNavigate();
     const param = useParams();
     const token = localStorage.getItem("jwtToken");
@@ -17,10 +17,15 @@ const EditUserProfile = () => {
         picture: "",
     });
 
+    const [pictureData, setPictureData] = useState("");
+    const [isPictureSelected, setIsPictureSelected] = useState(false);
+
     const fetchData = async () => {
         try {
             const response = await fetch(
-                `http://localhost:8080/dashboard/edit-user?id=${param.userId}&email=${email}`,
+                `${import.meta.env.VITE_APP_API_URL}/edit-user/?username=${
+                    param.username
+                }&email=${email}`,
                 {
                     method: "GET",
                     mode: "cors",
@@ -54,7 +59,6 @@ const EditUserProfile = () => {
                 fileReader.onload = () => {
                     resolve(fileReader.result);
                 };
-
                 fileReader.onerror = (error) => {
                     reject(error);
                 };
@@ -65,32 +69,36 @@ const EditUserProfile = () => {
 
     const handlePictureUpload = async (event) => {
         const pictureFile = event.target.files[0];
-        const base64 = await convertBase64(pictureFile);
-        const imageBase64 = base64.split(",")[1];
-        setUserData((prevUserData) => ({
-            ...prevUserData,
-            picture: imageBase64,
-        }));
+        if (pictureFile) {
+            const base64 = await convertBase64(pictureFile);
+            const imageBase64 = base64.split(",")[1];
+            setPictureData(imageBase64);
+            setIsPictureSelected(true);
+        } else {
+            console.log("No file selected");
+        }
     };
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
         const token = localStorage.getItem("jwtToken");
-        const username = localStorage.getItem("username").toLowerCase();
 
-        fetch(
-            `${
-                import.meta.env.VITE_APP_API_URL
-            }/dashboard/edit-user?id=${username}`,
-            {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
-                },
-                body: JSON.stringify(userData),
-            }
-        )
+        let dataToSend = { ...userData };
+        if (isPictureSelected) {
+            dataToSend.picture = pictureData;
+            setIsPictureSelected(false);
+        } else {
+            dataToSend.picture = localStorage.getItem("picture");
+        }
+
+        fetch(`${import.meta.env.VITE_APP_API_URL}/edit-user/?email=${email}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(dataToSend),
+        })
             .then((response) => {
                 if (response.ok) {
                     return response.json();
@@ -100,7 +108,6 @@ const EditUserProfile = () => {
             })
             .then((responseData) => {
                 const updatedUsername = responseData.username;
-                console.log(updatedUsername);
                 const newToken = responseData.token;
                 const picture = responseData.picture;
                 localStorage.setItem("username", updatedUsername);
@@ -116,7 +123,6 @@ const EditUserProfile = () => {
     function navigateToDashboard() {
         navigate(`/dashboard/${localStorage.getItem("username")}`);
     }
-
     useEffect(() => {
         fetchData();
     }, []);
@@ -215,6 +221,4 @@ const EditUserProfile = () => {
             </div>
         </>
     );
-};
-
-export default EditUserProfile;
+}

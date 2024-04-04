@@ -22,17 +22,21 @@ public class EditService {
         this.jwtService = jwtService;
     }
 
-    public ResponseEntity<Optional<User>> getUserData(String usernameFromToken, String username, String email) throws IOException {
+    public ResponseEntity<User> getUserData(String usernameFromToken, String username, String email) throws IOException {
         if (!usernameFromToken.equalsIgnoreCase(username)) {
             throw new IOException("User not found");
         }
         Optional<User> optionalUser = repository.findByEmail(email);
-        return new ResponseEntity<>(optionalUser, HttpStatus.OK);
+        if (optionalUser.isEmpty()) {
+            throw new IOException("User not found");
+        } else {
+            return new ResponseEntity<>(optionalUser.get(), HttpStatus.OK);
+        }
+
     }
 
-    public ResponseEntity<EditResponse> updateUser(EditRequest request, String userId) {
-        Optional<User> optionalUser = repository.findUserById(userId);
-
+    public ResponseEntity<EditResponse> updateUser(EditRequest request, String email) {
+        Optional<User> optionalUser = repository.findByEmail(email);
         if (optionalUser.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -58,11 +62,9 @@ public class EditService {
             user.setFacebook(request.getFacebook());
         }
 
-        //byte[] fileContent = FileUtils.readFileToByteArray(request.getPicture());
-        //String encodedString = Base64.getEncoder().encodeToString(fileContent);
-
         if (request.getPicture() != null) {
-            user.setPicture(request.getPicture());
+            byte[] imageData = request.getPicture().getBytes();
+            user.setPicture(imageData);
         }
 
         repository.save(user);
@@ -71,7 +73,9 @@ public class EditService {
         EditResponse editResponse = new EditResponse();
         editResponse.setUsername(user.getUsername());
         editResponse.setEmail(user.getEmail());
-        editResponse.setPicture(user.getPicture());
+        if (user.getPicture() != null) {
+            editResponse.setPicture(user.getPicture());
+        } else editResponse.setPicture(null);
         editResponse.setToken(token);
 
         return new ResponseEntity<>(editResponse, HttpStatus.OK);

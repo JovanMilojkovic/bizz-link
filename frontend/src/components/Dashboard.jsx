@@ -28,8 +28,8 @@ export default function Dashboard() {
     const fetchData = async () => {
         try {
             const response = await fetch(
-                `${import.meta.env.VITE_APP_API_URL}/dashboard/?id=${
-                    param.userId
+                `${import.meta.env.VITE_APP_API_URL}/dashboard/?username=${
+                    param.username
                 }`,
                 {
                     method: "GET",
@@ -48,11 +48,15 @@ export default function Dashboard() {
         }
     };
 
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     const handleEditButton = async () => {
         try {
             const response = await fetch(
-                `${import.meta.env.VITE_APP_API_URL}/dashboard/edit-user/?id=${
-                    param.userId
+                `${import.meta.env.VITE_APP_API_URL}/dashboard/?username=${
+                    param.username
                 }`,
                 {
                     method: "GET",
@@ -67,16 +71,12 @@ export default function Dashboard() {
             if (response.status != 200) {
                 navigate("*");
             } else {
-                navigate(`/dashboard/edit-user/${param.userId}`);
+                navigate(`/edit-user/${param.username}`);
             }
         } catch (error) {
             console.log(error);
         }
     };
-
-    useEffect(() => {
-        fetchData();
-    }, []);
 
     return (
         <div className="gradient-custom-2">
@@ -97,7 +97,7 @@ export default function Dashboard() {
                                 >
                                     <MDBCardImage
                                         src={
-                                            profilePic.length !== null
+                                            picture
                                                 ? profilePic
                                                 : "/src/components/pictures/PngItem_1468295.png"
                                         }
@@ -105,7 +105,7 @@ export default function Dashboard() {
                                         className="mt-4 mb-2 img-thumbnail"
                                         fluid
                                         style={{ width: "150px", zIndex: "1" }}
-                                        //ref={profilePicRef}
+                                        // ref={profilePic}
                                     />
                                 </div>
                                 <div
@@ -172,7 +172,6 @@ export default function Dashboard() {
                                             value={`${
                                                 import.meta.env.VITE_APP_API_URL
                                             }/#/api/v1/business-card/${userId}`}
-                                            // value={`https://bizlinkbyjj.netlify.app/#/api/v1/business-card/${username}`}
                                         />
                                     </MDBCol>
                                 </MDBRow>

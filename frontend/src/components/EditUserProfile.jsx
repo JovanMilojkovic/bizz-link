@@ -21,7 +21,6 @@ export default function EditUserProfile() {
     const [isPictureSelected, setIsPictureSelected] = useState(false);
 
     const fetchData = async () => {
-        console.log("FETCHING DATA");
         try {
             const response = await fetch(
                 `${import.meta.env.VITE_APP_API_URL}/edit-user/?username=${
@@ -44,7 +43,6 @@ export default function EditUserProfile() {
     };
 
     const handleInputChange = (event) => {
-        console.log("HANDLE INPUT CHANGE");
         const { name, value } = event.target;
         setUserData((prevUserData) => ({
             ...prevUserData,
@@ -82,7 +80,6 @@ export default function EditUserProfile() {
     };
 
     const handleFormSubmit = async (event) => {
-        console.log("Save IS CLICKED");
         event.preventDefault();
         const token = localStorage.getItem("jwtToken");
 
@@ -93,7 +90,6 @@ export default function EditUserProfile() {
         } else {
             dataToSend.picture = localStorage.getItem("picture");
         }
-        console.log(dataToSend);
 
         fetch(`${import.meta.env.VITE_APP_API_URL}/edit-user/?email=${email}`, {
             method: "PUT",

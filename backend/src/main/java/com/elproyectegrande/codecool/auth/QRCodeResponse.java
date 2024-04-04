@@ -11,6 +11,7 @@ public class QRCodeResponse {
     private String lastname;
     private String email;
     private String picture;
+    private String phone;
     private String linkedin;
     private String facebook;
     private String token;

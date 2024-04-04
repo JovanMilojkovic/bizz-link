@@ -34,6 +34,7 @@ public class AuthenticationService {
                     .id(user.getId())
                     .email(request.getEmail())
                     .username(user.getUsername())
+                    .phone(user.getPhone())
                     .picture(user.getPicture())
                     .role(user.getRole())// Add the username to the response
                     .token(jwtToken)

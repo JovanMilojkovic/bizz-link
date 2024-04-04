@@ -23,6 +23,7 @@ public class QRCodeService {
             QRCodeResponse response = new QRCodeResponse();
             response.setFirstname(actualUser.getFirstName());
             response.setLastname(actualUser.getLastName());
+            response.setPhone(actualUser.getPhone());
             response.setEmail(actualUser.getEmail());
             response.setPicture(actualUser.getPicture());
             response.setLinkedin(actualUser.getLinkedin());

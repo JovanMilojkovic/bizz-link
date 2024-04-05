@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import QRCode from "react-qr-code";
 import "./css_files/BusinessCard.css";
-import { useParams, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const BusinessCard = () => {
     const [param] = useSearchParams();

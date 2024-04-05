@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
 
 import {
@@ -15,37 +15,40 @@ import {
 import { useParams, useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
-    const username = localStorage.getItem("username");
-    const email = localStorage.getItem("email");
-    const phone = localStorage.getItem("phone");
+    const [userData, setUserData] = useState({
+        username: "",
+        email: "",
+        phone: "",
+        picture: "",
+    });
     const token = localStorage.getItem("jwtToken");
-    const picture = localStorage.getItem("picture");
     const userId = localStorage.getItem("id");
     const navigate = useNavigate();
     const param = useParams();
 
-    const profilePic = `data:image/jpg;base64,${picture}`;
+    const profilePic = `data:image/jpg;base64,${userData.picture}`;
 
     const fetchData = async () => {
-        try {
-            const response = await fetch(
-                `${import.meta.env.VITE_APP_API_URL}/dashboard/?username=${
-                    param.username
-                }`,
-                {
-                    method: "GET",
-                    mode: "cors",
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json",
-                    },
-                }
-            );
-            if (response.status !== 200) {
-                navigate("*");
+        const response = await fetch(
+            `${import.meta.env.VITE_APP_API_URL}/dashboard/?username=${
+                param.username
+            }`,
+            {
+                method: "GET",
+                mode: "cors",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
             }
-        } catch (error) {
-            console.log(error);
+        );
+        if (response.status !== 200) {
+            console.log("STATUS NIJE 200");
+            navigate("*");
+        } else {
+            const data = await response.json();
+            console.log(response);
+            setUserData({ ...data });
         }
     };
 
@@ -98,7 +101,7 @@ export default function Dashboard() {
                                 >
                                     <MDBCardImage
                                         src={
-                                            picture
+                                            userData.picture
                                                 ? profilePic
                                                 : "/src/components/pictures/PngItem_1468295.png"
                                         }
@@ -114,10 +117,10 @@ export default function Dashboard() {
                                     style={{ marginTop: "100px" }}
                                 >
                                     <MDBTypography tag="h5">
-                                        Hi {username}, welcome!
+                                        Hi {userData.username}, welcome!
                                     </MDBTypography>
-                                    <MDBCardText>{email}</MDBCardText>
-                                    <MDBCardText>{phone}</MDBCardText>
+                                    <MDBCardText>{userData.email}</MDBCardText>
+                                    <MDBCardText>{userData.phone}</MDBCardText>
                                 </div>
                             </div>
                             <div

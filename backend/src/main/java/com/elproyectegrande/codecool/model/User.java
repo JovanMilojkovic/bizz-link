@@ -45,7 +45,7 @@ public class User implements UserDetails {
     }
 
     public String getPicture() {
-        return new String(this.picture, StandardCharsets.UTF_8);
+        return new String(picture, StandardCharsets.UTF_8);
     }
 
     @Override

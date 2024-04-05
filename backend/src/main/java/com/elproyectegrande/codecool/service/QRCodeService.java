@@ -21,6 +21,7 @@ public class QRCodeService {
         if(user.isPresent()) {
             User actualUser = user.get();
             QRCodeResponse response = new QRCodeResponse();
+            response.setUsername(actualUser.getUsername());
             response.setFirstname(actualUser.getFirstName());
             response.setLastname(actualUser.getLastName());
             response.setPhone(actualUser.getPhone());

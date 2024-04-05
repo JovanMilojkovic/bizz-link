@@ -27,10 +27,6 @@ const BusinessCard = () => {
             {
                 method: "GET",
                 mode: "cors",
-                headers: {
-                    Authorization: `Bearer ${userData.token}`,
-                    "Content-Type": "application/json",
-                },
             }
         )
             .then((response) => {
@@ -50,7 +46,7 @@ const BusinessCard = () => {
 
     useEffect(() => {
         fetchData();
-    }, [param]);
+    }, []);
 
     const handleAddButton = (event) => {
         event.preventDefault();

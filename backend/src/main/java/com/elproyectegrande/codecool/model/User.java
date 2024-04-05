@@ -23,10 +23,11 @@ public class User implements UserDetails {
     private String id;
     private String username;
     @Column(unique = true)
-    private String email;
-    private String password;
     private String firstName;
     private String lastName;
+    private String password;
+    private String email;
+    private String phone;
     private String linkedin;
     private String facebook;
     private boolean isActive;

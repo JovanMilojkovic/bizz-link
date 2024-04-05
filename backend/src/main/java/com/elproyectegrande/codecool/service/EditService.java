@@ -53,6 +53,9 @@ public class EditService {
         if (request.getLastName() != null) {
             user.setLastName(request.getLastName());
         }
+        if(request.getPhone() != null){
+            user.setPhone(request.getPhone());
+        }
 
         if (request.getLinkedin() != null) {
             user.setLinkedin(request.getLinkedin());

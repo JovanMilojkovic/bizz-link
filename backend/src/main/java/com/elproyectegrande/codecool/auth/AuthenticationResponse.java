@@ -11,6 +11,7 @@ public class AuthenticationResponse {
     private String token;
     private String email;
     private String username;
+    private String phone;
     private String picture;
     private Role role;
     private String id;

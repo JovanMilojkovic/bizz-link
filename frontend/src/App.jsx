@@ -12,12 +12,12 @@ import PageNotFound from "./components/PageNotFound";
 import EditUserProfile from "./components/EditUserProfile";
 import BusinessCard from "./components/BusinessCard";
 import ContactsPage from "./components/ContactsPage";
-import { HashRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import ActivationProfil from "./components/ActivationProfil";
 
 function App() {
     return (
-        <HashRouter>
+        <BrowserRouter>
             <NavBar />
             <Routes>
                 <Route path="/" element={<HomePage />} />
@@ -32,11 +32,8 @@ function App() {
                     element={<ResetPassword />}
                 />
                 <Route path="/api/v1/error" element={<Error />} />
-                <Route
-                    path="/api/v1/business-card/*"
-                    element={<BusinessCard />}
-                />
                 <Route path="/dashboard/:username" element={<Dashboard />} />
+                <Route path="/business-card/*" element={<BusinessCard />} />
                 <Route
                     path="/edit-user/:username"
                     element={<EditUserProfile />}
@@ -44,7 +41,7 @@ function App() {
                 <Route path="/dashboard/contacts" element={<ContactsPage />} />
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
-        </HashRouter>
+        </BrowserRouter>
     );
 }
 

@@ -78,6 +78,7 @@ function Login() {
             localStorage.setItem("jwtToken", token);
             localStorage.setItem("username", responseBody.username);
             localStorage.setItem("email", responseBody.email);
+            localStorage.setItem("phone", responseBody.phone);
             localStorage.setItem("picture", responseBody.picture);
             localStorage.setItem("id", responseBody.id);
             navigate(`/dashboard/${username}`);

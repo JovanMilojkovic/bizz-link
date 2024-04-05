@@ -1,33 +1,35 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import QRCode from "react-qr-code";
 import "./css_files/BusinessCard.css";
-import { useNavigate } from "react-router";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const BusinessCard = () => {
+    const [param] = useSearchParams();
     const [userData, setUserData] = useState({
+        username: "",
         firstname: "",
         lastname: "",
-        phoneNumber: "",
+        phone: "",
         email: "",
         linkedin: "",
         facebook: "",
         picture: "",
+        token: "",
     });
-    const profilePicRef = useRef(null);
-    const navigate = useNavigate();
-    const token = localStorage.getItem("jwtToken");
-    const username = localStorage.getItem("username").toLowerCase();
-    const userId = localStorage.getItem("id");
 
-    useEffect(() => {
-        fetch(
-            `${import.meta.env.VITE_APP_API_URL}/business-card?username=${
-                param.username
-            }`,
+    const navigate = useNavigate();
+
+    const fetchData = async () => {
+        await fetch(
+            `${
+                import.meta.env.VITE_APP_API_URL
+            }/business-card/?userId=${param.get("userId")}`,
             {
                 method: "GET",
+                mode: "cors",
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${userData.token}`,
+                    "Content-Type": "application/json",
                 },
             }
         )
@@ -39,10 +41,16 @@ const BusinessCard = () => {
                 }
             })
             .then((user) => {
-                setUserData(user);
-                profilePicRef.current.src = `data:image/jpg;base64,${user.picture}`;
+                setUserData({
+                    ...user,
+                    picture: "data:image/jpg;base64," + user.picture,
+                });
             });
-    });
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, [param]);
 
     const handleAddButton = (event) => {
         event.preventDefault();
@@ -52,7 +60,7 @@ const BusinessCard = () => {
                 body: JSON.stringify(userData),
                 mode: "cors",
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `Bearer ${userData.token}`,
                     "Content-Type": "application/json",
                 },
             }).then((response) => {
@@ -62,15 +70,11 @@ const BusinessCard = () => {
                     throw new Error("Failed to add contact");
                 }
             });
-            navigate(`/dashboard/${username}`);
+            navigate(`/dashboard/${userData.username}`);
         } catch (error) {
             console.log(error);
         }
     };
-
-    useEffect(() => {
-        fetchData();
-    }, []);
 
     return (
         <div className="container my-4 d-flex justify-content-center">
@@ -80,14 +84,12 @@ const BusinessCard = () => {
                         <div className="col-md-12 text-center">
                             <img
                                 style={{ height: 50, width: 50 }}
-                                ref={profilePicRef}
+                                src={userData.picture}
                                 alt="Profile"
                                 className="img-fluid rounded-circle profile-pic"
                             />
                             <h2 className="card-title">{`${userData.firstname} ${userData.lastname}`}</h2>
-                            <p className="card-text">
-                                Phone: {userData.phoneNumber}
-                            </p>
+                            <p className="card-text">Phone: {userData.phone}</p>
                             <p className="card-text">Email: {userData.email}</p>
                             <div className="links">
                                 <a

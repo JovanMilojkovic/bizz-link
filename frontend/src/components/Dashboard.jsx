@@ -174,7 +174,7 @@ export default function Dashboard() {
                                             value={`${
                                                 import.meta.env
                                                     .VITE_APP_FRONTEND_URL
-                                            }/business-card/?userId=${userId}`}
+                                            }/#/business-card/?userId=${userId}`}
                                         />
                                     </MDBCol>
                                 </MDBRow>

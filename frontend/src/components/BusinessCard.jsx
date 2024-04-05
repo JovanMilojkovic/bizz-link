@@ -16,6 +16,7 @@ const BusinessCard = () => {
         picture: "",
         token: "",
     });
+    const profilePic = `data:image/jpg;base64,${userData.picture}`;
 
     const navigate = useNavigate();
 
@@ -39,7 +40,6 @@ const BusinessCard = () => {
             .then((user) => {
                 setUserData({
                     ...user,
-                    picture: "data:image/jpg;base64," + user.picture,
                 });
             });
     };
@@ -80,7 +80,7 @@ const BusinessCard = () => {
                         <div className="col-md-12 text-center">
                             <img
                                 style={{ height: 50, width: 50 }}
-                                src={userData.picture}
+                                src={profilePic}
                                 alt="Profile"
                                 className="img-fluid rounded-circle profile-pic"
                             />

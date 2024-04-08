@@ -12,12 +12,12 @@ import PageNotFound from "./components/PageNotFound";
 import EditUserProfile from "./components/EditUserProfile";
 import BusinessCard from "./components/BusinessCard";
 import ContactsPage from "./components/ContactsPage";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter, BrowserRouter } from "react-router-dom";
 import ActivationProfil from "./components/ActivationProfil";
 
 function App() {
     return (
-        <BrowserRouter>
+        <HashRouter>
             <NavBar />
             <Routes>
                 <Route path="/" element={<HomePage />} />
@@ -41,7 +41,7 @@ function App() {
                 <Route path="/dashboard/contacts" element={<ContactsPage />} />
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 

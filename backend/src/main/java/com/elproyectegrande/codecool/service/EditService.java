@@ -2,6 +2,7 @@ package com.elproyectegrande.codecool.service;
 
 import com.elproyectegrande.codecool.auth.EditRequest;
 import com.elproyectegrande.codecool.auth.EditResponse;
+import com.elproyectegrande.codecool.auth.UserResponse;
 import com.elproyectegrande.codecool.model.User;
 import com.elproyectegrande.codecool.repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -23,7 +24,7 @@ public class EditService {
         this.jwtService = jwtService;
     }
 
-    public ResponseEntity<User> getUserData(String usernameFromToken, String username, String email) throws IOException {
+    public ResponseEntity<UserResponse> getUserData(String usernameFromToken, String username, String email) throws IOException {
         if (!usernameFromToken.equalsIgnoreCase(username)) {
             throw new IOException("User not found");
         }
@@ -31,7 +32,16 @@ public class EditService {
         if (optionalUser.isEmpty()) {
             throw new IOException("User not found");
         } else {
-            return new ResponseEntity<>(optionalUser.get(), HttpStatus.OK);
+            return new ResponseEntity<>(UserResponse.builder()
+                    .email(optionalUser.get().getEmail())
+                    .username(optionalUser.get().getUsername())
+                    .firstName(optionalUser.get().getFirstName())
+                    .lastName(optionalUser.get().getLastName())
+                    .linkedin(optionalUser.get().getLinkedin())
+                    .facebook(optionalUser.get().getFacebook())
+                    .phone(optionalUser.get().getPhone())
+                    .picture(Base64.getEncoder().encodeToString(optionalUser.get().getPicture()))
+                    .build(), HttpStatus.OK);
         }
 
     }

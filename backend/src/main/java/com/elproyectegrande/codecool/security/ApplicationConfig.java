@@ -2,6 +2,7 @@ package com.elproyectegrande.codecool.security;
 
 import com.elproyectegrande.codecool.auth.AuthorizationResponse;
 import com.elproyectegrande.codecool.auth.EditResponse;
+import com.elproyectegrande.codecool.auth.UserResponse;
 import com.elproyectegrande.codecool.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -69,6 +70,11 @@ public class ApplicationConfig {
     @Bean
     public EditResponse editResponse() {
         return new EditResponse();
+    }
+
+    @Bean
+    public UserResponse userResponse() {
+        return new UserResponse();
     }
 
     @Bean

@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 @Service
@@ -37,6 +39,7 @@ public class EditService {
 
     public ResponseEntity<EditResponse> updateUser(EditRequest request, String email) {
         Optional<User> optionalUser = repository.findByEmail(email);
+        Charset charset = StandardCharsets.UTF_16;
         if (optionalUser.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -66,18 +69,18 @@ public class EditService {
         }
 
         if (request.getPicture() != null) {
-            byte[] imageData = request.getPicture().getBytes();
-            user.setPicture(imageData);
+            user.setPicture(request.getPicture().getBytes(charset));
         }
 
         repository.save(user);
         String token = jwtService.generateToken(user);
 
+
         EditResponse editResponse = new EditResponse();
         editResponse.setUsername(user.getUsername());
         editResponse.setEmail(user.getEmail());
         if (user.getPicture() != null) {
-            editResponse.setPicture(user.getPicture());
+            editResponse.setPicture(new String(user.getPicture(), charset));
         } else editResponse.setPicture(null);
         editResponse.setToken(token);
 

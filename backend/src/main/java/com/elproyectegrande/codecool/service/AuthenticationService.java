@@ -10,6 +10,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+
 
 @Service
 @RequiredArgsConstructor
@@ -30,12 +33,13 @@ public class AuthenticationService {
             var user = repository.findByEmail(request.getEmail())
                     .orElseThrow();
             var jwtToken = jwtService.generateToken(user);
+            Charset charset = StandardCharsets.UTF_16;
             return AuthenticationResponse.builder()
                     .id(user.getId())
                     .email(request.getEmail())
                     .username(user.getUsername())
                     .phone(user.getPhone())
-                    .picture(user.getPicture())
+                    .picture(new String(user.getPicture(), charset))
                     .role(user.getRole())// Add the username to the response
                     .token(jwtToken)
                     .build();

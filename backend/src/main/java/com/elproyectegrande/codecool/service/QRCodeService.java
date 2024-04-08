@@ -7,6 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 
 @Service
@@ -17,6 +20,7 @@ public class QRCodeService {
 
     public ResponseEntity<QRCodeResponse> generate(String userId) {
         System.out.println("qr code request made");
+        Charset charset = StandardCharsets.UTF_16;
         Optional<User> user = repository.findUserById(userId);
         if(user.isPresent()) {
             User actualUser = user.get();
@@ -26,7 +30,7 @@ public class QRCodeService {
             response.setLastname(actualUser.getLastName());
             response.setPhone(actualUser.getPhone());
             response.setEmail(actualUser.getEmail());
-            response.setPicture(actualUser.getPicture());
+            response.setPicture(new String(actualUser.getPicture(), charset));
             response.setLinkedin(actualUser.getLinkedin());
             response.setFacebook(actualUser.getFacebook());
 

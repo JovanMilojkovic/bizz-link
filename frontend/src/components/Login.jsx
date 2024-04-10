@@ -8,9 +8,9 @@ import Button from "@mui/joy/Button";
 import { Link } from "react-router-dom";
 import "./css_files/Login.css";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import useGlobalState from "../globalState";
+import { SharedDataContext } from "./SharedDataContext";
 
 // import jwt_decode from "jwt-decode";
 
@@ -20,6 +20,7 @@ function Login() {
     const [password, setPassword] = useState("");
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const { sharedData, setSharedData } = useContext(SharedDataContext);
 
     const setLogInFailed = useGlobalState(
         (selector) => selector.setLogInFailed
@@ -75,6 +76,7 @@ function Login() {
             const username = responseBody.username.toLowerCase();
             setIsLoggedIn(true);
             setLogInUserData(token);
+            await setSharedData(responseBody);
             localStorage.setItem("jwtToken", token);
             localStorage.setItem("username", responseBody.username);
             localStorage.setItem("email", responseBody.email);

@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import QRCode from "react-qr-code";
 import defaultPicture from "./pictures/PngItem_1468295.png";
+import { SharedDataContext } from "./SharedDataContext";
 
 import {
     MDBCol,
@@ -22,12 +23,13 @@ export default function Dashboard() {
         phone: "",
         picture: "",
     });
+    const { sharedData, setSharedData } = useContext(SharedDataContext);
     const token = localStorage.getItem("jwtToken");
     const userId = localStorage.getItem("id");
+    const picture = localStorage.getItem("picture");
     const navigate = useNavigate();
     const param = useParams();
-
-    const profilePic = `data:image/jpg;base64,${userData.picture}`;
+    const profilePic = `data:image/jpg;base64,${picture}`;
 
     const fetchData = async () => {
         const response = await fetch(
@@ -43,11 +45,11 @@ export default function Dashboard() {
                 },
             }
         );
+        const responseBody = await response.json();
         if (response.status !== 200) {
             navigate("*");
         } else {
-            const data = await response.json();
-            setUserData({ ...data });
+            setUserData({ ...responseBody });
         }
     };
 
@@ -100,7 +102,7 @@ export default function Dashboard() {
                                 >
                                     <MDBCardImage
                                         src={
-                                            userData.picture
+                                            picture
                                                 ? profilePic
                                                 : defaultPicture
                                         }

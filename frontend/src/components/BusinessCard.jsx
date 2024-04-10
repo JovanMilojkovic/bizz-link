@@ -22,7 +22,7 @@ const BusinessCard = () => {
     const navigate = useNavigate();
 
     const fetchData = async () => {
-        await fetch(
+        fetch(
             `${
                 import.meta.env.VITE_APP_API_URL
             }/business-card/?userId=${param.get("userId")}`,
@@ -39,6 +39,7 @@ const BusinessCard = () => {
                 }
             })
             .then((user) => {
+                console.log(user);
                 setUserData({
                     ...user,
                 });

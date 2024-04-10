@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import "./css_files/NavBar.css";
 import { useEffect } from "react";
+
 import { useNavigate } from "react-router-dom";
 import useGlobalState from "../globalState";
 import { shallow } from "zustand/shallow";

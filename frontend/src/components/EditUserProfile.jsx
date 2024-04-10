@@ -91,15 +91,17 @@ export default function EditUserProfile() {
         } else {
             dataToSend.picture = localStorage.getItem("picture");
         }
-
-        fetch(`${import.meta.env.VITE_APP_API_URL}/edit-user/?email=${email}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(dataToSend),
-        })
+        await fetch(
+            `${import.meta.env.VITE_APP_API_URL}/edit-user/?email=${email}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(dataToSend),
+            }
+        )
             .then((response) => {
                 if (response.ok) {
                     return response.json();

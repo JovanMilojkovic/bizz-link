@@ -10,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Base64;
 import java.util.Optional;
 
 
@@ -52,7 +51,7 @@ public class RegisterService {
                 .lastName("")
                 .facebook("")
                 .linkedin("")
-                .picture(Base64.getDecoder().decode(""))
+                .picture("")
                 .isActive(false)
                 .creationTime(LocalDateTime.now())
                 .role(Role.USER)

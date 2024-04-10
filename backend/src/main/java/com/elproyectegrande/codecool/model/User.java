@@ -33,7 +33,8 @@ public class User implements UserDetails {
     private LocalDateTime creationTime;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Contact> contacts;
-    private byte[] picture;
+    @Column(length = 1000000)
+    private String picture;
     @Getter
     @Enumerated(EnumType.STRING)
     private Role role;

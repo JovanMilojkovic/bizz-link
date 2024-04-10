@@ -16,13 +16,11 @@ import java.util.Optional;
 public class EditService {
     private final UserRepository repository;
     private final JwtService jwtService;
-    private final PictureService pictureService;
 
 
-    public EditService(UserRepository repository, JwtService jwtService, PictureService pictureService) {
+    public EditService(UserRepository repository, JwtService jwtService) {
         this.repository = repository;
         this.jwtService = jwtService;
-        this.pictureService = pictureService;
     }
 
     public ResponseEntity<UserResponse> getUserData(String usernameFromToken, String username, String email) throws IOException {
@@ -41,7 +39,7 @@ public class EditService {
                     .linkedin(optionalUser.get().getLinkedin())
                     .facebook(optionalUser.get().getFacebook())
                     .phone(optionalUser.get().getPhone())
-                    .picture(pictureService.encodePicture(optionalUser.get().getPicture()))
+                    .picture(optionalUser.get().getPicture())
                     .build(), HttpStatus.OK);
         }
 
@@ -78,7 +76,7 @@ public class EditService {
         }
 
         if (request.getPicture() != null) {
-            user.setPicture(pictureService.decodePicture(request.getPicture()));
+            user.setPicture(request.getPicture());
         }
 
         repository.save(user);
@@ -89,7 +87,7 @@ public class EditService {
         editResponse.setUsername(user.getUsername());
         editResponse.setEmail(user.getEmail());
         if (user.getPicture() != null) {
-            editResponse.setPicture(pictureService.encodePicture(user.getPicture()));
+            editResponse.setPicture(user.getPicture());
         } else editResponse.setPicture(null);
         editResponse.setToken(token);
 

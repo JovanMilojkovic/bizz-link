@@ -10,18 +10,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Base64;
 import java.util.Optional;
 
 @Service
 public class EditService {
     private final UserRepository repository;
     private final JwtService jwtService;
+    private final PictureService pictureService;
 
 
-    public EditService(UserRepository repository, JwtService jwtService) {
+    public EditService(UserRepository repository, JwtService jwtService, PictureService pictureService) {
         this.repository = repository;
         this.jwtService = jwtService;
+        this.pictureService = pictureService;
     }
 
     public ResponseEntity<UserResponse> getUserData(String usernameFromToken, String username, String email) throws IOException {
@@ -40,7 +41,7 @@ public class EditService {
                     .linkedin(optionalUser.get().getLinkedin())
                     .facebook(optionalUser.get().getFacebook())
                     .phone(optionalUser.get().getPhone())
-                    .picture(Base64.getEncoder().encodeToString(optionalUser.get().getPicture()))
+                    .picture(pictureService.encodePicture(optionalUser.get().getPicture()))
                     .build(), HttpStatus.OK);
         }
 
@@ -64,7 +65,7 @@ public class EditService {
         if (request.getLastName() != null) {
             user.setLastName(request.getLastName());
         }
-        if(request.getPhone() != null){
+        if (request.getPhone() != null) {
             user.setPhone(request.getPhone());
         }
 
@@ -77,7 +78,7 @@ public class EditService {
         }
 
         if (request.getPicture() != null) {
-            user.setPicture(Base64.getDecoder().decode(request.getPicture()));
+            user.setPicture(pictureService.decodePicture(request.getPicture()));
         }
 
         repository.save(user);
@@ -88,7 +89,7 @@ public class EditService {
         editResponse.setUsername(user.getUsername());
         editResponse.setEmail(user.getEmail());
         if (user.getPicture() != null) {
-            editResponse.setPicture(Base64.getEncoder().encodeToString(user.getPicture()));
+            editResponse.setPicture(pictureService.encodePicture(user.getPicture()));
         } else editResponse.setPicture(null);
         editResponse.setToken(token);
 
